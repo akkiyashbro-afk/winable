@@ -1,341 +1,26 @@
-WORK DIRECTLY ON THIS LOCAL PROJECT:
+Build the Recovery Case detail page for the CURRENT WinsAble website.
 
+LOCAL PROJECT:
 D:\winsable\v.2-main (1)\v.2-main
 
 IMPORTANT:
-Before making changes, inspect the CURRENT LOCAL PROJECT thoroughly.
+The current WinsAble website is already smooth and visually strong.
 
-This is NOT a redesign.
+DO NOT redesign the existing website.
+DO NOT replace the existing animation system.
+DO NOT modify the existing Recovery Wall animation.
+DO NOT change the existing card design.
+DO NOT change global colors, typography or spacing unnecessarily.
 
-The CURRENT NEW WINSABLE website is the visual/design/animation source of truth.
-
-The OLD v.2 WinsAble project is the content + feature reference.
-
-==================================================
-MAIN OBJECTIVE
-==================================================
-
-I want the CURRENT WinsAble website to remain visually and interactively the same, but become much more complete by bringing over the useful content, sections, information and functionality from v.2.
-
-Think:
-
-CURRENT WINSABLE DESIGN
-+
-CURRENT WINSABLE ANIMATIONS
-+
-USEFUL V.2 CONTENT / FEATURES
-
-NOT:
-
-V.2 DESIGN copied into the new site.
+This task is ONLY to create/improve the individual Recovery Case page that opens when a recovery card is clicked.
 
 ==================================================
-ABSOLUTE ANIMATION RULE
+1. ROUTE
 ==================================================
 
-The current website is already extremely smooth.
-
-DO NOT ruin that.
-
-DO NOT replace the current animation system.
-
-DO NOT simplify animations.
-
-DO NOT remove animations.
-
-DO NOT replace the current components just because v.2 used different components.
-
-Preserve all existing:
-
-- hero animation
-- hero card stack
-- word reveal
-- rotating text
-- scroll animations
-- reveal animations
-- parallax
-- magnetic interactions
-- hover effects
-- platform marquee
-- recovery wall marquee
-- card movement
-- transitions
-- section entrances
-- CTA animations
-- smooth scrolling
-- current typography animation
-- current visual effects
-
-If a section receives additional content, animate the NEW content using the EXISTING animation language.
-
-Do not introduce a completely different animation style.
-
-==================================================
-FIRST: AUDIT BOTH PROJECTS
-==================================================
-
-Before editing, inspect:
-
-CURRENT LOCAL WINSABLE:
-D:\winsable\v.2-main (1)\v.2-main
-
-OLD V.2:
-the existing v.2 WinsAble project/reference already available to this workspace.
-
-Go through both carefully.
-
-Do not assume that something is missing just because the component has a different name.
-
-Compare actual:
-- sections
-- routes
-- components
-- data
-- content
-- forms
-- recovery functionality
-- testimonials
-- profile data
-- FAQs
-- About content
-- Services content
-- How It Works content
-- Platforms
-- CTAs
-- footer
-- legal/support information
-- useful backend functionality
-
-Create an internal comparison:
-
-1. Already present in new WinsAble
-2. Missing from new WinsAble
-3. Better/more complete in v2
-4. Worth adding
-5. Not worth adding
-6. Unsupported claims that must NOT be added
-
-Then implement the useful missing pieces.
-
-==================================================
-DO NOT SKIP EXISTING SECTIONS
-==================================================
-
-The following areas MUST be compared with v2:
-
-- Services
-- How It Works
-- Platforms
-- FAQ
-- About
-- Recovery Cases
-- Recovery Profiles
-- Reviews / Testimonials
-- Trust / Safety information
-- CTA
-- Case Submission
-- Footer
-- any other meaningful section found in v2
-
-Even if the current site already has a section with the same purpose, compare the CONTENT.
-
-If v2 has useful information that the current site does not have, add it into the current section.
-
-Do not simply say:
-"this section already exists."
-
-Compare its actual content.
-
-==================================================
-SEPARATE PAGES
-==================================================
-
-If v2 contains an important standalone piece of content or functionality that cannot be cleanly placed into the current page, create a proper separate page/route.
-
-BUT:
-
-Do not create pages just for the sake of creating pages.
-
-Only create a separate page when it genuinely improves the website structure.
-
-Examples could include:
-
-/services
-/how-it-works
-/platforms
-/faq
-/about
-
-OR another meaningful page if the source content genuinely requires it.
-
-Use the CURRENT WinsAble design system for those pages.
-
-They must feel like part of the same website.
-
-Keep the same smooth reveal/transition language.
-
-==================================================
-SERVICES
-==================================================
-
-Compare the current Services section against v2.
-
-Keep the current service presentation and animations.
-
-Add useful missing recovery/service categories from v2 where appropriate.
-
-Possible recovery categories found in the source include:
-
-- Account Recovery
-- Disabled / Locked Account
-- Impersonation
-- Hacked / Account Takeover
-- Phishing Breach
-- Copyright
-- Platform Support
-- Credential Leak
-- Business Manager Breach
-- other legitimate recovery/support categories found in the source
-
-Do not unnecessarily make the UI huge.
-
-Use the information intelligently.
-
-==================================================
-HOW IT WORKS / FOUNDATION PLAYBOOK
-==================================================
-
-Compare current Process / How It Works with the old v2 Foundation Playbook.
-
-Useful v2 structure:
-
-"The Foundation Playbook"
-
-"Four movements. Zero noise."
-
-01 · Silent Intake
-
-"Encrypted, name-blind onboarding. Our forensic officers assess exposure without your identity ever touching a public system."
-
-02 · Chain of Custody
-
-"We reconstruct the digital chain of ownership using notarized signals — device history, biometric echoes, verified metadata."
-
-03 · Recovery Protocol
-
-"Direct escalations across platform trust teams. Zero automated scripts. Every step signed by a human recovery officer."
-
-04 · Hardened Return
-
-"Your account returns armored — hardware-key enforced, session-audited, and monitored for 90 days at no additional cost."
-
-IMPORTANT:
-
-Use this as SOURCE CONTENT/STRUCTURE.
-
-Do not blindly publish claims that are not actually true for WinsAble.
-
-If something is unsupported, rewrite/remove that specific claim rather than inventing capabilities.
-
-Integrate the useful process explanation into the CURRENT WinsAble How It Works design.
-
-==================================================
-PLATFORMS
-==================================================
-
-Compare current Platforms against v2.
-
-Keep the current platform animation/marquee.
-
-Add useful platform information if v2 contains something missing.
-
-Do not break the current marquee.
-
-==================================================
-FAQ
-==================================================
-
-Do a REAL content comparison of FAQ.
-
-Keep all useful current FAQ items.
-
-Look through v2 for additional questions/answers that would genuinely help someone considering a recovery/support case.
-
-Add only useful missing FAQ content.
-
-Keep the current animation and visual style.
-
-If the FAQ becomes large enough that a dedicated FAQ page makes more sense, create:
-
-/faq
-
-But do not duplicate the same FAQ content on both home and FAQ page unless intentionally using a short preview on home.
-
-==================================================
-ABOUT
-==================================================
-
-Compare the current About section/page with v2.
-
-Bring over useful positioning, explanation and company/service context.
-
-Do not make fake claims.
-
-Keep the current premium editorial design.
-
-If the current About content is better suited to a complete page, create/use:
-
-/about
-
-with the same current design language and smooth animations.
-
-==================================================
-RECOVERY CASES / WALL
-==================================================
-
-THIS IS EXTREMELY IMPORTANT.
-
-The current Recovery Wall is already working with a smooth animated two-row system.
-
-DO NOT redesign it.
-
-DO NOT turn it into a normal grid.
-
-DO NOT remove the marquee.
-
-DO NOT change the current card animation.
-
-Keep:
-
-TOP ROW → moves LEFT
-BOTTOM ROW → moves RIGHT
-
-Keep:
-- current card design
-- current dimensions
-- current rotations
-- current spacing
-- current movement
-- current edge treatment
-- current smooth loop
-
-The wall must never expose a giant empty area.
-
-If there are only a few real recovery records, use visual repetition for the marquee track so the viewport remains continuously populated.
-
-Do NOT create fake database records just to fill the animation.
-
-==================================================
-RECOVERY PROFILE ROUTES
-==================================================
-
-The route terminology must remain:
+Use:
 
 /recovery/[slug]
-
-NOT:
-
-/exclusive/[slug]
 
 Examples:
 
@@ -343,42 +28,262 @@ Examples:
 /recovery/reema-ghai
 /recovery/lakshay-chaudhary
 
-The site is about recovery.
+DO NOT use /exclusive/[slug].
 
-Do not use influencer-management terminology such as:
-- Exclusive Talent
-- Talent Management
-- Campaign
-- Brand Partnership
+This is a RECOVERY CASE, not an influencer/talent-management page.
 
-unless such terminology genuinely belongs to a real feature.
+==================================================
+2. CARD CLICK
+==================================================
 
-The profile page should feel like a RECOVERY CASE.
+When the user clicks a Recovery Case card:
 
-Where supported by the source data, useful fields can include:
+→ open its corresponding /recovery/[slug] page.
+
+The transition should feel smooth and intentional.
+
+Do not make the page appear as an unrelated static page.
+
+Use the existing WinsAble transition/reveal language.
+
+==================================================
+3. VISUAL DIRECTION
+==================================================
+
+Use the reference concept of a highly animated profile/case dossier page, BUT DO NOT COPY THE OTHER WEBSITE'S DESIGN.
+
+The final page must clearly look like WINSABLE.
+
+Use:
+
+- current black/dark background
+- existing WinsAble gold accent
+- current typography
+- subtle gradients/glows already used by WinsAble
+- premium editorial layout
+- thin borders
+- glass/subtle surfaces where appropriate
+- sophisticated spacing
+
+It should feel like:
+
+"Recovery Case / Recovery Report"
+
+not:
+
+"Exclusive Talent Profile".
+
+==================================================
+4. HERO / CASE HEADER
+==================================================
+
+Create an animated case header containing:
+
+RECOVERY CASE
+
+[Person Name]
+
+[Profile Image]
+
+[Platform badge]
+
+[Username]
+
+[Followers / Reach]
+
+[Recovery Status]
+
+Example structure:
+
+RECOVERY CASE
+
+Harsh Babbar
+
+@username
+Instagram
+2.5M+ Reach
+
+✓ Recovery Completed
+
+The exact values must come from the existing recovery data.
+
+Do not invent information.
+
+==================================================
+5. PROFILE IMAGE ANIMATION
+==================================================
+
+The profile image should have a premium entrance animation.
+
+Suggested behaviour:
+
+- subtle scale from ~0.96 → 1
+- opacity reveal
+- slight vertical movement
+- very subtle glow/border reveal
+
+Keep it smooth.
+
+Do NOT make it bounce.
+
+Do NOT use aggressive animation.
+
+==================================================
+6. NAME + REACH ANIMATION
+==================================================
+
+Reveal the name and important metadata with staggered timing.
+
+For example:
+
+RECOVERY CASE
+↓
+NAME
+↓
+USERNAME
+↓
+PLATFORM
+↓
+REACH
+↓
+RECOVERY STATUS
+
+Each element should reveal smoothly.
+
+The page should feel cinematic but restrained.
+
+==================================================
+7. RECOVERY INFORMATION
+==================================================
+
+Add a dedicated section:
+
+RECOVERY DETAILS
+
+Show available data such as:
+
+Platform
+Username
+Followers / Reach
+Recovery Type
+Recovery Date
+Recovery Status
+
+Only display fields that actually exist in the recovery record.
+
+Do not display empty fake values.
+
+==================================================
+8. CLIENT REVIEW
+==================================================
+
+This is VERY IMPORTANT.
+
+The recovery page should have a prominent:
+
+CLIENT REVIEW
+
+section.
+
+Show:
+
+- review quote
+- rating if available
+- person name
+- platform
+- date if available
+
+Use the existing review/recovery data.
+
+Do not fabricate reviews.
+
+Example visual hierarchy:
+
+CLIENT REVIEW
+
+"Recovery review goes here..."
+
+★★★★★
+
+Name
+Instagram · Date
+
+Animate this section into view when it enters the viewport.
+
+==================================================
+9. SOCIAL PROFILE
+==================================================
+
+Add:
+
+SOCIAL PROFILE
+
+[ Instagram → ]
+
+If an actual Instagram/social URL exists in the data, make it clickable.
+
+Open it safely in a new tab.
+
+If no URL exists, do not create a fake link.
+
+==================================================
+10. CASE INFORMATION
+==================================================
+
+Add a clean section such as:
+
+CASE INFORMATION
+
+Recovery Type
+Account Recovery
+
+Platform
+Instagram
+
+Recovery Date
+[date]
+
+Status
+Recovery Completed
+
+Only use real available data.
+
+==================================================
+11. OPTIONAL RECOVERY STORY
+==================================================
+
+If the data contains a useful bio/case description/recovery summary, show it as:
+
+THE CASE
+
+or
+
+RECOVERY SUMMARY
+
+Use the existing content.
+
+Do not invent a dramatic fake story.
+
+==================================================
+12. V.2 REVIEW DATA
+==================================================
+
+Use the old v.2 recovery data structure as reference.
+
+Useful fields from v.2 include:
 
 - name
 - role
 - username
 - platform
-- followers/reach
-- verified status
-- recovery type
-- recovery date
-- profile image
-- social links
-- case summary
-- client review
+- followers
+- verified
+- avatar
+- recoveryType
+- recoveryDate
+- popupId
 
-Keep the current page design and animations.
-
-==================================================
-V.2 REVIEW / PROOF CONTENT
-==================================================
-
-Compare the current Reviews/Testimonial system with v2.
-
-v2 contains richer review information such as:
+Reviews can contain:
 
 - username
 - platform
@@ -386,251 +291,249 @@ v2 contains richer review information such as:
 - verified
 - date
 - images
-- platform email screenshot
-- Telegram screenshot
-- description
+- review description
 - rating
 
-Use useful parts of this structure where appropriate.
+Bring useful fields into the new Recovery Case page where they exist.
 
-Do not blindly copy the old popup UI.
+Do NOT copy the old v.2 popup design.
 
-Adapt the information into the CURRENT WinsAble design.
-
-Do not publish fabricated proof as verified real-world evidence.
+Adapt the information to the CURRENT WinsAble visual system.
 
 ==================================================
-V.2 TESTIMONIAL CONTENT
+13. PROOF / VERIFIED STATUS
 ==================================================
 
-Review the v2 testimonial content and bring over useful entries only where they are legitimate/approved content.
+If the existing data contains verified information, show a subtle:
 
-Known v2 examples include:
+✓ Verified Recovery
 
-"Calm, forensic, relentless."
+or equivalent status.
 
-"I had lost hope after 3 weeks of automated support. WinsAble had me back online in under a week."
+Do not claim verification if the data does not support it.
 
-"Discreet, encrypted, human."
+If proof images exist in the source, they may be shown in a tasteful case-proof section.
 
-"Precision engineering behind every step."
-
-"48 hours from panic to peace."
-
-Do not invent names, dates, verification or outcomes.
-
-If source content is demo content, preserve that distinction.
+Do not invent proof screenshots.
 
 ==================================================
-TRUST / SAFETY
+14. PAGE ANIMATION
 ==================================================
 
-Keep the current honest safety messaging.
+The whole page should have premium scroll-based reveals.
 
-Important current principles include:
+Suggested animation sequence:
 
-- independent assistance
-- no passwords required
-- no OTP requests
-- no guaranteed outcomes
-- clear case reference
+PAGE LOAD
+↓
+background settles
+↓
+case label reveals
+↓
+name reveals
+↓
+profile image reveals
+↓
+platform + username
+↓
+reach count
+↓
+recovery status
+↓
+recovery details
+↓
+client review
+↓
+social profile
+↓
+case summary
+↓
+final CTA
 
-Do not add fake certifications or unsupported security claims.
+Use subtle staggered reveals.
 
-The old v2 contains claims such as:
+Use the CURRENT WinsAble animation style wherever possible.
 
-SOC 2 · Type II
-FIDO2 · Hardware-Key Only
-ISO 27001 Aligned
-Zero-Log Intake
-
-ONLY use these if they are actually verified.
-
-Otherwise do NOT add them.
-
-Honest content is more important than impressive claims.
-
-==================================================
-CASE FORM
-==================================================
-
-Keep the current Case Form design and 5-step experience.
-
-Do not redesign it.
-
-Check its actual functionality while auditing v2.
-
-Make sure:
-
-- Start a Case opens/works correctly
-- validation works
-- case submission works
-- case ID is generated
-- confirmation works
-- email workflow works
-- attachments are actually handled if the UI allows them
-
-If an existing attachment selection UI does not actually pass the selected files/metadata to the submission logic, fix the functionality.
-
-Do not change the visual design unnecessarily.
+Do not introduce a completely different animation library/system just for this page.
 
 ==================================================
+15. BACKGROUND
+==================================================
+
+Keep the existing WinsAble dark background.
+
+Add only subtle movement:
+
+- very soft gradient drift
+- subtle glow behind profile
+- light grain/noise if already available
+- very subtle line/grid treatment if consistent with current site
+
+Do NOT create a distracting animated background.
+
+The content must remain readable.
+
+==================================================
+16. FINAL CTA
+==================================================
+
+At the bottom:
+
 START A CASE
-==================================================
 
-IMPORTANT:
+or
 
-The Case Form must NOT automatically appear merely because the user scrolls.
+START YOUR RECOVERY CASE
 
-It should appear/open when:
+Clicking it should open/use the existing Case Form.
 
-- Start a Case is clicked
-- Start Your Case is clicked
-- another intentional recovery CTA is clicked
-
-Do not render the case form unexpectedly over unrelated sections.
+Do not create a second completely different submission form.
 
 ==================================================
-CONTENT TERMINOLOGY
+17. NAVIGATION
 ==================================================
 
-Use recovery terminology consistently.
+Keep the current WinsAble navigation.
 
-Prefer:
+The Recovery Case page should feel like a natural part of the same site.
 
-Recovery
+Do not create a new navbar design.
+
+==================================================
+18. MOBILE
+==================================================
+
+The page must work properly on mobile.
+
+On mobile:
+
+- profile image scales naturally
+- name remains readable
+- metadata stacks cleanly
+- review remains readable
+- no horizontal overflow
+- no broken animations
+- no giant empty spaces
+
+==================================================
+19. DATA ARCHITECTURE
+==================================================
+
+Use the existing recovery data source.
+
+Do not hardcode each profile page separately.
+
+The page should be reusable:
+
+/recovery/harsh-babbar
+/recovery/reema-ghai
+/recovery/lakshay-chaudhary
+
+etc.
+
+The slug should resolve the correct recovery record.
+
+==================================================
+20. IMPORTANT TERMINOLOGY
+==================================================
+
+Use:
+
 Recovery Case
-Account Recovery
-Support Request
-Case Review
-Recovery Profile
-Recovery Process
-Case Reference
+Recovery Report
+Recovered Profile
+Recovery Details
+Recovery Status
+Recovery Date
+Client Review
 
-Avoid accidentally turning WinsAble into:
+DO NOT use:
 
-Influencer Management
-Talent Agency
-Brand Deals
-Campaign Management
+Exclusive Talent
+Talent Profile
+Brand Partnership
+Campaign
+Talent Management
 
-The purpose is recovery/support assistance.
-
-==================================================
-WHATSAPP SOURCE LINE
-==================================================
-
-KEEP THIS EXACT SOURCE LINE IN THE CONTENT/SOURCE INVENTORY:
-
-"Blessings With You take risk & make that thing people will Think about that thing why this is missing"
-
-Do NOT silently delete it.
-
-Do NOT lose it during the content migration.
-
-If it is suitable for public-facing website copy, place it intentionally in an appropriate content context.
-
-Do not randomly insert it into unrelated sections.
+The purpose is account/social-media recovery.
 
 ==================================================
-CURRENT DESIGN MUST WIN
+21. DO NOT BREAK CURRENT WEBSITE
 ==================================================
 
-When v2 and current WinsAble disagree visually:
+After implementing this page:
 
-CURRENT WINSABLE WINS.
+CHECK THAT:
 
-When v2 contains useful information that current WinsAble lacks:
-
-ADD THE INFORMATION using CURRENT WINSABLE DESIGN.
-
-When v2 contains an animation that conflicts with current WinsAble:
-
-DO NOT COPY THE V2 ANIMATION.
-
-When v2 contains an unsupported claim:
-
-DO NOT ADD IT AS FACT.
-
-==================================================
-NO UNNECESSARY CHANGES
-==================================================
-
-Do not refactor unrelated code.
-
-Do not rename components unnecessarily.
-
-Do not replace working components just to make the code look different.
-
-Do not change the existing color system.
-
-Do not change typography unless required for new content.
-
-Do not remove working animations.
-
-Do not remove working sections.
-
-Do not create duplicate content.
-
-Do not create unnecessary pages.
+- Home still works
+- Services still works
+- How It Works still works
+- Platforms still works
+- FAQ still works
+- About still works
+- Recovery Wall still works
+- Recovery Wall animation is unchanged
+- Start a Case still works
+- Case Form still works
+- all existing animations still work
+- no global CSS was accidentally changed
+- no existing section was removed
 
 ==================================================
-FINAL QUALITY CHECK
+22. VERY IMPORTANT — EXISTING ANIMATIONS
 ==================================================
 
-After implementation test:
+Before creating new animations, inspect the current project and reuse existing animation utilities/components where possible.
 
-- Home
-- Services
-- How It Works
-- Platforms
-- FAQ
-- About
-- Recovery Wall
-- Recovery Profile
-- Case Form
-- Footer
-- every new route created
+Do NOT create duplicate animation systems.
 
-Test desktop + mobile.
+Do NOT replace working animations.
 
-Test every CTA.
+The current website is intentionally very smooth.
 
-Test every recovery profile link.
-
-Confirm all recovery URLs use:
-
-/recovery/[slug]
-
-Confirm no /exclusive/[slug] routes remain.
-
-Confirm the Recovery Wall has no empty gap.
-
-Confirm the Recovery Wall animation remains smooth.
-
-Confirm existing animations still work.
-
-Confirm no unexpected Case Form appears while scrolling.
-
-Confirm no existing section was accidentally deleted.
+PRESERVE THAT FEEL.
 
 ==================================================
-FINAL REPORT
+23. FINAL RESULT
 ==================================================
 
-When finished, report briefly:
+The final experience should feel like:
 
-1. Files changed
-2. Sections retained
-3. v2 content added
-4. v2 features added
-5. New pages/routes created, if any
-6. Recovery profile improvements
-7. Case Form fixes
-8. Recovery Wall status
-9. Animations preserved
-10. Anything intentionally NOT added and why
+User sees Recovery Cases
+↓
+clicks a recovery card
+↓
+smooth transition
+↓
+beautiful animated WinsAble Recovery Case page
+↓
+sees profile + platform + reach + recovery information
+↓
+reads client review
+↓
+opens Instagram/social profile if available
+↓
+sees recovery details
+↓
+can start their own recovery case
 
-Do not give a huge generic explanation.
+It should feel premium, trustworthy, cinematic and distinctly WinsAble.
 
-Be precise about what actually changed.
+Do not copy the reference site's branding or content.
+
+Only take inspiration from its rich animated case/profile presentation.
+
+==================================================
+FINAL RESPONSE
+==================================================
+
+After implementation, report briefly:
+
+1. Which files were changed
+2. Which route was created/updated
+3. What recovery information is displayed
+4. How the animation works
+5. Confirmation that existing WinsAble animations were preserved
+6. Confirmation that /recovery/[slug] works
+7. Confirmation that no /exclusive/[slug] terminology remains
+8. Build/test result

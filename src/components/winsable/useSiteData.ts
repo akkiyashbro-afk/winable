@@ -67,6 +67,10 @@ export interface Talent {
   verified?: boolean;
   recoveryType?: string;
   recoveryDate?: string;
+  review?: {
+    quote: string;
+    rating: number;
+  };
   socials: {
     instagram?: string;
     youtube?: string;
