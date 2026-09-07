@@ -275,7 +275,12 @@ export function EditorialWall() {
     const data = (siteData?.talents || defaultTalents)
       .filter((t) => t.active !== false)
       .sort((a, b) => (a.order ?? 0) - (b.order ?? 0));
-    return [...data, ...data, ...data];
+    if (data.length === 0) return [];
+    const minCards = Math.ceil(2400 / (data.length * 250)) * 2;
+    const repeats = Math.max(6, minCards);
+    const result: typeof data = [];
+    for (let i = 0; i < repeats; i++) result.push(...data);
+    return result;
   }, [siteData]);
 
   const topRow = talents.filter((_, i) => i % 2 === 0);

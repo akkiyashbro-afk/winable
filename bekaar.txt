@@ -1,320 +1,103 @@
-STOP ALL CURRENT RECOVERY WALL CHANGES.
+DO NOT CHANGE THE RECOVERY WALL DESIGN.
 
-The latest Recovery Wall implementation broke the wall.
+The wall is now almost correct.
 
-I have checked the Git history.
+There is ONLY ONE remaining visual glitch:
 
-The BAD change is commit:
+On the current viewport, the bottom/right side of the second row becomes empty after a few cards.
 
-60fde35fe74e1d8aea73ee5058326af386d3b303
-"feat: responsive recovery wall grid, Load More system, minimal edge blur"
+See the screenshot:
+the bottom row has cards on the left, but a large blank black area appears on the right.
 
-Its parent is:
-
-7a33ff62e2c57a32da5503b0f4c5f0c6bea52599
-
-The parent version contains the previous working two-row animated wall.
-
-I WANT THAT PREVIOUS WALL BACK.
+FIX ONLY THIS.
 
 ==================================================
-1. RESTORE THE PREVIOUS WORKING WALL
+ROOT CAUSE
 ==================================================
 
-Restore ONLY the Recovery Wall implementation from:
+EditorialWall currently creates only:
 
-7a33ff62e2c57a32da5503b0f4c5f0c6bea52599
+[...data, ...data, ...data]
 
-Specifically restore:
+and then splits that into topRow and bottomRow.
 
-src/components/winsable/EditorialWall.tsx
-src/styles.css
-
-Do NOT revert the whole repository.
-
-Do NOT revert:
-- navbar
-- routing
-- /recovery routes
-- case form
-- other sections
-- current animations outside the wall
-- other fixes already completed
-
-Only restore the wall-related implementation.
-
-The previous implementation used:
-
-- two horizontal rows
-- top row moving left
-- bottom row moving right
-- repeated visual track for a seamless loop
-- cards with fixed/clamped width
-- overflow-hidden wall container
-- editorial track animation
-
-That is the wall I want.
+When the actual recovery data contains only a few cases, the resulting visual track is not long enough to continuously cover the viewport during the marquee animation.
 
 ==================================================
-2. REMOVE THE NEW BROKEN GRID SYSTEM
+FIX
 ==================================================
 
-REMOVE the new system introduced by 60fde:
-
-- wall-grid CSS grid
-- INITIAL_COUNT
-- LOAD_MORE_COUNT
-- visibleCount
-- newBatchStart
-- LoadMoreCard
-- finite grid rendering
-- Load More logic
-- wall-card reveal system if it was added only for this grid
-- any logic that changed the wall from marquee rows into a grid
-
-I DO NOT WANT A NORMAL GRID.
-
-I DO NOT WANT:
-
-[ CARD ][ CARD ][ CARD ][ CARD ]
-[ CARD ][ CARD ]
-
-I DO NOT WANT giant empty spaces.
-
-==================================================
-3. RESTORE THE TWO-ROW FLOWING WALL
-==================================================
-
-The wall should look like the previous working version:
-
-ROW 1:
-
-[ CARD ][ CARD ][ CARD ][ CARD ][ CARD ] → → →
-
-ROW 2:
-
-← ← ← [ CARD ][ CARD ][ CARD ][ CARD ][ CARD ]
-
-The rows should continuously move in opposite directions.
-
-The loop must be seamless.
-
-The user should NEVER see the track suddenly end.
-
-The wall should feel continuously populated.
-
-==================================================
-4. IMPORTANT — VISUAL DUPLICATION IS ALLOWED FOR THE LOOP
-==================================================
-
-The old implementation duplicated the DATA visually so the animation could loop seamlessly.
-
-That is OK.
-
-This does NOT mean the website should create separate fake recovery cases.
-
-The same case can appear again later in the moving animation because it is part of the seamless visual loop.
-
-DO NOT convert this into a finite data grid.
-
-Use the previous working technique:
-
-const data = actualRecoveryCases;
-return [...data, ...data, ...data];
-
-Then split into the two animated rows as the previous implementation did.
-
-The purpose is seamless animation, NOT displaying three separate copies simultaneously as a static grid.
-
-==================================================
-5. KEEP RECOVERY TERMINOLOGY
-==================================================
-
-The old wall implementation must remain recovery-focused.
+Keep the exact same two-row marquee architecture.
 
 Keep:
 
-Recovery Cases
-Recent Recoveries.
-View Case
+- top row moving LEFT
+- bottom row moving RIGHT
+- current card design
+- current card sizes
+- current rotations
+- current spacing
+- current animation speeds
+- current edge fade
+- current recovery terminology
+- /recovery/${talent.slug}
 
-Links MUST remain:
+ONLY make the visual track long enough that neither row can expose empty space.
 
-/recovery/${talent.slug}
+Use enough VISUAL repetitions of the actual data to guarantee that the track is wider than the viewport.
 
-Do NOT restore:
+For example, instead of only:
 
-/exclusive/
+return [...data, ...data, ...data];
 
-Do NOT restore:
+use enough repetitions, such as:
 
-Exclusive Talents
+return [...data, ...data, ...data, ...data, ...data, ...data];
 
-Do NOT restore:
+OR implement an equivalent robust calculation based on viewport width.
 
-Talent Management
+IMPORTANT:
 
-The rollback is ONLY for the visual wall mechanism.
+This is visual duplication for the marquee loop only.
 
-==================================================
-6. SIDE BLUR — KEEP IT VERY LIGHT
-==================================================
+Do NOT create duplicate database records.
 
-The previous wall had the correct concept of edge masking.
+Do NOT show duplicate cards as a static grid.
 
-Keep the reduced blur version rather than the original heavy blur.
+Do NOT add Load More.
 
-I want:
-
-- subtle left fade
-- subtle right fade
-- center completely sharp
-- edge cards still readable
-
-Target approximately:
-
-width: 10–12%
-blur: 3px maximum
-low opacity gradient
-
-The effect should barely be noticeable.
-
-DO NOT use the old 25% / 12px heavy blur.
+Do NOT change the layout.
 
 ==================================================
-7. CARD DESIGN MUST STAY
+MOST IMPORTANT
 ==================================================
 
-Keep the current card design.
+The wall must NEVER show:
 
-Do not redesign:
+[ CARD ][ CARD ][ CARD ]
+                         HUGE EMPTY SPACE
 
-- card shape
-- gold/dark styling
-- initials
-- category badge
-- name
-- reach
-- social icons
-- View Case
-- hover animation
-- rotations
+Both rows must remain visually populated across the entire viewport throughout the animation.
 
-Only restore the wall layout/animation.
+The transition must remain seamless.
+
+Do NOT change the animation direction or timing.
+
+Do NOT redesign anything.
 
 ==================================================
-8. NO LOAD MORE
+VERIFY
 ==================================================
 
-REMOVE Load More completely from the normal wall.
+Test the wall when there are only:
 
-I originally considered Load More only because the broken grid was creating empty space.
+3 real recovery cases
+4 real recovery cases
+6 real recovery cases
+8+ real recovery cases
 
-The correct solution is NOT Load More.
+Even with only 3 real cases, both moving rows must continuously cover the full viewport with no visible empty region.
 
-The correct solution is the old seamless two-row wall.
+ONLY FIX THIS ONE GLITCH.
 
-Therefore:
-
-NO Load More button.
-
-NO empty placeholder.
-
-NO special Load More card.
-
-The wall should continuously loop.
-
-==================================================
-9. VERY IMPORTANT — DO NOT TOUCH THE REST OF THE WEBSITE
-==================================================
-
-Do NOT change:
-
-- Hero
-- Navbar
-- Services
-- How It Works
-- Platforms
-- FAQ
-- About
-- Case Form
-- page animations
-- typography
-- colors
-- global motion
-- /recovery/[slug] routes
-- floating CTA fix
-
-Only repair the Recovery Cases wall.
-
-==================================================
-10. VERIFY AGAINST THE OLD VERSION
-==================================================
-
-After making the change, compare:
-
-CURRENT BROKEN VERSION
-vs
-7a33ff62e2c57a32da5503b0f4c5f0c6bea52599
-
-The wall should use the old:
-
-editorial-wall-container
-editorial-row
-editorial-track
-editorial-track-left
-editorial-track-right
-
-architecture.
-
-The previous version used:
-
-top row → left
-bottom row → right
-
-with:
-
-60s / 55s linear continuous animation
-
-and a wide card:
-
-width: clamp(220px, 22vw, 300px)
-
-Restore that behavior.
-
-==================================================
-11. FINAL VISUAL REQUIREMENT
-==================================================
-
-I want the wall to feel like this:
-
-        [CARD] [CARD] [CARD] [CARD] [CARD]
-   ←    [CARD] [CARD] [CARD] [CARD] [CARD]    →
-
-The cards continuously enter and leave the viewport.
-
-There should NEVER be:
-
-- a half-empty row
-- a giant black area
-- 3 cards sitting in the center
-- a normal static grid
-- a Load More button
-- a broken loop
-- a sudden blank section
-
-The wall should look alive and cinematic again.
-
-DO NOT IMPROVISE A NEW WALL.
-
-RESTORE THE PREVIOUS WORKING WALL FIRST.
-
-Only after restoring it, make the edge blur slightly lighter.
-
-At the end, report:
-1. exactly which files changed
-2. confirmation that 60fde35 wall changes were removed
-3. confirmation that the 7a33ff6 two-row wall architecture was restored
-4. confirmation that /recovery/ URLs remain intact
-5. confirmation that Load More was removed
-6. confirmation that no other website section was changed
+Do not touch any other section or animation.
