@@ -1,0 +1,194 @@
+{
+  "reviews": [
+    {
+      "id": "r1",
+      "quote": "The process was explained step by step, so I finally understood what was actually being submitted and why.",
+      "name": "A. M.",
+      "role": "Creator, Instagram case",
+      "avatar": "",
+      "rating": 5,
+      "order": 0,
+      "featured": true,
+      "enabled": true
+    },
+    {
+      "id": "r2",
+      "quote": "No exaggerated promises. Just an organised summary of my situation and a clear next step.",
+      "name": "R. K.",
+      "role": "Small business owner",
+      "avatar": "",
+      "rating": 5,
+      "order": 1,
+      "featured": false,
+      "enabled": true
+    },
+    {
+      "id": "r3",
+      "quote": "They kept everything documented and easy to follow, which made a stressful week much calmer.",
+      "name": "S. D.",
+      "role": "Photographer, copyright case",
+      "avatar": "",
+      "rating": 5,
+      "order": 2,
+      "featured": false,
+      "enabled": true
+    },
+    {
+      "id": "r4",
+      "quote": "Straightforward communication and a proper case reference at the end. That was all I needed.",
+      "name": "T. N.",
+      "role": "YouTube channel owner",
+      "avatar": "",
+      "rating": 5,
+      "order": 3,
+      "featured": true,
+      "enabled": true
+    }
+  ],
+  "services": [
+    {
+      "id": "s1",
+      "n": "01",
+      "title": "Account Recovery",
+      "icon": "recovery",
+      "body": "Assistance with account access issues and recovery request preparation.",
+      "tags": ["Ownership evidence", "Login history", "Recovery form"],
+      "enabled": true
+    },
+    {
+      "id": "s2",
+      "n": "02",
+      "title": "Disabled Account",
+      "icon": "disabled",
+      "body": "Help organizing information for legitimate appeals when an account is disabled.",
+      "tags": ["Appeal draft", "Policy context"],
+      "enabled": true
+    },
+    {
+      "id": "s3",
+      "n": "03",
+      "title": "Impersonation Reports",
+      "icon": "impersonation",
+      "body": "Assistance preparing a legitimate impersonation report and organizing evidence.",
+      "tags": ["Identity proof", "Report pack"],
+      "enabled": true
+    },
+    {
+      "id": "s4",
+      "n": "04",
+      "title": "Copyright Assistance",
+      "icon": "copyright",
+      "body": "Help with copyright-related complaints and platform submissions.",
+      "tags": ["Original files", "Rights summary"],
+      "enabled": true
+    },
+    {
+      "id": "s5",
+      "n": "05",
+      "title": "Hacked Account",
+      "icon": "hacked",
+      "body": "Assistance with account compromise support requests. Never ask for your password, OTP or 2FA code.",
+      "tags": ["Security review", "Recovery plan"],
+      "enabled": true
+    },
+    {
+      "id": "s6",
+      "n": "06",
+      "title": "Platform Support",
+      "icon": "support",
+      "body": "General assistance with preparing support requests for various platform issues.",
+      "tags": ["Right channel", "Clear summary"],
+      "enabled": true
+    }
+  ],
+  "talents": [
+    {
+      "id": "t1",
+      "name": "Harsh Babbar",
+      "slug": "harsh-babbar",
+      "mainImage": "",
+      "profileImage": "",
+      "category": "Content Creator",
+      "bio": "Digital content creator and social media strategist with a passion for storytelling.",
+      "totalReach": "2.5M+",
+      "socials": {
+        "instagram": "https://instagram.com/harshbabbar",
+        "youtube": "https://youtube.com/@harshbabbar"
+      },
+      "clients": [],
+      "campaigns": [],
+      "socialPosts": [],
+      "contact": {
+        "email": "harsh@winsable.com"
+      },
+      "active": true,
+      "featured": true,
+      "order": 0
+    },
+    {
+      "id": "t2",
+      "name": "Reema Ghai",
+      "slug": "reema-ghai",
+      "mainImage": "",
+      "profileImage": "",
+      "category": "Lifestyle Creator",
+      "bio": "Lifestyle and fashion content creator with an eye for aesthetics.",
+      "totalReach": "1.8M+",
+      "socials": {
+        "instagram": "https://instagram.com/reemaghai"
+      },
+      "clients": [],
+      "campaigns": [],
+      "socialPosts": [],
+      "contact": {
+        "email": "reema@winsable.com"
+      },
+      "active": true,
+      "featured": true,
+      "order": 1
+    },
+    {
+      "id": "t3",
+      "name": "Lakshay Chaudhary",
+      "slug": "lakshay-chaudhary",
+      "mainImage": "",
+      "profileImage": "",
+      "category": "Entertainment Creator",
+      "bio": "Entertainment and comedy content creator with millions of followers.",
+      "totalReach": "5M+",
+      "socials": {
+        "instagram": "https://instagram.com/lakshaychaudhary",
+        "youtube": "https://youtube.com/@lakshaychaudhary",
+        "tiktok": "https://tiktok.com/@lakshaychaudhary"
+      },
+      "clients": [],
+      "campaigns": [],
+      "socialPosts": [],
+      "contact": {
+        "email": "lakshay@winsable.com"
+      },
+      "active": true,
+      "featured": true,
+      "order": 2
+    }
+  ],
+  "content": {
+    "heroHeadline": "When a Platform Says No, Knowing What to Do Next Matters.",
+    "heroSubtext": "WinsAble helps people organize their situation, prepare clear support requests, and navigate legitimate account recovery, appeal, impersonation, and copyright-related cases.",
+    "servicesHeading": "Support for the Cases That Are Hard to Navigate Alone.",
+    "servicesSubtext": "WinsAble provides assistance in preparing and submitting legitimate support requests across major social media platforms.",
+    "processHeading": "From Confusion to a Clear Case.",
+    "philosophyHeading": "Clarity before claims.",
+    "philosophyText": "People dealing with difficult account situations deserve clear information rather than exaggerated promises.",
+    "aboutHeading": "Digital problems are confusing enough. The process shouldn't be.",
+    "aboutText": "WinsAble is an independent service for people facing difficult situations on digital platforms — recovery, disablements, impersonation, copyright and support requests.",
+    "aboutClosing": "A small team. A clear method. Nothing exaggerated.",
+    "ctaHeading": "Make your next step clear.",
+    "ctaText": "Start with a clear case and a structured process."
+  },
+  "settings": {
+    "adminPassword": "winsable2026",
+    "siteName": "WinsAble",
+    "tagline": "Protecting What You Built"
+  }
+}
