@@ -3,7 +3,7 @@ import { Nav } from "@/components/winsable/Nav";
 import { CornerMeta, ScrollProgress } from "@/components/winsable/Chrome";
 import { Boundaries, Coverage } from "@/components/winsable/Extras";
 import { EditorialWall } from "@/components/winsable/EditorialWall";
-import { IntroCurtain, StickyCta } from "@/components/winsable/Premium";
+import { IntroCurtain } from "@/components/winsable/Premium";
 import { CaseForm } from "@/components/winsable/CaseForm";
 
 import {
@@ -84,7 +84,6 @@ function Index() {
       </main>
       <Footer />
       <CornerMeta />
-      <StickyCta />
     </div>
   );
 }

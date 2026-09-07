@@ -1,0 +1,477 @@
+FIRST PRIORITY: FIX THE CURRENT WINSABLE WEBSITE.
+DO NOT redesign it.
+DO NOT convert it to the old v2 design yet.
+DO NOT touch or replace the current good animations.
+
+There are TWO immediate problems that must be fixed before any other feature work.
+
+==================================================
+1. REMOVE THE AUTOMATIC FLOATING "START A CASE"
+==================================================
+
+The current site has a StickyCta component in:
+
+src/components/winsable/Premium.tsx
+
+It automatically appears after the user scrolls down and creates a floating "Start a Case" button.
+
+This is unwanted.
+
+Remove the automatic StickyCta behavior completely from the homepage.
+
+Do not replace it with another floating button.
+
+Keep the existing:
+- Navbar Start a Case
+- Hero Start Your Case
+- Final CTA
+- Case Form
+
+Do not change their visual design.
+
+The floating button must NOT appear while scrolling through the page or over the Case Form.
+
+Remove the StickyCta import/use from the homepage and remove the component if it is no longer used.
+
+==================================================
+2. FIX THE /exclusive/:slug PAGES
+==================================================
+
+The route exists:
+
+/exclusive/$slug
+
+and the generated TanStack route tree already includes it.
+
+However, the current implementation is not functioning robustly as a real profile route.
+
+Current cards in EditorialWall.tsx use raw:
+
+<a href={`/exclusive/${talent.slug}`}>
+
+Replace internal profile navigation with proper TanStack Router Link navigation where appropriate.
+
+Verify that these URLs work:
+
+/exclusive/harsh-babbar
+/exclusive/reema-ghai
+/exclusive/lakshay-chaudhary
+
+Test ALL of these:
+
+1. Click profile card from homepage
+2. Directly open URL
+3. Refresh the page
+4. Browser back
+5. Browser forward
+6. Desktop
+7. Mobile
+
+The correct profile must load for the slug.
+
+==================================================
+3. FIX THE CURRENT DATA LOADING / CACHE PROBLEM
+==================================================
+
+Inspect:
+
+src/components/winsable/useSiteData.ts
+
+The current implementation gives localStorage data priority over /site-data.json.
+
+This can cause stale winsable-site-data to override the current website data.
+
+Fix this safely.
+
+The site must not silently keep rendering obsolete/stale talent data after the source data has changed.
+
+Do not destroy useful admin functionality if it exists.
+
+Use a safe versioning strategy or another robust cache invalidation strategy.
+
+Do NOT simply hard-code the profiles into the UI.
+
+==================================================
+4. DO NOT CHANGE THE CURRENT WEBSITE DESIGN
+==================================================
+
+KEEP:
+- current Hero
+- current Hero animations
+- current Reveal animations
+- current typography
+- current dark/gold theme
+- current navigation
+- current services
+- current process section
+- current FAQ
+- current About
+- current Case Form design
+- current scroll effects
+- current premium visual language
+
+Do NOT copy the old v2 design yet.
+
+Do NOT replace the current wall yet.
+
+Do NOT introduce the old v2 recovery galaxy/review wall yet.
+
+That will be a separate later task.
+
+==================================================
+5. EXCLUSIVE PAGE — KEEP IT FUNCTIONAL FOR NOW
+==================================================
+
+For now, make the existing Exclusive/Talent profile pages technically reliable.
+
+Do not redesign them into recovery case studies yet.
+
+However, structure the code cleanly so the profile page can later be converted into a WinsAble recovery/case-study profile.
+
+Do not invent:
+- fake recovery results
+- fake clients
+- fake campaigns
+- fake statistics
+- fake testimonials
+- fake verification
+- fake outcomes
+
+Only display data actually present in the project.
+
+==================================================
+6. IMPORTANT FUTURE DIRECTION — DO NOT IMPLEMENT YET
+==================================================
+
+The future Exclusive page may become a premium WinsAble Recovery Profile / Case Study.
+
+Potential future sections:
+
+- Recovery Record
+- Platform
+- Case Type
+- Situation
+- Assistance Provided
+- Recovery Timeline
+- Outcome
+- Client Review
+- Evidence / Proof
+- Start Your Case CTA
+
+Potential future animations:
+
+- cinematic profile reveal
+- gold line-drawing timeline
+- scroll-triggered recovery stages
+- subtle image parallax
+- floating platform badge
+- animated case metrics
+- glass proof/review card reveal
+- premium magnetic CTA
+
+But DO NOT build these now.
+Only prepare the code architecture if necessary.
+
+==================================================
+7. FINAL VERIFICATION
+==================================================
+
+After changes:
+
+- No automatic floating Start a Case button should appear during scroll.
+- Case Form must remain clean and unobstructed.
+- Homepage must still animate exactly as before.
+- Exclusive profile links must work.
+- Direct /exclusive/:slug URLs must work.
+- Refreshing an exclusive URL must work.
+- Correct profile must load from the slug.
+- Stale localStorage must not unexpectedly override current data.
+- No unrelated redesign.
+
+At the end, report:
+1. files changed
+2. exact bug in each file
+3. exact fix made
+4. routes tested
+5. animations preserved
+6. anything still intentionally left for the later v2/recovery-wall phase
+IMPORTANT — MAKE ONLY THIS CHANGE NOW.
+DO NOT redesign anything else.
+
+The current WinsAble website is a RECOVERY SERVICE website, NOT an influencer/talent management website.
+
+==================================================
+1. CHANGE THE URL STRUCTURE
+==================================================
+
+Replace the current Exclusive/Talent URL structure:
+
+/exclusive/harsh-babbar
+/exclusive/reema-ghai
+/exclusive/lakshay-chaudhary
+
+with:
+
+/recovery/harsh-babbar
+/recovery/reema-ghai
+/recovery/lakshay-chaudhary
+
+The route must become:
+
+/recovery/$slug
+
+Remove the old /exclusive/$slug route from active usage.
+
+Update ALL internal links accordingly.
+
+For example:
+
+WRONG:
+<a href={`/exclusive/${talent.slug}`}>
+
+CORRECT:
+<Link to="/recovery/$slug" params={{ slug: talent.slug }}>
+
+or the correct TanStack Router equivalent for this project.
+
+==================================================
+2. CHANGE THE LANGUAGE FROM "EXCLUSIVE TALENT" TO RECOVERY
+==================================================
+
+This is NOT an influencer-management website.
+
+Do NOT use wording such as:
+
+- Exclusive Talents
+- Our Exclusive Talents
+- Talent Management
+- Brand Partnerships
+- Campaigns
+- Content Showcase
+- Creator Management
+- Collaborations
+
+The purpose is:
+
+WinsAble helps creators, influencers, founders and public figures recover compromised social-media accounts and digital identities.
+
+The profile pages should therefore represent:
+
+RECOVERY CASES / RECOVERY PROFILES
+
+not talent profiles.
+
+Use terminology such as:
+
+- Recovery
+- Recovery Case
+- Recovery Profile
+- Recovered Account
+- Platform
+- Account Recovery
+- Recovery Details
+- Case Information
+- Recovery Timeline
+- Case Outcome
+- Start a Recovery Case
+
+==================================================
+3. IMPORTANT — DO NOT REDESIGN THE WEBSITE
+==================================================
+
+Keep the current website exactly as it is visually.
+
+DO NOT change:
+
+- Hero
+- Hero animations
+- Reveal animations
+- Typography
+- Dark/gold theme
+- Navbar
+- Services
+- How It Works
+- Platforms
+- FAQ
+- About
+- Case Form
+- Existing transitions
+- Existing premium animations
+
+This task is ONLY about correcting the Exclusive → Recovery concept and routing.
+
+==================================================
+4. RECOVERY PAGE FOR NOW
+==================================================
+
+The existing profile route can remain visually similar for now, but change its meaning from a talent profile to a recovery case.
+
+For example:
+
+Instead of:
+
+"Exclusive Talents"
+
+use:
+
+"Recovery Cases"
+
+Instead of:
+
+"Talent Profile"
+
+use:
+
+"Recovery Profile"
+
+Instead of:
+
+"Total Reach"
+
+use something appropriate for recovery information, ONLY if real data exists.
+
+Do NOT invent recovery statistics.
+
+Do NOT invent recovery dates.
+
+Do NOT invent success percentages.
+
+Do NOT invent verification.
+
+Do NOT invent fake testimonials.
+
+Use only data that actually exists in the project.
+
+==================================================
+5. REMOVE TALENT-MANAGEMENT SECTIONS FROM RECOVERY PAGE
+==================================================
+
+The current profile page contains sections such as:
+
+- Clients
+- Brand Partnerships & Campaigns
+- Content Showcase
+- Collaboration contact information
+
+These do not represent WinsAble's recovery service.
+
+Remove them from the recovery page or refactor them into recovery-relevant sections.
+
+For now, prefer a clean structure such as:
+
+Recovery Profile
+↓
+Platform / Account
+↓
+Case Information
+↓
+Recovery Details
+↓
+Outcome (only if real data exists)
+↓
+Start Your Recovery Case
+
+Do not create fake content just to fill sections.
+
+==================================================
+6. HOMEPAGE WALL
+==================================================
+
+The current wall may still contain the existing creator/profile cards.
+
+DO NOT redesign the wall yet.
+
+DO NOT bring the old v2 wall into the site yet.
+
+That is a separate later task.
+
+For now, simply make sure the cards link to:
+
+/recovery/[slug]
+
+instead of:
+
+/exclusive/[slug]
+
+==================================================
+7. FIX THE FLOATING START A CASE BUTTON
+==================================================
+
+Keep the previous fix requirement:
+
+The automatic floating StickyCta that appears while scrolling must NOT appear.
+
+The user already has Start a Case buttons in the proper places.
+
+Do not add another floating CTA.
+
+==================================================
+8. ROUTING TEST
+
+After implementation, verify:
+
+/recovery/harsh-babbar
+/recovery/reema-ghai
+/recovery/lakshay-chaudhary
+
+all load correctly.
+
+Test:
+
+- clicking the card
+- direct URL
+- page refresh
+- browser back
+- browser forward
+- desktop
+- mobile
+
+There must be no broken /exclusive/... links remaining.
+
+Search the entire source code for:
+
+"/exclusive/"
+"exclusive/"
+"Exclusive Talents"
+"Talent Profile"
+"Talent Management"
+
+and remove/update references that are part of this feature.
+
+==================================================
+9. DO NOT TOUCH V2 YET
+==================================================
+
+VERY IMPORTANT:
+
+Do NOT copy the old WinsAble v2 design yet.
+
+Do NOT replace the current animations.
+
+Do NOT rebuild the old Recovery Galaxy.
+
+Do NOT rebuild the old v2 review wall.
+
+Do NOT migrate the old v2 content yet.
+
+That will happen later.
+
+RIGHT NOW:
+Fix the current website's routing and terminology only.
+
+==================================================
+FINAL RESULT
+
+The website should clearly communicate:
+
+WinsAble = social-media account recovery / digital identity recovery.
+
+Profile URLs should be:
+
+/recovery/[person]
+
+NOT:
+
+/exclusive/[person]
+
+Keep everything else that is currently working exactly as it is.

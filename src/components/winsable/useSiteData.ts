@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 
 const STORAGE_KEY = "winsable-site-data";
+const VERSION_KEY = "winsable-data-version";
 
 export interface Review {
   id: string;
@@ -125,28 +126,55 @@ export function useSiteData() {
   const [data, setData] = useState<SiteData | null>(cachedData);
 
   useEffect(() => {
-    const stored = localStorage.getItem(STORAGE_KEY);
-    if (stored) {
-      try {
-        const parsed = JSON.parse(stored);
-        cachedData = mergeWithDefaults(parsed);
-        setData(cachedData);
-      } catch {
-        loadDefaults();
-      }
-    } else {
-      loadDefaults();
-    }
-  }, []);
-
-  function loadDefaults() {
     fetch("/site-data.json")
       .then((r) => r.json())
-      .then((d) => {
-        cachedData = mergeWithDefaults(d);
-        setData(cachedData);
+      .then((freshData: SiteData & { version?: number }) => {
+        const freshVersion = freshData.version ?? 0;
+        const storedVersion = parseInt(localStorage.getItem(VERSION_KEY) ?? "0", 10);
+
+        if (freshVersion > storedVersion) {
+          localStorage.removeItem(STORAGE_KEY);
+          localStorage.removeItem(VERSION_KEY);
+          cachedData = mergeWithDefaults(freshData);
+          setData(cachedData);
+          return;
+        }
+
+        const stored = localStorage.getItem(STORAGE_KEY);
+        if (stored) {
+          try {
+            const parsed = JSON.parse(stored);
+            cachedData = mergeWithDefaults(parsed);
+            setData(cachedData);
+          } catch {
+            cachedData = mergeWithDefaults(freshData);
+            setData(cachedData);
+          }
+        } else {
+          cachedData = mergeWithDefaults(freshData);
+          setData(cachedData);
+        }
+      })
+      .catch(() => {
+        const stored = localStorage.getItem(STORAGE_KEY);
+        if (stored) {
+          try {
+            const parsed = JSON.parse(stored);
+            cachedData = mergeWithDefaults(parsed);
+            setData(cachedData);
+          } catch {
+            setData(null);
+          }
+        }
       });
-  }
+  }, []);
 
   return data;
+}
+
+export function saveSiteData(data: SiteData) {
+  const version = Date.now();
+  localStorage.setItem(STORAGE_KEY, JSON.stringify(data));
+  localStorage.setItem(VERSION_KEY, String(version));
+  cachedData = mergeWithDefaults(data);
 }

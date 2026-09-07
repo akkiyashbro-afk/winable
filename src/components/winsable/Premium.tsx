@@ -1,5 +1,4 @@
 import { useEffect, useState } from "react";
-import { ArrowUpRight } from "./Bits";
 
 function prefersReduced() {
   return (
@@ -91,45 +90,3 @@ export function IntroCurtain() {
   );
 }
 
-/** Sticky CTA dock that surfaces after the hero. */
-export function StickyCta() {
-  const [show, setShow] = useState(false);
-
-  useEffect(() => {
-    let frame = 0;
-    const update = () => {
-      frame = 0;
-      const y = window.scrollY;
-      const max = document.documentElement.scrollHeight - window.innerHeight;
-      setShow(y > window.innerHeight * 0.9 && y < max - 320);
-    };
-    const onScroll = () => {
-      if (!frame) frame = requestAnimationFrame(update);
-    };
-    update();
-    window.addEventListener("scroll", onScroll, { passive: true });
-    window.addEventListener("resize", onScroll);
-    return () => {
-      window.removeEventListener("scroll", onScroll);
-      window.removeEventListener("resize", onScroll);
-      if (frame) cancelAnimationFrame(frame);
-    };
-  }, []);
-
-  return (
-    <div
-      className={`fixed inset-x-0 bottom-5 z-[65] flex justify-center px-4 transition-all duration-500 ease-out ${
-        show ? "translate-y-0 opacity-100" : "pointer-events-none translate-y-6 opacity-0"
-      }`}
-    >
-        <a
-          href="#case-form"
-          className="group inline-flex items-center gap-3 rounded-full border border-gold/20 bg-background/90 px-5 py-3 text-foreground shadow-[0_18px_40px_-24px_oklch(0.75_0.12_75/0.3)] backdrop-blur-xl transition-all duration-300 hover:border-gold/40 hover:bg-gold/10"
-        >
-        <span className="size-1.5 animate-pulse rounded-full bg-gold" />
-        <span className="text-sm font-medium">Start a Case</span>
-        <ArrowUpRight className="size-3.5 transition-transform duration-300 group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
-      </a>
-    </div>
-  );
-}

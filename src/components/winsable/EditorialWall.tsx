@@ -179,7 +179,7 @@ function TalentCard({
 
   return (
     <a
-      href={`/exclusive/${talent.slug}`}
+      href={`/recovery/${talent.slug}`}
       className="editorial-card group relative shrink-0 overflow-hidden rounded-xl border border-white/[0.08] bg-surface/80 backdrop-blur-sm"
       style={{
         transform: `rotate(${rotation}deg)`,
@@ -260,7 +260,7 @@ function TalentCard({
               </svg>
             )}
             <span className="ml-auto text-[0.6rem] font-medium text-white/30 transition-colors group-hover:text-gold/60">
-              View Profile →
+              View Case →
             </span>
           </div>
         </div>
@@ -295,15 +295,15 @@ export function EditorialWall() {
 
       {/* Center heading */}
       <div className="relative z-20 mb-12 text-center md:mb-16">
-        <span className="eyebrow">Exclusive Talents</span>
+        <span className="eyebrow">Recovery Cases</span>
         <h2 className="display mx-auto mt-5 max-w-2xl text-[clamp(2.2rem,5vw,4rem)] leading-[1.02]">
-          Our Exclusive
+          Recent
           <br />
-          <span className="italic text-gold">Talents.</span>
+          <span className="italic text-gold">Recoveries.</span>
         </h2>
         <p className="mx-auto mt-5 max-w-md text-sm text-white/40">
-          Meet the creators and talents who trust WinsAble. Each profile tells a unique story of
-          growth and digital excellence.
+          Creators and public figures who trust WinsAble for social media
+          account recovery and digital identity protection.
         </p>
       </div>
 
@@ -365,7 +365,7 @@ export function EditorialWall() {
       </div>
 
       <p className="relative z-20 mt-10 text-center text-xs text-white/25">
-        Talent profiles are managed through the WinsAble admin panel.
+        Recovery cases managed through the WinsAble admin panel.
       </p>
     </section>
   );

@@ -6,6 +6,7 @@ export const Route = createFileRoute("/admin/")({
 });
 
 const STORAGE_KEY = "winsable-site-data";
+const VERSION_KEY = "winsable-data-version";
 const PASSWORD_KEY = "winsable-admin-auth";
 const DEFAULT_PASSWORD = "winsable2026";
 
@@ -131,7 +132,9 @@ async function loadSiteData(): Promise<SiteData> {
 }
 
 function saveSiteData(data: SiteData) {
+  const version = Date.now();
   localStorage.setItem(STORAGE_KEY, JSON.stringify(data));
+  localStorage.setItem(VERSION_KEY, String(version));
 }
 
 function LoginScreen({ onLogin }: { onLogin: () => void }) {
@@ -1048,7 +1051,7 @@ function AdminDashboard() {
                   </div>
                   <div className="flex gap-1">
                     <a
-                      href={`/exclusive/${t.slug}`}
+                      href={`/recovery/${t.slug}`}
                       target="_blank"
                       rel="noopener noreferrer"
                       className="rounded px-2 py-1 text-xs text-white/40 hover:bg-white/5 hover:text-foreground"
