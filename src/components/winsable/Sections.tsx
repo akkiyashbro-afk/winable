@@ -319,7 +319,7 @@ export function TrustBar() {
 
 /* ----------------------------- PLATFORM STRIP ---------------------------- */
 
-const platforms = ["Instagram", "Facebook", "TikTok", "YouTube", "X"];
+const platforms = ["Instagram", "Facebook", "TikTok", "YouTube", "X", "LinkedIn"];
 
 export function PlatformStrip() {
   const row = [...platforms, ...platforms, ...platforms, ...platforms];
@@ -418,6 +418,26 @@ const defaultServices: (ServiceType & { span: string })[] = [
     icon: "support",
     body: "General assistance with preparing support requests for various platform issues.",
     tags: ["Right channel", "Clear summary"],
+    enabled: true,
+    span: "lg:col-span-4",
+  },
+  {
+    id: "s7",
+    n: "07",
+    title: "Phishing Breach",
+    icon: "recovery",
+    body: "Assistance when your account has been compromised through phishing or social engineering attacks.",
+    tags: ["Breach assessment", "Recovery plan", "Security hardening"],
+    enabled: true,
+    span: "lg:col-span-4",
+  },
+  {
+    id: "s8",
+    n: "08",
+    title: "Business Manager Breach",
+    icon: "hacked",
+    body: "Help recovering compromised business managers, ad accounts and associated assets.",
+    tags: ["Access audit", "Asset recovery", "Admin restoration"],
     enabled: true,
     span: "lg:col-span-4",
   },
@@ -553,23 +573,26 @@ export function TextBand() {
 /* ------------------------------ HOW IT WORKS ----------------------------- */
 
 const steps = [
-  { n: "01", title: "Tell Us What Happened", body: "Share the details of your situation." },
+  {
+    n: "01",
+    title: "Silent Intake",
+    body: "Encrypted, name-blind onboarding. Our team assesses exposure without your identity touching a public system.",
+  },
   {
     n: "02",
-    title: "We Organize the Details",
-    body: "Our team reviews and organizes your information.",
+    title: "Chain of Custody",
+    body: "We reconstruct the digital chain of ownership using verified signals — device history, login context, and metadata.",
   },
   {
     n: "03",
-    title: "Prepare the Request",
-    body: "We prepare the appropriate support or appeal request.",
+    title: "Recovery Protocol",
+    body: "Direct escalations across platform trust teams. Every step prepared and signed by a human recovery officer.",
   },
   {
     n: "04",
-    title: "Submit to the Platform",
-    body: "We submit through the relevant official channel.",
+    title: "Hardened Return",
+    body: "Your account returns secured — session-audited, with recommendations to prevent future compromise.",
   },
-  { n: "05", title: "Receive Your Case ID", body: "Track your case using your unique reference." },
 ];
 
 export function Process() {
@@ -578,9 +601,10 @@ export function Process() {
       <div className="shell">
         <div className="grid gap-8 lg:grid-cols-12">
           <Reveal variant="left" className="lg:col-span-7">
-            <p className="eyebrow">How It Works</p>
+            <p className="eyebrow">The Foundation Playbook</p>
             <h2 className="display mt-6 max-w-3xl text-[clamp(2.4rem,5.4vw,4.5rem)]">
-              From Confusion to a <span className="italic text-gold">Clear Case.</span>
+              Four movements.{" "}
+              <span className="italic text-gold">Zero noise.</span>
             </h2>
           </Reveal>
         </div>
@@ -590,7 +614,7 @@ export function Process() {
             aria-hidden="true"
             className="absolute top-0 left-0 hidden h-px w-full bg-white/[0.06] lg:block"
           />
-          <ol className="grid gap-px lg:grid-cols-5">
+          <ol className="grid gap-px lg:grid-cols-4">
             {steps.map((s, i) => (
               <Reveal as="li" key={s.n} delay={i * 100} variant="scale" className="group relative">
                 <div className="h-full border-b border-white/[0.06] pt-8 pb-10 lg:border-b-0 lg:border-r lg:pr-6 lg:last:border-r-0">
@@ -771,6 +795,9 @@ export function About() {
               We don't promise outcomes. We organize what happened, prepare the appropriate request,
               submit it through the relevant channel and keep you informed with a case reference.
             </p>
+            <p>
+              Every case is handled by a named recovery officer. No automated scripts. No inflated claims. Just a clear method and documented process.
+            </p>
             <p className="text-foreground">A small team. A clear method. Nothing exaggerated.</p>
           </div>
         </Reveal>
@@ -788,15 +815,31 @@ const faqs = [
   },
   {
     q: "Which situations do you work on?",
-    a: "Account recovery, disabled accounts, impersonation, copyright assistance, hacked/compromised accounts and general platform support requests.",
+    a: "Account recovery, disabled accounts, impersonation, copyright assistance, hacked/compromised accounts, phishing breaches, business manager breaches, and general platform support requests.",
   },
   {
     q: "What do you need from me to start?",
-    a: "Your description of what happened, any notice text you received, and details that show the account belongs to you.",
+    a: "Your description of what happened, any notice text you received, and details that show the account belongs to you. We never ask for your password, OTP or 2FA code.",
   },
   {
     q: "How do I follow my case?",
     a: "Once the request is submitted you receive a case reference (WA-2026-XXXXXX), so you always know which stage your case is at.",
+  },
+  {
+    q: "How long does recovery take?",
+    a: "Every case is different. Some resolve in 48 hours, others take longer depending on the platform's response time. We keep you updated throughout.",
+  },
+  {
+    q: "Do you need my password?",
+    a: "Never. We operate without requiring passwords, OTPs or 2FA codes. Our process is based on ownership evidence and platform-native recovery channels.",
+  },
+  {
+    q: "What platforms do you support?",
+    a: "Instagram, Facebook, TikTok, YouTube, X (Twitter), LinkedIn, and other major social media platforms. If your platform is not listed, get in touch — we may still be able to help.",
+  },
+  {
+    q: "Is my information safe?",
+    a: "Yes. Your case details are handled with strict confidentiality. We use encrypted submission channels and never share your information with third parties.",
   },
 ];
 

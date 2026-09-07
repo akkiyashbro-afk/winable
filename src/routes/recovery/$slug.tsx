@@ -117,13 +117,42 @@ function RecoveryProfile() {
                 </h1>
                 <p className="mt-4 text-lg text-white/50">{talent.bio}</p>
 
-                {/* Platform */}
-                <div className="mt-8 inline-flex items-center gap-3 rounded-full border border-gold/20 bg-gold/[0.06] px-5 py-2.5">
-                  <span className="text-xs font-semibold tracking-[0.16em] text-white/40 uppercase">
-                    Platform
-                  </span>
-                  <span className="text-lg font-bold text-gold">{talent.category}</span>
+                {/* Recovery Info */}
+                <div className="mt-8 flex flex-wrap gap-3">
+                  <div className="inline-flex items-center gap-2 rounded-full border border-gold/20 bg-gold/[0.06] px-4 py-2">
+                    <span className="text-xs font-semibold tracking-[0.12em] text-white/40 uppercase">Platform</span>
+                    <span className="text-sm font-bold text-gold">{talent.category}</span>
+                  </div>
+                  {talent.recoveryType && (
+                    <div className="inline-flex items-center gap-2 rounded-full border border-gold/20 bg-gold/[0.06] px-4 py-2">
+                      <span className="text-xs font-semibold tracking-[0.12em] text-white/40 uppercase">Recovery</span>
+                      <span className="text-sm font-bold text-gold">{talent.recoveryType}</span>
+                    </div>
+                  )}
+                  {talent.followers && (
+                    <div className="inline-flex items-center gap-2 rounded-full border border-gold/20 bg-gold/[0.06] px-4 py-2">
+                      <span className="text-xs font-semibold tracking-[0.12em] text-white/40 uppercase">Followers</span>
+                      <span className="text-sm font-bold text-gold">{talent.followers}</span>
+                    </div>
+                  )}
+                  {talent.verified && (
+                    <div className="inline-flex items-center gap-2 rounded-full border border-gold/20 bg-gold/[0.06] px-4 py-2">
+                      <svg viewBox="0 0 24 24" className="size-4 text-gold" fill="currentColor">
+                        <path d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+                      </svg>
+                      <span className="text-sm font-bold text-gold">Verified</span>
+                    </div>
+                  )}
+                  {talent.recoveryDate && (
+                    <div className="inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/[0.04] px-4 py-2">
+                      <span className="text-xs font-semibold tracking-[0.12em] text-white/40 uppercase">Recovered</span>
+                      <span className="text-sm text-white/60">{talent.recoveryDate}</span>
+                    </div>
+                  )}
                 </div>
+                {talent.username && (
+                  <p className="mt-3 text-sm text-white/40">{talent.username}</p>
+                )}
 
                 {/* Social links */}
                 {Object.values(talent.socials).some(Boolean) && (

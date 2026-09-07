@@ -8,7 +8,7 @@ export const caseFormSchema = z.object({
   email: z.string().email("Please enter a valid email address"),
   phone: z.string().optional(),
   country: z.string().optional(),
-  platform: z.enum(["Instagram", "Facebook", "TikTok", "YouTube", "X (Twitter)", "Other"], {
+  platform: z.enum(["Instagram", "Facebook", "TikTok", "YouTube", "X (Twitter)", "LinkedIn", "Other"], {
     required_error: "Please select a platform",
   }),
   otherPlatform: z.string().optional(),
@@ -19,13 +19,18 @@ export const caseFormSchema = z.object({
       "Impersonation",
       "Copyright",
       "Hacked Account",
+      "Phishing Breach",
+      "Business Manager Breach",
       "Other",
     ],
     { required_error: "Please select a case type" },
   ),
   username: z.string().optional(),
+  followers: z.string().optional(),
   profileUrl: z.string().url("Please enter a valid URL").optional().or(z.literal("")),
   incidentDate: z.string().optional(),
+  alreadySubmittedAppeal: z.enum(["yes", "no"]).optional(),
+  canStillLogin: z.enum(["yes", "no"]).optional(),
   description: z
     .string()
     .min(20, "Please provide at least 20 characters describing your case")

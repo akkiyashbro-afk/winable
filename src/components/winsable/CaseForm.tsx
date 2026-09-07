@@ -8,13 +8,15 @@ import { Reveal } from "./Reveal";
 
 const steps = ["Details", "Platform", "Case", "Review", "Done"] as const;
 
-const platforms = ["Instagram", "Facebook", "TikTok", "YouTube", "X (Twitter)", "Other"] as const;
+const platforms = ["Instagram", "Facebook", "TikTok", "YouTube", "X (Twitter)", "LinkedIn", "Other"] as const;
 const caseTypes = [
   "Account Recovery",
   "Disabled Account",
   "Impersonation",
   "Copyright",
   "Hacked Account",
+  "Phishing Breach",
+  "Business Manager Breach",
   "Other",
 ] as const;
 
@@ -39,8 +41,11 @@ export function CaseForm() {
       otherPlatform: "",
       caseType: "Account Recovery",
       username: "",
+      followers: "",
       profileUrl: "",
       incidentDate: "",
+      alreadySubmittedAppeal: "no",
+      canStillLogin: "no",
       description: "",
     },
   });
@@ -81,8 +86,11 @@ export function CaseForm() {
           otherPlatform: data.otherPlatform || "",
           caseType: data.caseType || "",
           username: data.username || "",
+          followers: data.followers || "",
           profileUrl: data.profileUrl || "",
           incidentDate: data.incidentDate || "",
+          alreadySubmittedAppeal: data.alreadySubmittedAppeal || "",
+          canStillLogin: data.canStillLogin || "",
           description: data.description,
         },
       });
@@ -241,17 +249,40 @@ export function CaseForm() {
                       className={inputClass}
                     />
                   </Field>
+                  <Field label="Followers (optional)" error={errors.followers?.message}>
+                    <input
+                      {...register("followers")}
+                      placeholder="e.g. 128K"
+                      className={inputClass}
+                    />
+                  </Field>
+                </div>
+                <div className="grid grid-cols-2 gap-4">
                   <Field label="Incident Date (optional)" error={errors.incidentDate?.message}>
                     <input {...register("incidentDate")} type="date" className={inputClass} />
                   </Field>
+                  <Field label="Profile URL (optional)" error={errors.profileUrl?.message}>
+                    <input
+                      {...register("profileUrl")}
+                      placeholder="https://..."
+                      className={inputClass}
+                    />
+                  </Field>
                 </div>
-                <Field label="Profile URL (optional)" error={errors.profileUrl?.message}>
-                  <input
-                    {...register("profileUrl")}
-                    placeholder="https://..."
-                    className={inputClass}
-                  />
-                </Field>
+                <div className="grid grid-cols-2 gap-4">
+                  <Field label="Already submitted an appeal?" error={errors.alreadySubmittedAppeal?.message}>
+                    <select {...register("alreadySubmittedAppeal")} className={inputClass}>
+                      <option value="no">No</option>
+                      <option value="yes">Yes</option>
+                    </select>
+                  </Field>
+                  <Field label="Can you still log in?" error={errors.canStillLogin?.message}>
+                    <select {...register("canStillLogin")} className={inputClass}>
+                      <option value="no">No</option>
+                      <option value="yes">Yes</option>
+                    </select>
+                  </Field>
+                </div>
                 <Field label="Description *" error={errors.description?.message}>
                   <textarea
                     {...register("description")}

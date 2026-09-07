@@ -61,12 +61,19 @@ export interface Talent {
   category: string;
   bio: string;
   totalReach: string;
+  username?: string;
+  platform?: string;
+  followers?: string;
+  verified?: boolean;
+  recoveryType?: string;
+  recoveryDate?: string;
   socials: {
     instagram?: string;
     youtube?: string;
     tiktok?: string;
     facebook?: string;
     x?: string;
+    linkedin?: string;
     other?: string;
   };
   clients: TalentClient[];
