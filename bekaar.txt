@@ -1,135 +1,308 @@
-IMPORTANT: The current WinsAble website is now visually smooth and the existing animations feel good.
-DO NOT redesign the website.
-DO NOT replace the current visual system.
-DO NOT touch the Hero, typography, section animations, scroll animations, or general dark/gold theme.
+IMPORTANT — THIS IS THE FINAL REQUIREMENT FOR THE RECOVERY CASES WALL.
 
-We only need to polish TWO things.
+DO NOT redesign the rest of the website.
+The current website animations are smooth and premium. PRESERVE THEM.
 
-==================================================
-1. KEEP THE REAL FINAL CTA BUTTON
-==================================================
-
-The "Start a Case" button inside the Final CTA section is CORRECT and must remain.
-
-It should continue linking to:
-
-#case-form
-
-DO NOT remove this actual CTA.
-
-However, there must NOT be a separate automatic/sticky floating "Start a Case" button appearing while the user scrolls through the page.
-
-Search the entire project for any StickyCta / floating CTA / fixed bottom CTA implementation.
-
-If any automatic floating CTA still exists:
-- remove it from the homepage
-- do not replace it with another floating button
-- keep the normal Final CTA button
-- keep the navbar Start a Case button
-- keep the Hero Start Your Case button
-
-The user should only see CTA buttons in their intended sections.
+I want the Recovery Cases wall to behave like a continuously populated wall.
 
 ==================================================
-2. REDUCE THE WALL SIDE BLUR
+1. THE WALL MUST ALWAYS LOOK FULL
 ==================================================
 
-The current EditorialWall has very strong left/right edge masks.
+The wall should visually maintain a full layout like:
 
-The wall currently uses:
-- approximately 25% mask width
-- backdrop-filter blur around 12px
-- heavy gradient opacity
+[ CARD ] [ CARD ] [ CARD ] [ CARD ]
+[ CARD ] [ CARD ] [ CARD ] [ CARD ]
 
-This makes too much of the wall disappear and reduces the visual impact of the cards.
+There must NEVER be a situation like:
 
-Keep the current wall layout and animation EXACTLY as it is.
+[ CARD ] [ CARD ] [ CARD ] [ CARD ]
+[ CARD ] [ CARD ]
 
-ONLY reduce the edge masking intensity.
+with a huge empty area beside/below the remaining cards.
 
-Target result:
-- central cards remain completely sharp and readable
-- side cards still fade naturally into the background
-- much less blur
-- much less dark overlay
-- smooth premium edge transition
-- no harsh visible mask boundary
+The wall must dynamically maintain balanced rows.
 
-Recommended values:
-- edge mask width: approximately 12%–15%
-- min width can be reduced appropriately
-- backdrop-filter blur: approximately 4px–6px
-- reduce gradient opacity substantially
-- do not blur the entire cards
-- do not change card sizing
-- do not change the moving animation
-- do not change row direction
-- do not change spacing unless absolutely necessary
+Desktop target:
+4 cards per row when the viewport allows.
 
-The wall should feel like:
-"cards fading into atmosphere"
-
-NOT:
-"cards being hidden behind a giant blur."
-
-==================================================
-3. DO NOT CHANGE THE WALL CONCEPT YET
-==================================================
-
-Do NOT migrate the old v2 wall yet.
-
-Do NOT introduce Recovery Galaxy yet.
-
-Do NOT import old v2 review data yet.
-
-Do NOT redesign the wall into another concept.
-
-Keep the current wall implementation for now.
-
-Later we will separately decide what content comes from v2.
-
-==================================================
-4. KEEP THE WEBSITE SMOOTH
-==================================================
-
-The current animations are already very smooth.
-
-Preserve:
-- Reveal animations
-- scroll animations
-- text animations
-- hero motion
-- hover interactions
-- section transitions
-- marquee/moving wall animation
-- current premium dark/gold appearance
-
-Do not simplify or remove animations just to make the code smaller.
-
-==================================================
-5. VERIFY AFTER THE CHANGE
-==================================================
-
-Check:
-
-Desktop:
-- wall edges are less blurred
-- cards are easier to see
-- no floating CTA while scrolling
-- Final CTA button still exists
+Tablet:
+2–3 cards per row depending on available width.
 
 Mobile:
-- same improvements
-- no layout break
-- no excessive edge blur
+1 card per row.
 
-Also search the whole repo for:
-- StickyCta
-- fixed bottom CTA
-- "Start a Case" + fixed
-- "Exclusive"
-- "/exclusive/"
+Use responsive sizing so the wall remains visually filled.
 
-Report what was found and what was changed.
+==================================================
+2. KEEP THE LOOP / MOVEMENT SMOOTH
+==================================================
 
-Do not make any unrelated changes.
+I like the current smooth animated feeling of the wall.
+
+Keep the moving/flowing animation if it can be done without visual gaps.
+
+The important rule is:
+
+THE USER MUST NEVER SEE AN EMPTY GAP CAUSED BY THE LOOP.
+
+If the wall uses a continuous marquee/loop:
+
+- make the animation seamless
+- duplicate the visual track only when necessary for a seamless loop
+- do NOT render duplicated recovery cards as separate actual cases
+- do NOT allow a blank section to appear when the track loops
+- ensure the second visual copy begins before the first copy completely exits
+- the transition from end → beginning must be invisible
+
+The user should feel like the recovery wall is continuously alive.
+
+==================================================
+3. DO NOT SHOW LOAD MORE INITIALLY IF THERE ARE ENOUGH CASES
+==================================================
+
+If there are enough recovery cases to keep the wall visually full:
+
+DO NOT show a Load More button.
+
+The starting wall should simply look like:
+
+[ CARD ] [ CARD ] [ CARD ] [ CARD ]
+[ CARD ] [ CARD ] [ CARD ] [ CARD ]
+
+No Load More is necessary.
+
+==================================================
+4. LOAD MORE SHOULD ONLY APPEAR WHEN NEEDED
+==================================================
+
+If the available real recovery cases are running out and another card is required to maintain the layout, then a Load More element can occupy ONE normal card position.
+
+Example:
+
+[ CARD ] [ CARD ] [ CARD ] [ CARD ]
+[ CARD ] [ CARD ] [ LOAD MORE ] [ CARD ]
+
+The Load More element must look like a premium recovery-wall card.
+
+It should NOT look like a random button floating outside the wall.
+
+It should occupy the same approximate visual space as a card.
+
+When clicked:
+
+1. Load/reveal the next recovery cases.
+2. Replace the Load More card with an actual recovery card.
+3. Add the newly available recovery cases into the wall.
+4. Smoothly animate the new cards into position.
+5. Keep the wall full.
+6. Do not reload the page.
+7. Do not duplicate actual recovery cases.
+
+==================================================
+5. IMPORTANT: NO ARTIFICIAL DATA DUPLICATION
+==================================================
+
+Do NOT use this to solve layout:
+
+return [...data, ...data, ...data];
+
+Do NOT show the same person repeatedly as separate recovery cases.
+
+Each real recovery case must have one real data record.
+
+For the animation itself, a temporary visual clone of the track is allowed ONLY if necessary to create a seamless visual loop.
+
+The user must never perceive this as duplicate cases.
+
+==================================================
+6. RESPONSIVE BEHAVIOUR
+==================================================
+
+The wall must calculate its layout based on available width.
+
+Desktop:
+
+[ C ][ C ][ C ][ C ]
+[ C ][ C ][ C ][ C ]
+
+If more cases exist:
+
+[ C ][ C ][ C ][ C ]
+[ C ][ C ][ C ][ C ]
+[ C ][ C ][ C ][ C ]
+[ C ][ C ][ C ][ C ]
+
+No uneven final row should create a giant empty area.
+
+If the number of available cases does not perfectly fill the final row:
+
+- use the Load More card in an available slot when more cases can be loaded
+- otherwise intelligently center/distribute the remaining cards
+- NEVER leave a giant dead area
+
+==================================================
+7. LOAD MORE ANIMATION
+==================================================
+
+When Load More is clicked:
+
+Use a premium animation:
+
+opacity: 0 → 1
+transform: translateY(18px) scale(0.98) → translateY(0) scale(1)
+
+Use a small stagger between cards.
+
+The new cards should feel like they are being revealed into the wall.
+
+Do not cause a large page jump.
+
+==================================================
+8. SIDE BLUR — REDUCE IT FURTHER
+==================================================
+
+The current side blur is still too strong.
+
+Make the left/right edge effect MUCH lighter.
+
+The cards near the edges should remain readable.
+
+Target:
+
+- edge fade around 8–10%
+- blur around 2–4px maximum
+- very low overlay opacity
+- smooth atmospheric fade
+
+The center of the wall must be completely sharp.
+
+The side effect should be barely noticeable.
+
+Do NOT make the cards look blurred.
+
+Do NOT hide large parts of cards.
+
+The user should be able to clearly read cards close to the edges.
+
+==================================================
+9. KEEP CURRENT CARD DESIGN
+==================================================
+
+Do not redesign the cards.
+
+Keep the existing:
+
+- dark/gold appearance
+- profile image / initials
+- category badge
+- name
+- reach
+- social icons
+- View Case
+- subtle rotation
+- hover animation
+
+Only fix the layout/loop/loading behavior.
+
+==================================================
+10. RECOVERY LANGUAGE
+==================================================
+
+This is NOT an influencer-management wall.
+
+Use:
+
+Recovery Cases
+Recent Recoveries.
+View Case
+
+URLs:
+
+/recovery/[slug]
+
+Do not use:
+
+Exclusive
+Exclusive Talents
+Talent Management
+Campaigns
+Brand Partnerships
+
+==================================================
+11. DO NOT TOUCH OTHER WEBSITE SECTIONS
+==================================================
+
+DO NOT change:
+
+- Hero
+- Navbar
+- Services
+- How It Works
+- Platforms
+- FAQ
+- About
+- Case Form
+- typography
+- global animations
+- overall dark/gold theme
+
+Only modify the Recovery Cases wall and the minimum supporting code required for its layout/data behavior.
+
+==================================================
+12. FINAL VISUAL TEST
+==================================================
+
+Test with:
+
+4 cards
+6 cards
+8 cards
+10 cards
+12+ cards
+
+The wall should NEVER look broken.
+
+For example, with 8 cards:
+
+[ C ][ C ][ C ][ C ]
+[ C ][ C ][ C ][ C ]
+
+With more:
+
+[ C ][ C ][ C ][ C ]
+[ C ][ C ][ C ][ C ]
+[ C ][ C ][ C ][ C ]
+[ C ][ C ][ C ][ C ]
+
+If additional data is not immediately available:
+
+[ C ][ C ][ C ][ C ]
+[ C ][ C ][LOAD MORE][ C ]
+
+Click Load More:
+
+[ C ][ C ][ C ][ C ]
+[ C ][ C ][ C ][ C ]
+[ C ][ C ][ C ][ C ]
+...
+
+The wall should remain visually full throughout.
+
+MOST IMPORTANT:
+NO GIANT EMPTY SPACE.
+NO BROKEN LOOP.
+NO RANDOM HALF-EMPTY ROW.
+NO EXCESSIVE SIDE BLUR.
+NO UNNECESSARY LOAD MORE BUTTON.
+
+Keep the existing smooth animation quality.
+
+At the end, report:
+- files changed
+- how the seamless loop was implemented
+- how empty gaps are prevented
+- when Load More appears
+- how many cards are shown initially
+- how responsive layout works
+- how much the edge blur was reduced
