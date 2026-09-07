@@ -313,12 +313,12 @@ export function EditorialWall() {
         <div
           className="pointer-events-none absolute inset-y-0 left-0 z-30"
           style={{
-            width: "25%",
-            minWidth: "120px",
+            width: "15%",
+            minWidth: "60px",
             background:
-              "linear-gradient(to right, oklch(0.13 0.005 260) 0%, oklch(0.13 0.005 260 / 0.95) 15%, oklch(0.13 0.005 260 / 0.7) 40%, oklch(0.13 0.005 260 / 0.3) 70%, transparent 100%)",
-            backdropFilter: "blur(12px) saturate(0.6)",
-            WebkitBackdropFilter: "blur(12px) saturate(0.6)",
+              "linear-gradient(to right, oklch(0.13 0.005 260 / 0.7) 0%, oklch(0.13 0.005 260 / 0.4) 30%, oklch(0.13 0.005 260 / 0.15) 60%, transparent 100%)",
+            backdropFilter: "blur(5px) saturate(0.7)",
+            WebkitBackdropFilter: "blur(5px) saturate(0.7)",
           }}
         />
 
@@ -326,12 +326,12 @@ export function EditorialWall() {
         <div
           className="pointer-events-none absolute inset-y-0 right-0 z-30"
           style={{
-            width: "25%",
-            minWidth: "120px",
+            width: "15%",
+            minWidth: "60px",
             background:
-              "linear-gradient(to left, oklch(0.13 0.005 260) 0%, oklch(0.13 0.005 260 / 0.95) 15%, oklch(0.13 0.005 260 / 0.7) 40%, oklch(0.13 0.005 260 / 0.3) 70%, transparent 100%)",
-            backdropFilter: "blur(12px) saturate(0.6)",
-            WebkitBackdropFilter: "blur(12px) saturate(0.6)",
+              "linear-gradient(to left, oklch(0.13 0.005 260 / 0.7) 0%, oklch(0.13 0.005 260 / 0.4) 30%, oklch(0.13 0.005 260 / 0.15) 60%, transparent 100%)",
+            backdropFilter: "blur(5px) saturate(0.7)",
+            WebkitBackdropFilter: "blur(5px) saturate(0.7)",
           }}
         />
 
