@@ -1,4 +1,4 @@
-import { useMemo, useState, useCallback } from "react";
+import { useMemo } from "react";
 import { useSiteData, type Talent } from "./useSiteData";
 
 const defaultTalents: Talent[] = [
@@ -161,21 +161,14 @@ const gradients = [
 
 const rotations = [-4, -2.5, -1, 0.5, 2, 3.5, -3, 1.5, -1.8, 3, -0.5, 2.8, -3.5, 1, -2, 4];
 
-const INITIAL_COUNT = 8;
-const LOAD_MORE_COUNT = 4;
-
 function TalentCard({
   talent,
   rotation,
   gradient,
-  index,
-  isNew,
 }: {
   talent: Talent;
   rotation: number;
   gradient: string;
-  index: number;
-  isNew?: boolean;
 }) {
   const initials = talent.name
     .split(" ")
@@ -187,10 +180,10 @@ function TalentCard({
   return (
     <a
       href={`/recovery/${talent.slug}`}
-      className={`editorial-card group relative overflow-hidden rounded-xl border border-white/[0.08] bg-surface/80 backdrop-blur-sm wall-card ${isNew ? "wall-card-new" : ""}`}
+      className="editorial-card group relative shrink-0 overflow-hidden rounded-xl border border-white/[0.08] bg-surface/80 backdrop-blur-sm"
       style={{
         transform: `rotate(${rotation}deg)`,
-        animationDelay: isNew ? `${(index % LOAD_MORE_COUNT) * 80}ms` : `${index * 60}ms`,
+        width: "clamp(220px, 22vw, 300px)",
       }}
     >
       <div
@@ -231,18 +224,22 @@ function TalentCard({
 
         {/* Content overlay */}
         <div className="relative z-10">
+          {/* Name — large editorial style */}
           <h3 className="display text-xl leading-tight text-foreground transition-colors duration-300 group-hover:text-gold md:text-2xl">
             {talent.name}
           </h3>
 
+          {/* Reach */}
           <p className="mt-1.5 text-[0.7rem] font-semibold tracking-[0.14em] text-gold/80 uppercase">
             {talent.totalReach} reach
           </p>
 
+          {/* Bio — visible on hover */}
           <p className="mt-2 max-h-0 overflow-hidden text-[0.75rem] leading-relaxed text-white/60 transition-all duration-500 ease-out group-hover:max-h-20">
             {talent.bio}
           </p>
 
+          {/* Social icons */}
           <div className="mt-3 flex items-center gap-2 border-t border-white/[0.08] pt-3">
             {talent.socials.instagram && (
               <svg viewBox="0 0 24 24" className="size-3.5 text-white/40 transition-colors group-hover:text-gold" fill="none" stroke="currentColor" strokeWidth="1.5">
@@ -272,60 +269,17 @@ function TalentCard({
   );
 }
 
-function LoadMoreCard({ onClick, loading }: { onClick: () => void; loading: boolean }) {
-  return (
-    <button
-      onClick={onClick}
-      disabled={loading}
-      className="editorial-card group relative overflow-hidden rounded-xl border border-gold/20 bg-surface/80 backdrop-blur-sm wall-card wall-card-load-more"
-      style={{ aspectRatio: "3/4" }}
-    >
-      <div className="flex h-full flex-col items-center justify-center p-6 text-center">
-        {loading ? (
-          <span className="size-6 animate-spin rounded-full border-2 border-gold/30 border-t-gold" />
-        ) : (
-          <>
-            <span className="grid size-14 place-items-center rounded-full border border-gold/20 bg-gold/[0.08] transition-all duration-300 group-hover:scale-110 group-hover:bg-gold/[0.15]">
-              <svg viewBox="0 0 24 24" className="size-6 text-gold" fill="none" stroke="currentColor" strokeWidth="1.5">
-                <path d="M12 5v14M5 12h14" />
-              </svg>
-            </span>
-            <span className="mt-4 text-sm font-medium text-white/50 transition-colors group-hover:text-gold">
-              Load More
-            </span>
-          </>
-        )}
-      </div>
-    </button>
-  );
-}
-
 export function EditorialWall() {
   const siteData = useSiteData();
-  const [visibleCount, setVisibleCount] = useState(INITIAL_COUNT);
-  const [loading, setLoading] = useState(false);
-  const [newBatchStart, setNewBatchStart] = useState(-1);
-
-  const allTalents = useMemo(() => {
-    return (siteData?.talents || defaultTalents)
+  const talents = useMemo(() => {
+    const data = (siteData?.talents || defaultTalents)
       .filter((t) => t.active !== false)
       .sort((a, b) => (a.order ?? 0) - (b.order ?? 0));
+    return [...data, ...data, ...data];
   }, [siteData]);
 
-  const visibleTalents = useMemo(() => allTalents.slice(0, visibleCount), [allTalents, visibleCount]);
-  const hasMore = visibleCount < allTalents.length;
-
-  const loadMore = useCallback(() => {
-    if (loading || !hasMore) return;
-    setLoading(true);
-    const prevCount = visibleCount;
-    setTimeout(() => {
-      setVisibleCount((c) => Math.min(c + LOAD_MORE_COUNT, allTalents.length));
-      setNewBatchStart(prevCount);
-      setLoading(false);
-      setTimeout(() => setNewBatchStart(-1), 800);
-    }, 400);
-  }, [loading, hasMore, visibleCount, allTalents.length]);
+  const topRow = talents.filter((_, i) => i % 2 === 0);
+  const bottomRow = talents.filter((_, i) => i % 2 === 1);
 
   return (
     <section
@@ -353,49 +307,60 @@ export function EditorialWall() {
         </p>
       </div>
 
-      {/* Card grid with edge masking */}
-      <div className="wall-grid-container relative z-10 mx-auto max-w-7xl px-4 md:px-8">
-        {/* Left edge mask */}
+      {/* Card wall with edge masking */}
+      <div className="editorial-wall-container relative z-10">
+        {/* Left edge mask — progressive blur + fade */}
         <div
           className="pointer-events-none absolute inset-y-0 left-0 z-30"
           style={{
-            width: "8%",
-            minWidth: "40px",
-            background: "linear-gradient(to right, oklch(0.13 0.005 260 / 0.5) 0%, oklch(0.13 0.005 260 / 0.2) 40%, transparent 100%)",
-            backdropFilter: "blur(3px)",
-            WebkitBackdropFilter: "blur(3px)",
+            width: "10%",
+            minWidth: "50px",
+            background:
+              "linear-gradient(to right, oklch(0.13 0.005 260 / 0.5) 0%, oklch(0.13 0.005 260 / 0.25) 40%, transparent 100%)",
+            backdropFilter: "blur(3px) saturate(0.8)",
+            WebkitBackdropFilter: "blur(3px) saturate(0.8)",
           }}
         />
 
-        {/* Right edge mask */}
+        {/* Right edge mask — progressive blur + fade */}
         <div
           className="pointer-events-none absolute inset-y-0 right-0 z-30"
           style={{
-            width: "8%",
-            minWidth: "40px",
-            background: "linear-gradient(to left, oklch(0.13 0.005 260 / 0.5) 0%, oklch(0.13 0.005 260 / 0.2) 40%, transparent 100%)",
-            backdropFilter: "blur(3px)",
-            WebkitBackdropFilter: "blur(3px)",
+            width: "10%",
+            minWidth: "50px",
+            background:
+              "linear-gradient(to left, oklch(0.13 0.005 260 / 0.5) 0%, oklch(0.13 0.005 260 / 0.25) 40%, transparent 100%)",
+            backdropFilter: "blur(3px) saturate(0.8)",
+            WebkitBackdropFilter: "blur(3px) saturate(0.8)",
           }}
         />
 
-        {/* Responsive grid */}
-        <div className="wall-grid">
-          {visibleTalents.map((talent, i) => (
-            <TalentCard
-              key={talent.id}
-              talent={talent}
-              rotation={rotations[i % rotations.length] ?? 0}
-              gradient={gradients[i % gradients.length] ?? gradients[0]!}
-              index={i}
-              isNew={newBatchStart >= 0 && i >= newBatchStart}
-            />
-          ))}
+        {/* Top row - moves left */}
+        <div className="editorial-row editorial-row-left mb-4 md:mb-6">
+          <div className="editorial-track editorial-track-left">
+            {topRow.map((talent, i) => (
+              <TalentCard
+                key={`${talent.id}-top-${i}`}
+                talent={talent}
+                rotation={rotations[i % rotations.length] ?? 0}
+                gradient={gradients[i % gradients.length] ?? gradients[0]!}
+              />
+            ))}
+          </div>
+        </div>
 
-          {/* Load More card */}
-          {hasMore && (
-            <LoadMoreCard onClick={loadMore} loading={loading} />
-          )}
+        {/* Bottom row - moves right */}
+        <div className="editorial-row editorial-row-right">
+          <div className="editorial-track editorial-track-right">
+            {bottomRow.map((talent, i) => (
+              <TalentCard
+                key={`${talent.id}-bottom-${i}`}
+                talent={talent}
+                rotation={rotations[(i + 5) % rotations.length] ?? 0}
+                gradient={gradients[(i + 3) % gradients.length] ?? gradients[0]!}
+              />
+            ))}
+          </div>
         </div>
       </div>
 

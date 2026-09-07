@@ -1,239 +1,234 @@
-IMPORTANT — THIS IS THE FINAL REQUIREMENT FOR THE RECOVERY CASES WALL.
+STOP ALL CURRENT RECOVERY WALL CHANGES.
 
-DO NOT redesign the rest of the website.
-The current website animations are smooth and premium. PRESERVE THEM.
+The latest Recovery Wall implementation broke the wall.
 
-I want the Recovery Cases wall to behave like a continuously populated wall.
+I have checked the Git history.
 
-==================================================
-1. THE WALL MUST ALWAYS LOOK FULL
-==================================================
+The BAD change is commit:
 
-The wall should visually maintain a full layout like:
+60fde35fe74e1d8aea73ee5058326af386d3b303
+"feat: responsive recovery wall grid, Load More system, minimal edge blur"
 
-[ CARD ] [ CARD ] [ CARD ] [ CARD ]
-[ CARD ] [ CARD ] [ CARD ] [ CARD ]
+Its parent is:
 
-There must NEVER be a situation like:
+7a33ff62e2c57a32da5503b0f4c5f0c6bea52599
 
-[ CARD ] [ CARD ] [ CARD ] [ CARD ]
-[ CARD ] [ CARD ]
+The parent version contains the previous working two-row animated wall.
 
-with a huge empty area beside/below the remaining cards.
-
-The wall must dynamically maintain balanced rows.
-
-Desktop target:
-4 cards per row when the viewport allows.
-
-Tablet:
-2–3 cards per row depending on available width.
-
-Mobile:
-1 card per row.
-
-Use responsive sizing so the wall remains visually filled.
+I WANT THAT PREVIOUS WALL BACK.
 
 ==================================================
-2. KEEP THE LOOP / MOVEMENT SMOOTH
+1. RESTORE THE PREVIOUS WORKING WALL
 ==================================================
 
-I like the current smooth animated feeling of the wall.
+Restore ONLY the Recovery Wall implementation from:
 
-Keep the moving/flowing animation if it can be done without visual gaps.
+7a33ff62e2c57a32da5503b0f4c5f0c6bea52599
 
-The important rule is:
+Specifically restore:
 
-THE USER MUST NEVER SEE AN EMPTY GAP CAUSED BY THE LOOP.
+src/components/winsable/EditorialWall.tsx
+src/styles.css
 
-If the wall uses a continuous marquee/loop:
+Do NOT revert the whole repository.
 
-- make the animation seamless
-- duplicate the visual track only when necessary for a seamless loop
-- do NOT render duplicated recovery cards as separate actual cases
-- do NOT allow a blank section to appear when the track loops
-- ensure the second visual copy begins before the first copy completely exits
-- the transition from end → beginning must be invisible
+Do NOT revert:
+- navbar
+- routing
+- /recovery routes
+- case form
+- other sections
+- current animations outside the wall
+- other fixes already completed
 
-The user should feel like the recovery wall is continuously alive.
+Only restore the wall-related implementation.
 
-==================================================
-3. DO NOT SHOW LOAD MORE INITIALLY IF THERE ARE ENOUGH CASES
-==================================================
+The previous implementation used:
 
-If there are enough recovery cases to keep the wall visually full:
+- two horizontal rows
+- top row moving left
+- bottom row moving right
+- repeated visual track for a seamless loop
+- cards with fixed/clamped width
+- overflow-hidden wall container
+- editorial track animation
 
-DO NOT show a Load More button.
-
-The starting wall should simply look like:
-
-[ CARD ] [ CARD ] [ CARD ] [ CARD ]
-[ CARD ] [ CARD ] [ CARD ] [ CARD ]
-
-No Load More is necessary.
-
-==================================================
-4. LOAD MORE SHOULD ONLY APPEAR WHEN NEEDED
-==================================================
-
-If the available real recovery cases are running out and another card is required to maintain the layout, then a Load More element can occupy ONE normal card position.
-
-Example:
-
-[ CARD ] [ CARD ] [ CARD ] [ CARD ]
-[ CARD ] [ CARD ] [ LOAD MORE ] [ CARD ]
-
-The Load More element must look like a premium recovery-wall card.
-
-It should NOT look like a random button floating outside the wall.
-
-It should occupy the same approximate visual space as a card.
-
-When clicked:
-
-1. Load/reveal the next recovery cases.
-2. Replace the Load More card with an actual recovery card.
-3. Add the newly available recovery cases into the wall.
-4. Smoothly animate the new cards into position.
-5. Keep the wall full.
-6. Do not reload the page.
-7. Do not duplicate actual recovery cases.
+That is the wall I want.
 
 ==================================================
-5. IMPORTANT: NO ARTIFICIAL DATA DUPLICATION
+2. REMOVE THE NEW BROKEN GRID SYSTEM
 ==================================================
 
-Do NOT use this to solve layout:
+REMOVE the new system introduced by 60fde:
 
+- wall-grid CSS grid
+- INITIAL_COUNT
+- LOAD_MORE_COUNT
+- visibleCount
+- newBatchStart
+- LoadMoreCard
+- finite grid rendering
+- Load More logic
+- wall-card reveal system if it was added only for this grid
+- any logic that changed the wall from marquee rows into a grid
+
+I DO NOT WANT A NORMAL GRID.
+
+I DO NOT WANT:
+
+[ CARD ][ CARD ][ CARD ][ CARD ]
+[ CARD ][ CARD ]
+
+I DO NOT WANT giant empty spaces.
+
+==================================================
+3. RESTORE THE TWO-ROW FLOWING WALL
+==================================================
+
+The wall should look like the previous working version:
+
+ROW 1:
+
+[ CARD ][ CARD ][ CARD ][ CARD ][ CARD ] → → →
+
+ROW 2:
+
+← ← ← [ CARD ][ CARD ][ CARD ][ CARD ][ CARD ]
+
+The rows should continuously move in opposite directions.
+
+The loop must be seamless.
+
+The user should NEVER see the track suddenly end.
+
+The wall should feel continuously populated.
+
+==================================================
+4. IMPORTANT — VISUAL DUPLICATION IS ALLOWED FOR THE LOOP
+==================================================
+
+The old implementation duplicated the DATA visually so the animation could loop seamlessly.
+
+That is OK.
+
+This does NOT mean the website should create separate fake recovery cases.
+
+The same case can appear again later in the moving animation because it is part of the seamless visual loop.
+
+DO NOT convert this into a finite data grid.
+
+Use the previous working technique:
+
+const data = actualRecoveryCases;
 return [...data, ...data, ...data];
 
-Do NOT show the same person repeatedly as separate recovery cases.
+Then split into the two animated rows as the previous implementation did.
 
-Each real recovery case must have one real data record.
-
-For the animation itself, a temporary visual clone of the track is allowed ONLY if necessary to create a seamless visual loop.
-
-The user must never perceive this as duplicate cases.
+The purpose is seamless animation, NOT displaying three separate copies simultaneously as a static grid.
 
 ==================================================
-6. RESPONSIVE BEHAVIOUR
+5. KEEP RECOVERY TERMINOLOGY
 ==================================================
 
-The wall must calculate its layout based on available width.
+The old wall implementation must remain recovery-focused.
 
-Desktop:
-
-[ C ][ C ][ C ][ C ]
-[ C ][ C ][ C ][ C ]
-
-If more cases exist:
-
-[ C ][ C ][ C ][ C ]
-[ C ][ C ][ C ][ C ]
-[ C ][ C ][ C ][ C ]
-[ C ][ C ][ C ][ C ]
-
-No uneven final row should create a giant empty area.
-
-If the number of available cases does not perfectly fill the final row:
-
-- use the Load More card in an available slot when more cases can be loaded
-- otherwise intelligently center/distribute the remaining cards
-- NEVER leave a giant dead area
-
-==================================================
-7. LOAD MORE ANIMATION
-==================================================
-
-When Load More is clicked:
-
-Use a premium animation:
-
-opacity: 0 → 1
-transform: translateY(18px) scale(0.98) → translateY(0) scale(1)
-
-Use a small stagger between cards.
-
-The new cards should feel like they are being revealed into the wall.
-
-Do not cause a large page jump.
-
-==================================================
-8. SIDE BLUR — REDUCE IT FURTHER
-==================================================
-
-The current side blur is still too strong.
-
-Make the left/right edge effect MUCH lighter.
-
-The cards near the edges should remain readable.
-
-Target:
-
-- edge fade around 8–10%
-- blur around 2–4px maximum
-- very low overlay opacity
-- smooth atmospheric fade
-
-The center of the wall must be completely sharp.
-
-The side effect should be barely noticeable.
-
-Do NOT make the cards look blurred.
-
-Do NOT hide large parts of cards.
-
-The user should be able to clearly read cards close to the edges.
-
-==================================================
-9. KEEP CURRENT CARD DESIGN
-==================================================
-
-Do not redesign the cards.
-
-Keep the existing:
-
-- dark/gold appearance
-- profile image / initials
-- category badge
-- name
-- reach
-- social icons
-- View Case
-- subtle rotation
-- hover animation
-
-Only fix the layout/loop/loading behavior.
-
-==================================================
-10. RECOVERY LANGUAGE
-==================================================
-
-This is NOT an influencer-management wall.
-
-Use:
+Keep:
 
 Recovery Cases
 Recent Recoveries.
 View Case
 
-URLs:
+Links MUST remain:
 
-/recovery/[slug]
+/recovery/${talent.slug}
 
-Do not use:
+Do NOT restore:
 
-Exclusive
+/exclusive/
+
+Do NOT restore:
+
 Exclusive Talents
+
+Do NOT restore:
+
 Talent Management
-Campaigns
-Brand Partnerships
+
+The rollback is ONLY for the visual wall mechanism.
 
 ==================================================
-11. DO NOT TOUCH OTHER WEBSITE SECTIONS
+6. SIDE BLUR — KEEP IT VERY LIGHT
 ==================================================
 
-DO NOT change:
+The previous wall had the correct concept of edge masking.
+
+Keep the reduced blur version rather than the original heavy blur.
+
+I want:
+
+- subtle left fade
+- subtle right fade
+- center completely sharp
+- edge cards still readable
+
+Target approximately:
+
+width: 10–12%
+blur: 3px maximum
+low opacity gradient
+
+The effect should barely be noticeable.
+
+DO NOT use the old 25% / 12px heavy blur.
+
+==================================================
+7. CARD DESIGN MUST STAY
+==================================================
+
+Keep the current card design.
+
+Do not redesign:
+
+- card shape
+- gold/dark styling
+- initials
+- category badge
+- name
+- reach
+- social icons
+- View Case
+- hover animation
+- rotations
+
+Only restore the wall layout/animation.
+
+==================================================
+8. NO LOAD MORE
+==================================================
+
+REMOVE Load More completely from the normal wall.
+
+I originally considered Load More only because the broken grid was creating empty space.
+
+The correct solution is NOT Load More.
+
+The correct solution is the old seamless two-row wall.
+
+Therefore:
+
+NO Load More button.
+
+NO empty placeholder.
+
+NO special Load More card.
+
+The wall should continuously loop.
+
+==================================================
+9. VERY IMPORTANT — DO NOT TOUCH THE REST OF THE WEBSITE
+==================================================
+
+Do NOT change:
 
 - Hero
 - Navbar
@@ -243,66 +238,83 @@ DO NOT change:
 - FAQ
 - About
 - Case Form
+- page animations
 - typography
-- global animations
-- overall dark/gold theme
+- colors
+- global motion
+- /recovery/[slug] routes
+- floating CTA fix
 
-Only modify the Recovery Cases wall and the minimum supporting code required for its layout/data behavior.
+Only repair the Recovery Cases wall.
 
 ==================================================
-12. FINAL VISUAL TEST
+10. VERIFY AGAINST THE OLD VERSION
 ==================================================
 
-Test with:
+After making the change, compare:
 
-4 cards
-6 cards
-8 cards
-10 cards
-12+ cards
+CURRENT BROKEN VERSION
+vs
+7a33ff62e2c57a32da5503b0f4c5f0c6bea52599
 
-The wall should NEVER look broken.
+The wall should use the old:
 
-For example, with 8 cards:
+editorial-wall-container
+editorial-row
+editorial-track
+editorial-track-left
+editorial-track-right
 
-[ C ][ C ][ C ][ C ]
-[ C ][ C ][ C ][ C ]
+architecture.
 
-With more:
+The previous version used:
 
-[ C ][ C ][ C ][ C ]
-[ C ][ C ][ C ][ C ]
-[ C ][ C ][ C ][ C ]
-[ C ][ C ][ C ][ C ]
+top row → left
+bottom row → right
 
-If additional data is not immediately available:
+with:
 
-[ C ][ C ][ C ][ C ]
-[ C ][ C ][LOAD MORE][ C ]
+60s / 55s linear continuous animation
 
-Click Load More:
+and a wide card:
 
-[ C ][ C ][ C ][ C ]
-[ C ][ C ][ C ][ C ]
-[ C ][ C ][ C ][ C ]
-...
+width: clamp(220px, 22vw, 300px)
 
-The wall should remain visually full throughout.
+Restore that behavior.
 
-MOST IMPORTANT:
-NO GIANT EMPTY SPACE.
-NO BROKEN LOOP.
-NO RANDOM HALF-EMPTY ROW.
-NO EXCESSIVE SIDE BLUR.
-NO UNNECESSARY LOAD MORE BUTTON.
+==================================================
+11. FINAL VISUAL REQUIREMENT
+==================================================
 
-Keep the existing smooth animation quality.
+I want the wall to feel like this:
+
+        [CARD] [CARD] [CARD] [CARD] [CARD]
+   ←    [CARD] [CARD] [CARD] [CARD] [CARD]    →
+
+The cards continuously enter and leave the viewport.
+
+There should NEVER be:
+
+- a half-empty row
+- a giant black area
+- 3 cards sitting in the center
+- a normal static grid
+- a Load More button
+- a broken loop
+- a sudden blank section
+
+The wall should look alive and cinematic again.
+
+DO NOT IMPROVISE A NEW WALL.
+
+RESTORE THE PREVIOUS WORKING WALL FIRST.
+
+Only after restoring it, make the edge blur slightly lighter.
 
 At the end, report:
-- files changed
-- how the seamless loop was implemented
-- how empty gaps are prevented
-- when Load More appears
-- how many cards are shown initially
-- how responsive layout works
-- how much the edge blur was reduced
+1. exactly which files changed
+2. confirmation that 60fde35 wall changes were removed
+3. confirmation that the 7a33ff6 two-row wall architecture was restored
+4. confirmation that /recovery/ URLs remain intact
+5. confirmation that Load More was removed
+6. confirmation that no other website section was changed
