@@ -207,10 +207,10 @@ export function Hero() {
                       zIndex: c.z,
                       opacity: ready ? 1 : 0,
                       transitionDelay: `${240 + i * 110}ms`,
-                      borderColor: active === i ? "var(--gold)" : undefined,
+                      borderColor: active === i ? "var(--purple)" : undefined,
                       boxShadow:
                         active === i
-                          ? "0 28px 60px -30px oklch(0.75 0.12 75 / 0.3), 0 0 0 1px oklch(0.75 0.12 75 / 0.2)"
+                          ? "0 28px 60px -30px oklch(0.55 0.22 295 / 0.3), 0 0 0 1px oklch(0.55 0.22 295 / 0.2)"
                           : undefined,
                       transform: ready
                         ? `translate(calc(${c.x} + ${tilt.x * depth * 14}px), calc(${c.y} + ${tilt.y * depth * 10}px)) rotate(${c.rot}) scale(${active === i ? 1.035 : 1})`
@@ -237,12 +237,12 @@ export function Hero() {
                         {[0, 1, 2, 3].map((d) => (
                           <span
                             key={d}
-                            className={`h-1 w-6 rounded-full transition-colors duration-700 ${d <= i % 4 ? "bg-gold" : "bg-white/10"}`}
+                            className={`h-1 w-6 rounded-full transition-colors duration-700 ${d <= i % 4 ? "bg-purple" : "bg-white/10"}`}
                             style={{ transitionDelay: `${600 + d * 120}ms` }}
                           />
                         ))}
                       </span>
-                      <ArrowUpRight className="size-3.5 text-white/30" />
+                      <span className="text-lg leading-none text-white/30">+</span>
                     </div>
                   </div>
                 );
@@ -469,7 +469,7 @@ function ServiceCard({ s }: { s: ServiceType & { span: string } }) {
     <article
       onPointerMove={spot.onPointerMove}
       style={spot.style}
-      className="group relative flex h-full flex-col justify-between overflow-hidden rounded-xl glass p-7 transition-all duration-500 hover:-translate-y-1.5 hover:shadow-[0_34px_70px_-42px_oklch(0.75_0.12_75/0.25)]"
+      className="corner-marks group relative flex h-full flex-col justify-between overflow-hidden rounded-xl glass p-7 transition-all duration-500 hover:-translate-y-1.5 hover:shadow-[0_34px_70px_-42px_oklch(0.75_0.12_75/0.25)]"
     >
       <Spotlight />
       {/* Gold top line sweep */}
@@ -508,9 +508,9 @@ function ServiceCard({ s }: { s: ServiceType & { span: string } }) {
             </li>
           ))}
         </ul>
-        <span className="mt-7 inline-flex items-center gap-2 text-sm font-semibold text-gold/70 transition-colors group-hover:text-gold">
+        <span className="mt-7 inline-flex items-center gap-2 text-sm font-semibold text-purple/70 transition-colors group-hover:text-purple">
           <span className="link-underline">Learn More</span>
-          <ArrowUpRight className="size-3.5 transition-transform duration-300 group-hover:translate-x-1 group-hover:-translate-y-1" />
+          <span className="text-lg leading-none transition-transform duration-300 group-hover:rotate-90">+</span>
         </span>
       </div>
     </article>
@@ -844,7 +844,7 @@ export function Faq() {
           <p className="eyebrow">Questions</p>
           <h2 className="display mt-6 text-[clamp(2.2rem,4.6vw,3.6rem)]">Straight answers.</h2>
         </Reveal>
-        <div className="lg:col-span-7 lg:col-start-6">
+        <div className="corner-marks lg:col-span-7 lg:col-start-6">
           {faqs.map((f, i) => {
             const isOpen = open === i;
             return (
@@ -897,7 +897,7 @@ export function FinalCta() {
   return (
     <section id="start" className="relative overflow-hidden py-28 md:py-40">
       <span className="glow-gold top-1/2 left-1/2 h-[30rem] w-[30rem] -translate-x-1/2 -translate-y-1/2 opacity-25" />
-      <div className="shell relative text-center">
+      <div className="corner-marks shell relative text-center">
         <Reveal variant="scale">
           <p className="eyebrow">Start here</p>
           <h2 className="display mx-auto mt-8 max-w-4xl text-[clamp(2.7rem,9vw,7rem)]">
@@ -976,7 +976,7 @@ export function Footer() {
             <p className="eyebrow">Social</p>
             <a
               href="https://instagram.com"
-              className="group mt-5 inline-flex items-center gap-2 text-sm text-white/40 transition-colors hover:text-gold"
+              className="group mt-5 inline-flex items-center gap-2 text-sm text-white/40 transition-colors hover:text-purple"
             >
               Instagram
               <ArrowUpRight className="size-3 transition-transform duration-300 group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />

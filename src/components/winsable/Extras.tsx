@@ -115,14 +115,16 @@ export function Coverage() {
                       style={{ maxHeight: open ? "5rem" : "0px", opacity: open ? 1 : 0 }}
                     >
                       <span className="mt-3 block text-sm text-white/50">{row.note}</span>
-                      <span className="mt-1 block text-[11px] tracking-[0.22em] text-gold uppercase">
+                      <span className="mt-1 block text-[11px] tracking-[0.22em] text-purple uppercase">
                         {row.cases}
                       </span>
                     </span>
                   </span>
-                  <ArrowUpRight
-                    className={`size-5 transition-all duration-500 ${open ? "translate-x-0 text-gold" : "-translate-x-2 text-white/30 opacity-0"}`}
-                  />
+                  <span
+                    className={`text-lg leading-none transition-all duration-500 ${open ? "translate-x-0 text-purple rotate-45" : "-translate-x-2 text-white/30 opacity-0"}`}
+                  >
+                    +
+                  </span>
                 </button>
               </li>
             );

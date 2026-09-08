@@ -81,7 +81,7 @@ export function Nav() {
         <div className="flex items-center gap-2">
           <a
             href="#case-form"
-            className="group hidden items-center gap-2 rounded-full border border-gold/30 bg-gold/10 px-5 py-2.5 text-sm font-semibold text-gold transition-all duration-300 hover:border-gold/60 hover:bg-gold/20 hover:shadow-[0_0_24px_oklch(0.75_0.12_75/0.2)] sm:inline-flex"
+            className="group hidden items-center gap-2 rounded-full border border-gold/30 bg-gold/10 px-5 py-2.5 text-sm font-semibold text-gold transition-all duration-300 hover:border-gold/60 hover:bg-gold/20 hover:shadow-[0_0_24px_oklch(0.55_0.22_295/0.2)] sm:inline-flex"
           >
             Start a Case
             <ArrowUpRight className="size-3.5 transition-transform duration-300 group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />

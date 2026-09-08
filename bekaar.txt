@@ -1,539 +1,354 @@
-Build the Recovery Case detail page for the CURRENT WinsAble website.
-
-LOCAL PROJECT:
-D:\winsable\v.2-main (1)\v.2-main
+Update the EXISTING WinsAble website based on the latest screenshots and the visual direction of CreatorsMela.
 
 IMPORTANT:
-The current WinsAble website is already smooth and visually strong.
-
-DO NOT redesign the existing website.
-DO NOT replace the existing animation system.
-DO NOT modify the existing Recovery Wall animation.
-DO NOT change the existing card design.
-DO NOT change global colors, typography or spacing unnecessarily.
-
-This task is ONLY to create/improve the individual Recovery Case page that opens when a recovery card is clicked.
+Do NOT rebuild or redesign the website from scratch.
+Keep the existing layout, sections, content structure, animations and interactions.
+This is a visual refinement + UI cleanup.
 
 ==================================================
-1. ROUTE
+1. CHANGE THE ENTIRE WEBSITE COLOR SYSTEM
 ==================================================
+
+Change the current black + gold theme to a BLACK + PURPLE theme inspired by CreatorsMela.
+
+Use this palette consistently across the ENTIRE website:
+
+Primary background:
+#000000
+
+Secondary / surface background:
+#050509
+#08080D
+
+Primary purple:
+#6D35E8
+
+Bright purple:
+#7C3AED
+
+Purple glow:
+rgba(109, 53, 232, 0.35)
+rgba(124, 58, 237, 0.25)
+
+Primary text:
+#FFFFFF
+
+Secondary text:
+#A0A0A8
+
+Borders:
+rgba(255,255,255,0.08)
+rgba(124,58,237,0.20)
+
+IMPORTANT:
+Replace the existing GOLD accent throughout the website with PURPLE.
+
+This includes:
+- buttons
+- active navbar links
+- borders
+- badges
+- highlights
+- form selected states
+- progress indicators
+- icons
+- hover states
+- focus states
+- decorative lines
+- glows
+- section accents
+- CTA elements
+- loading/animated accents
+
+Do not leave random gold elements behind.
+
+The final website should visually feel:
+BLACK + ELECTRIC PURPLE + WHITE
+
+==================================================
+2. PURPLE GLOW / ATMOSPHERE
+==================================================
+
+Add subtle purple ambient glow where the existing gold glow is currently used.
+
+Keep the glow premium and subtle.
+
+Do NOT make the website overly bright or neon.
+
+Use purple gradients/glows behind:
+- Hero
+- important cards
+- CTA
+- selected form elements
+- major section transitions
+
+Preserve the existing animations.
+
+==================================================
+3. RECTANGULAR ELEMENT CORNER DESIGN
+==================================================
+
+I want a subtle editorial/technical corner treatment across the website.
+
+For rectangular UI elements such as:
+- service cards
+- case cards
+- form cards
+- information boxes
+- CTA boxes
+- large rectangular panels
+- important content containers
+
+Add small decorative corner marks similar to:
+
+|—
+ 
+and/or
+
+_|
+
+The corner decoration should look like a small technical/editorial bracket attached to the corner.
+
+Example concept:
+
+┌──────────────
+│   CONTENT
+│
+└──────────────
+
+But DO NOT use a normal thick border around the whole element just to create this.
+
+Use small thin corner accents.
+
+Style:
+- very thin
+- subtle
+- purple/white
+- low opacity
+- premium
+- minimal
+- responsive
+
+Do not put these decorations on every tiny input/button.
+Only use them on meaningful rectangular cards/containers.
+
+Do not make the decorations visually distracting.
+
+==================================================
+4. ARROW → PLUS
+==================================================
+
+Where the current UI uses the decorative/action arrow that is shown in the referenced design, replace that arrow with a PLUS symbol:
+
++
+
+Use the plus symbol especially for expandable/secondary card interactions.
+
+Do NOT replace arrows that are actually needed to communicate navigation direction, such as:
+- Back
+- Continue
+- external navigation
+- form progression
+
+Only replace the decorative/card action arrow where appropriate.
+
+The plus should have a subtle hover animation:
+- rotate slightly or transform smoothly
+- existing animation timing should remain elegant
+
+==================================================
+5. FONT / TEXT GLITCH
+==================================================
+
+There appears to be a font/text rendering glitch in some sections.
+
+Audit the entire website for:
+- text clipping
+- incorrect font rendering
+- overlapping text
+- broken line-height
+- text overflowing containers
+- strange character spacing
+- text appearing behind another element
+- highlighted text clipping
+- responsive typography problems
+
+Pay special attention to:
+- Hero headline
+- highlighted/italic words
+- service titles
+- service descriptions
+- CTA text
+- form labels
+- buttons
+- mobile layout
+
+Fix the underlying CSS/layout issue.
+
+Do NOT simply hide overflowing text.
+
+Make sure typography remains intentional and responsive.
+
+Keep the existing font pairing if it is already part of the design, unless a specific font bug requires correction.
+
+==================================================
+6. HERO
+==================================================
+
+Keep:
+
+"Real Cases. Clearer Support."
+
+Remove the old "2026" badge if it still exists.
+
+Do not change the main Hero headline or its existing animation.
+
+Only update the accent colors from gold → purple.
+
+==================================================
+7. NAVBAR
+==================================================
+
+Keep the existing navbar layout and animation.
+
+Keep using:
+
+/navbar.png
+
+as the actual WinsAble navbar logo.
+
+Do NOT recreate the logo.
+
+Change navbar accents from gold → purple.
+
+Do not make the navbar taller or redesign it.
+
+Mobile hamburger menu should remain intact.
+
+==================================================
+8. CASE FORM
+==================================================
+
+Keep the existing 5-step case form.
+
+The case form should use the new purple accent system.
+
+Selected fields:
+purple
+
+Buttons:
+purple
+
+Progress indicator:
+purple
+
+Focus states:
+purple
+
+Borders:
+subtle purple
+
+Do not expose raw technical validation errors.
+
+The error:
+
+"Invalid enum value..."
+
+must NEVER appear to users.
+
+Use a friendly message instead.
+
+==================================================
+9. MOBILE
+==================================================
+
+The website must look clean on mobile.
+
+Check all screenshots/sections at mobile width.
+
+Fix:
+- text clipping
+- horizontal overflow
+- cards exceeding viewport
+- buttons exceeding viewport
+- overlapping elements
+- form fields overflowing
+- corner decorations being misplaced
+- navbar overlap
+
+Do not remove animations just because they need responsive adjustments.
+
+Make animations lighter/smoother on mobile where necessary.
+
+==================================================
+10. IMPORTANT VISUAL RULE
+==================================================
+
+The final design should feel like:
+
+CREATORS-MELA-INSPIRED VISUAL LANGUAGE
++
+WINSABLE'S EXISTING CONTENT AND STRUCTURE
+
+NOT a copy of CreatorsMela.
 
 Use:
-
-/recovery/[slug]
-
-Examples:
-
-/recovery/harsh-babbar
-/recovery/reema-ghai
-/recovery/lakshay-chaudhary
-
-DO NOT use /exclusive/[slug].
-
-This is a RECOVERY CASE, not an influencer/talent-management page.
-
-==================================================
-2. CARD CLICK
-==================================================
-
-When the user clicks a Recovery Case card:
-
-→ open its corresponding /recovery/[slug] page.
-
-The transition should feel smooth and intentional.
-
-Do not make the page appear as an unrelated static page.
-
-Use the existing WinsAble transition/reveal language.
-
-==================================================
-3. VISUAL DIRECTION
-==================================================
-
-Use the reference concept of a highly animated profile/case dossier page, BUT DO NOT COPY THE OTHER WEBSITE'S DESIGN.
-
-The final page must clearly look like WINSABLE.
-
-Use:
-
-- current black/dark background
-- existing WinsAble gold accent
-- current typography
-- subtle gradients/glows already used by WinsAble
-- premium editorial layout
+- black background
+- electric purple accents
+- white typography
+- subtle purple glow
+- editorial typography
 - thin borders
-- glass/subtle surfaces where appropriate
-- sophisticated spacing
-
-It should feel like:
-
-"Recovery Case / Recovery Report"
-
-not:
-
-"Exclusive Talent Profile".
+- minimal corner decorations
+- smooth existing animations
 
 ==================================================
-4. HERO / CASE HEADER
+11. DO NOT BREAK EXISTING ANIMATIONS
 ==================================================
 
-Create an animated case header containing:
+DO NOT replace the current animation system.
 
-RECOVERY CASE
+Do NOT remove:
+- Hero animations
+- card animations
+- marquee/recovery wall animation
+- reveal animations
+- hover animations
+- existing smooth transitions
 
-[Person Name]
-
-[Profile Image]
-
-[Platform badge]
-
-[Username]
-
-[Followers / Reach]
-
-[Recovery Status]
-
-Example structure:
-
-RECOVERY CASE
-
-Harsh Babbar
-
-@username
-Instagram
-2.5M+ Reach
-
-✓ Recovery Completed
-
-The exact values must come from the existing recovery data.
-
-Do not invent information.
+Only update colors and visual details around them.
 
 ==================================================
-5. PROFILE IMAGE ANIMATION
+12. FINAL CODEBASE CLEANUP
 ==================================================
 
-The profile image should have a premium entrance animation.
-
-Suggested behaviour:
-
-- subtle scale from ~0.96 → 1
-- opacity reveal
-- slight vertical movement
-- very subtle glow/border reveal
-
-Keep it smooth.
-
-Do NOT make it bounce.
-
-Do NOT use aggressive animation.
-
-==================================================
-6. NAME + REACH ANIMATION
-==================================================
-
-Reveal the name and important metadata with staggered timing.
-
-For example:
-
-RECOVERY CASE
-↓
-NAME
-↓
-USERNAME
-↓
-PLATFORM
-↓
-REACH
-↓
-RECOVERY STATUS
-
-Each element should reveal smoothly.
-
-The page should feel cinematic but restrained.
-
-==================================================
-7. RECOVERY INFORMATION
-==================================================
-
-Add a dedicated section:
-
-RECOVERY DETAILS
-
-Show available data such as:
-
-Platform
-Username
-Followers / Reach
-Recovery Type
-Recovery Date
-Recovery Status
-
-Only display fields that actually exist in the recovery record.
-
-Do not display empty fake values.
-
-==================================================
-8. CLIENT REVIEW
-==================================================
-
-This is VERY IMPORTANT.
-
-The recovery page should have a prominent:
-
-CLIENT REVIEW
-
-section.
-
-Show:
-
-- review quote
-- rating if available
-- person name
-- platform
-- date if available
-
-Use the existing review/recovery data.
-
-Do not fabricate reviews.
-
-Example visual hierarchy:
-
-CLIENT REVIEW
-
-"Recovery review goes here..."
-
-★★★★★
-
-Name
-Instagram · Date
-
-Animate this section into view when it enters the viewport.
-
-==================================================
-9. SOCIAL PROFILE
-==================================================
-
-Add:
-
-SOCIAL PROFILE
-
-[ Instagram → ]
-
-If an actual Instagram/social URL exists in the data, make it clickable.
-
-Open it safely in a new tab.
-
-If no URL exists, do not create a fake link.
-
-==================================================
-10. CASE INFORMATION
-==================================================
-
-Add a clean section such as:
-
-CASE INFORMATION
-
-Recovery Type
-Account Recovery
-
-Platform
-Instagram
-
-Recovery Date
-[date]
-
-Status
-Recovery Completed
-
-Only use real available data.
-
-==================================================
-11. OPTIONAL RECOVERY STORY
-==================================================
-
-If the data contains a useful bio/case description/recovery summary, show it as:
-
-THE CASE
-
-or
-
-RECOVERY SUMMARY
-
-Use the existing content.
-
-Do not invent a dramatic fake story.
-
-==================================================
-12. V.2 REVIEW DATA
-==================================================
-
-Use the old v.2 recovery data structure as reference.
-
-Useful fields from v.2 include:
-
-- name
-- role
-- username
-- platform
-- followers
-- verified
-- avatar
-- recoveryType
-- recoveryDate
-- popupId
-
-Reviews can contain:
-
-- username
-- platform
-- followers
-- verified
-- date
-- images
-- review description
-- rating
-
-Bring useful fields into the new Recovery Case page where they exist.
-
-Do NOT copy the old v.2 popup design.
-
-Adapt the information to the CURRENT WinsAble visual system.
-
-==================================================
-13. PROOF / VERIFIED STATUS
-==================================================
-
-If the existing data contains verified information, show a subtle:
-
-✓ Verified Recovery
-
-or equivalent status.
-
-Do not claim verification if the data does not support it.
-
-If proof images exist in the source, they may be shown in a tasteful case-proof section.
-
-Do not invent proof screenshots.
-
-==================================================
-14. PAGE ANIMATION
-==================================================
-
-The whole page should have premium scroll-based reveals.
-
-Suggested animation sequence:
-
-PAGE LOAD
-↓
-background settles
-↓
-case label reveals
-↓
-name reveals
-↓
-profile image reveals
-↓
-platform + username
-↓
-reach count
-↓
-recovery status
-↓
-recovery details
-↓
-client review
-↓
-social profile
-↓
-case summary
-↓
-final CTA
-
-Use subtle staggered reveals.
-
-Use the CURRENT WinsAble animation style wherever possible.
-
-Do not introduce a completely different animation library/system just for this page.
-
-==================================================
-15. BACKGROUND
-==================================================
-
-Keep the existing WinsAble dark background.
-
-Add only subtle movement:
-
-- very soft gradient drift
-- subtle glow behind profile
-- light grain/noise if already available
-- very subtle line/grid treatment if consistent with current site
-
-Do NOT create a distracting animated background.
-
-The content must remain readable.
-
-==================================================
-16. FINAL CTA
-==================================================
-
-At the bottom:
-
-START A CASE
-
-or
-
-START YOUR RECOVERY CASE
-
-Clicking it should open/use the existing Case Form.
-
-Do not create a second completely different submission form.
-
-==================================================
-17. NAVIGATION
-==================================================
-
-Keep the current WinsAble navigation.
-
-The Recovery Case page should feel like a natural part of the same site.
-
-Do not create a new navbar design.
-
-==================================================
-18. MOBILE
-==================================================
-
-The page must work properly on mobile.
-
-On mobile:
-
-- profile image scales naturally
-- name remains readable
-- metadata stacks cleanly
-- review remains readable
-- no horizontal overflow
-- no broken animations
-- no giant empty spaces
-
-==================================================
-19. DATA ARCHITECTURE
-==================================================
-
-Use the existing recovery data source.
-
-Do not hardcode each profile page separately.
-
-The page should be reusable:
-
-/recovery/harsh-babbar
-/recovery/reema-ghai
-/recovery/lakshay-chaudhary
-
-etc.
-
-The slug should resolve the correct recovery record.
-
-==================================================
-20. IMPORTANT TERMINOLOGY
-==================================================
-
-Use:
-
-Recovery Case
-Recovery Report
-Recovered Profile
-Recovery Details
-Recovery Status
-Recovery Date
-Client Review
-
-DO NOT use:
-
-Exclusive Talent
-Talent Profile
-Brand Partnership
-Campaign
-Talent Management
-
-The purpose is account/social-media recovery.
-
-==================================================
-21. DO NOT BREAK CURRENT WEBSITE
-==================================================
-
-After implementing this page:
-
-CHECK THAT:
-
-- Home still works
-- Services still works
-- How It Works still works
-- Platforms still works
-- FAQ still works
-- About still works
-- Recovery Wall still works
-- Recovery Wall animation is unchanged
-- Start a Case still works
-- Case Form still works
-- all existing animations still work
-- no global CSS was accidentally changed
-- no existing section was removed
-
-==================================================
-22. VERY IMPORTANT — EXISTING ANIMATIONS
-==================================================
-
-Before creating new animations, inspect the current project and reuse existing animation utilities/components where possible.
-
-Do NOT create duplicate animation systems.
-
-Do NOT replace working animations.
-
-The current website is intentionally very smooth.
-
-PRESERVE THAT FEEL.
-
-==================================================
-23. FINAL RESULT
-==================================================
-
-The final experience should feel like:
-
-User sees Recovery Cases
-↓
-clicks a recovery card
-↓
-smooth transition
-↓
-beautiful animated WinsAble Recovery Case page
-↓
-sees profile + platform + reach + recovery information
-↓
-reads client review
-↓
-opens Instagram/social profile if available
-↓
-sees recovery details
-↓
-can start their own recovery case
-
-It should feel premium, trustworthy, cinematic and distinctly WinsAble.
-
-Do not copy the reference site's branding or content.
-
-Only take inspiration from its rich animated case/profile presentation.
-
-==================================================
-FINAL RESPONSE
-==================================================
-
-After implementation, report briefly:
-
-1. Which files were changed
-2. Which route was created/updated
-3. What recovery information is displayed
-4. How the animation works
-5. Confirmation that existing WinsAble animations were preserved
-6. Confirmation that /recovery/[slug] works
-7. Confirmation that no /exclusive/[slug] terminology remains
-8. Build/test result
+Search the entire codebase for the old gold color variables/classes.
+
+Replace the website-wide gold accent with the new purple accent where appropriate.
+
+Also search for:
+- old gold gradients
+- gold box shadows
+- gold borders
+- gold hover states
+- gold text
+- gold SVG/icon colors
+
+Make sure the color system is consistent.
+
+Then run:
+
+- TypeScript/typecheck
+- production build
+
+Fix all errors.
+
+Finally report:
+1. Files changed
+2. Color system changed
+3. Corner decoration implementation
+4. Arrow → plus changes
+5. Font/text glitch fixes
+6. Build result
+7. Typecheck result
+8. Commit SHA

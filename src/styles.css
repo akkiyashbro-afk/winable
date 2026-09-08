@@ -6,7 +6,7 @@
 
 /*
  * WinsAble — Dark luxury design system.
- * Black/charcoal base, warm gold/bronze accents, glassmorphism.
+ * Black/charcoal base, electric purple accents, glassmorphism.
  */
 
 @theme inline {
@@ -40,8 +40,8 @@
   --color-paper: var(--paper);
   --color-paper-deep: var(--paper-deep);
   --color-rule: var(--rule);
-  --color-gold: var(--gold);
-  --color-gold-dim: var(--gold-dim);
+  --color-gold: var(--purple);
+  --color-gold-dim: var(--purple-dim);
   --color-surface: var(--surface);
   --color-surface-elevated: var(--surface-elevated);
   --font-display: var(--font-display-family);
@@ -51,13 +51,13 @@
 :root {
   --radius: 0.25rem;
 
-  /* Dark luxury palette */
+  /* Dark luxury palette — purple accent */
   --paper: oklch(0.13 0.005 260);
   --paper-deep: oklch(0.1 0.005 260);
   --ink: oklch(0.95 0.002 85);
   --rule: oklch(0.25 0.008 260);
-  --gold: oklch(0.75 0.12 75);
-  --gold-dim: oklch(0.6 0.1 75);
+  --purple: oklch(0.55 0.22 295);
+  --purple-dim: oklch(0.45 0.18 295);
   --surface: oklch(0.16 0.008 260);
   --surface-elevated: oklch(0.2 0.01 260);
 
@@ -67,19 +67,19 @@
   --card-foreground: var(--ink);
   --popover: oklch(0.17 0.008 260 / 0.95);
   --popover-foreground: var(--ink);
-  --primary: var(--gold);
-  --primary-foreground: oklch(0.1 0.005 260);
+  --primary: var(--purple);
+  --primary-foreground: oklch(0.98 0.002 85);
   --secondary: var(--surface);
   --secondary-foreground: var(--ink);
   --muted: var(--surface);
   --muted-foreground: oklch(0.6 0.01 260);
-  --accent: var(--gold);
-  --accent-foreground: oklch(0.1 0.005 260);
+  --accent: var(--purple);
+  --accent-foreground: oklch(0.98 0.002 85);
   --destructive: oklch(0.577 0.245 27.325);
   --destructive-foreground: oklch(0.985 0.006 85);
   --border: var(--rule);
   --input: var(--rule);
-  --ring: var(--gold);
+  --ring: var(--purple);
 
   --font-display-family: "Playfair Display", ui-serif, Georgia, serif;
   --font-sans-family: "Inter", ui-sans-serif, system-ui, sans-serif;
@@ -100,8 +100,8 @@
   }
 
   ::selection {
-    background-color: var(--gold);
-    color: oklch(0.1 0.005 260);
+    background-color: var(--purple);
+    color: oklch(0.98 0.002 85);
   }
 }
 
@@ -127,7 +127,7 @@
   font-weight: 600;
   letter-spacing: 0.18em;
   text-transform: uppercase;
-  color: var(--gold);
+  color: var(--purple);
 }
 
 @utility display {
@@ -147,6 +147,36 @@
   background: oklch(0.2 0.01 260 / 0.6);
   backdrop-filter: blur(20px) saturate(1.6);
   border: 1px solid oklch(0.35 0.012 260 / 0.6);
+}
+
+/* ===================== CORNER DECORATIONS ===================== */
+
+.corner-marks {
+  position: relative;
+}
+
+.corner-marks::before,
+.corner-marks::after {
+  content: "";
+  position: absolute;
+  width: 16px;
+  height: 16px;
+  pointer-events: none;
+  opacity: 0.25;
+}
+
+.corner-marks::before {
+  top: -1px;
+  left: -1px;
+  border-top: 1px solid var(--purple);
+  border-left: 1px solid var(--purple);
+}
+
+.corner-marks::after {
+  bottom: -1px;
+  right: -1px;
+  border-bottom: 1px solid var(--purple);
+  border-right: 1px solid var(--purple);
 }
 
 /* ======================== REVEAL ANIMATIONS ======================== */
@@ -270,7 +300,7 @@
   position: absolute;
   border-radius: 9999px;
   filter: blur(100px);
-  background: radial-gradient(circle at center, oklch(0.75 0.12 75 / 0.25), transparent 70%);
+  background: radial-gradient(circle at center, oklch(0.55 0.22 295 / 0.35), transparent 70%);
   pointer-events: none;
 }
 
@@ -278,7 +308,7 @@
   position: absolute;
   border-radius: 9999px;
   filter: blur(100px);
-  background: radial-gradient(circle at center, oklch(0.75 0.12 75 / 0.2), transparent 70%);
+  background: radial-gradient(circle at center, oklch(0.55 0.22 295 / 0.25), transparent 70%);
   pointer-events: none;
 }
 
@@ -292,7 +322,7 @@
     bottom: -4px;
     height: 1px;
     width: 0;
-    background: var(--gold);
+    background: var(--purple);
     transition: width 0.4s cubic-bezier(0.16, 1, 0.3, 1);
   }
 
@@ -302,15 +332,15 @@
 }
 
 @utility mark-highlight {
-  background: var(--gold);
-  color: oklch(0.1 0.005 260);
+  background: var(--purple);
+  color: oklch(0.98 0.002 85);
   padding-inline: 0.22em;
   box-decoration-break: clone;
 }
 
 @utility mark-highlight-dim {
-  background: oklch(0.75 0.12 75 / 0.15);
-  color: var(--gold);
+  background: oklch(0.55 0.22 295 / 0.15);
+  color: var(--purple);
   padding-inline: 0.22em;
   box-decoration-break: clone;
 }
@@ -372,7 +402,7 @@
     background: linear-gradient(
       110deg,
       transparent 35%,
-      oklch(0.75 0.12 75 / 0.06) 50%,
+      oklch(0.55 0.22 295 / 0.06) 50%,
       transparent 65%
     );
     transform: translateX(-120%);
@@ -431,7 +461,7 @@
     inset-inline: 0;
     top: 0;
     height: 45%;
-    background: var(--gold);
+    background: var(--purple);
     animation: winsable-cue 2.1s cubic-bezier(0.65, 0, 0.35, 1) infinite;
   }
 }
@@ -466,7 +496,7 @@
 @utility spotlight {
   background: radial-gradient(
     16rem 16rem at var(--mx, 50%) var(--my, 0%),
-    oklch(0.75 0.12 75 / 0.12),
+    oklch(0.55 0.22 295 / 0.12),
     transparent 70%
   );
 }
@@ -522,8 +552,8 @@
 
   &:hover {
     transform: rotate(0deg) scale(1.05) !important;
-    box-shadow: 0 30px 80px -30px oklch(0.75 0.12 75 / 0.3);
-    border-color: oklch(0.75 0.12 75 / 0.3);
+    box-shadow: 0 30px 80px -30px oklch(0.55 0.22 295 / 0.3);
+    border-color: oklch(0.55 0.22 295 / 0.3);
     z-index: 40;
   }
 }

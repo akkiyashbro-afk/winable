@@ -239,7 +239,7 @@ function TalentCard({
 
   return (
     <div
-      className="editorial-card group relative shrink-0 overflow-hidden rounded-xl border border-white/[0.08] bg-surface/80 backdrop-blur-sm"
+      className="corner-marks editorial-card group relative shrink-0 overflow-hidden rounded-xl border border-white/[0.08] bg-surface/80 backdrop-blur-sm"
       style={{
         transform: `rotate(${rotation}deg)`,
         width: "clamp(220px, 22vw, 300px)",
@@ -253,7 +253,7 @@ function TalentCard({
           <div
             className="absolute inset-0"
             style={{
-              backgroundImage: `radial-gradient(circle at 30% 40%, oklch(0.75 0.12 75 / 0.5) 0%, transparent 50%),
+              backgroundImage: `radial-gradient(circle at 30% 40%, oklch(0.55 0.22 295 / 0.5) 0%, transparent 50%),
                                 radial-gradient(circle at 70% 60%, oklch(0.55 0.15 280 / 0.3) 0%, transparent 50%)`,
             }}
           />

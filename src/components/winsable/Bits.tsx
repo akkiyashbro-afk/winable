@@ -43,7 +43,7 @@ export function CtaLink({
     "group inline-flex items-center gap-2 rounded-full px-6 py-3 text-sm font-semibold transition-all duration-300";
   const styles = {
     solid:
-      "bg-gold text-background hover:bg-gold-dim hover:shadow-[0_0_30px_oklch(0.75_0.12_75/0.3)]",
+      "bg-gold text-background hover:bg-gold-dim hover:shadow-[0_0_30px_oklch(0.55_0.22_295/0.3)]",
     accent: "bg-gold/10 text-gold border border-gold/30 hover:bg-gold/20 hover:border-gold/50",
     outline:
       "border border-white/20 text-foreground hover:border-gold/50 hover:bg-gold/10 hover:text-gold",

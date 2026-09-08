@@ -184,7 +184,7 @@ export function CaseForm() {
         </Reveal>
 
         {/* Form Steps */}
-        <div className="mt-8 glass rounded-2xl p-6 md:p-8">
+        <div className="corner-marks mt-8 glass rounded-2xl p-6 md:p-8">
           {step === 0 && (
             <Reveal variant="left">
               <h3 className="text-lg font-semibold mb-6">Your Details</h3>
