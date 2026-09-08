@@ -418,26 +418,6 @@ const defaultServices: (ServiceType & { span: string })[] = [
     enabled: true,
     span: "lg:col-span-4",
   },
-  {
-    id: "s7",
-    n: "07",
-    title: "Phishing Breach",
-    icon: "recovery",
-    body: "Assistance when your account has been compromised through phishing or social engineering attacks.",
-    tags: ["Breach assessment", "Recovery plan", "Security hardening"],
-    enabled: true,
-    span: "lg:col-span-4",
-  },
-  {
-    id: "s8",
-    n: "08",
-    title: "Business Manager Breach",
-    icon: "hacked",
-    body: "Help recovering compromised business managers, ad accounts and associated assets.",
-    tags: ["Access audit", "Asset recovery", "Admin restoration"],
-    enabled: true,
-    span: "lg:col-span-4",
-  },
 ];
 
 export function Services() {
@@ -827,7 +807,7 @@ const faqs = [
   },
   {
     q: "Which situations do you work on?",
-    a: "Account recovery, disabled accounts, impersonation, copyright assistance, hacked/compromised accounts, phishing breaches, business manager breaches, and general platform support requests.",
+    a: "Account recovery, disabled accounts, impersonation, copyright assistance, hacked/compromised accounts, and general platform support requests.",
   },
   {
     q: "What do you need from me to start?",

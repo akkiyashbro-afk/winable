@@ -111,24 +111,6 @@
       "body": "General assistance with preparing support requests for various platform issues.",
       "tags": ["Right channel", "Clear summary"],
       "enabled": true
-    },
-    {
-      "id": "s7",
-      "n": "07",
-      "title": "Phishing Breach",
-      "icon": "recovery",
-      "body": "Assistance when your account has been compromised through phishing or social engineering attacks.",
-      "tags": ["Breach assessment", "Recovery plan", "Security hardening"],
-      "enabled": true
-    },
-    {
-      "id": "s8",
-      "n": "08",
-      "title": "Business Manager Breach",
-      "icon": "hacked",
-      "body": "Help recovering compromised business managers, ad accounts and associated assets.",
-      "tags": ["Access audit", "Asset recovery", "Admin restoration"],
-      "enabled": true
     }
   ],
   "talents": [
@@ -138,9 +120,18 @@
       "slug": "harsh-babbar",
       "mainImage": "",
       "profileImage": "",
-      "category": "Content Creator",
+      "category": "Instagram",
       "bio": "Digital content creator and social media strategist with a passion for storytelling.",
       "totalReach": "2.5M+",
+      "username": "@harshbabbar",
+      "followers": "2.5M",
+      "verified": true,
+      "recoveryType": "Account Takeover",
+      "recoveryDate": "Jun 3, 2026",
+      "review": {
+        "quote": "They didn't just recover my account — they restored a decade of brand equity. Calm, forensic, relentless.",
+        "rating": 5
+      },
       "socials": {
         "instagram": "https://instagram.com/harshbabbar",
         "youtube": "https://youtube.com/@harshbabbar"
@@ -161,9 +152,18 @@
       "slug": "reema-ghai",
       "mainImage": "",
       "profileImage": "",
-      "category": "Lifestyle Creator",
+      "category": "Instagram",
       "bio": "Lifestyle and fashion content creator with an eye for aesthetics.",
       "totalReach": "1.8M+",
+      "username": "@reemaghai",
+      "followers": "1.8M",
+      "verified": true,
+      "recoveryType": "Impersonation",
+      "recoveryDate": "May 28, 2026",
+      "review": {
+        "quote": "I had lost hope after 3 weeks of automated support. WinsAble had me back online in under a week.",
+        "rating": 5
+      },
       "socials": {
         "instagram": "https://instagram.com/reemaghai"
       },
@@ -183,9 +183,18 @@
       "slug": "lakshay-chaudhary",
       "mainImage": "",
       "profileImage": "",
-      "category": "Entertainment Creator",
+      "category": "YouTube",
       "bio": "Entertainment and comedy content creator with millions of followers.",
       "totalReach": "5M+",
+      "username": "@lakshaychaudhary",
+      "followers": "5M",
+      "verified": true,
+      "recoveryType": "Account Takeover",
+      "recoveryDate": "May 15, 2026",
+      "review": {
+        "quote": "Discreet, encrypted, human. My clients never even knew there was an incident.",
+        "rating": 5
+      },
       "socials": {
         "instagram": "https://instagram.com/lakshaychaudhary",
         "youtube": "https://youtube.com/@lakshaychaudhary",

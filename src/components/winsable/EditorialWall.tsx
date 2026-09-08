@@ -122,7 +122,7 @@ const defaultTalents: Talent[] = [
     username: "@anushkatripathi",
     followers: "900K",
     verified: false,
-    recoveryType: "Phishing Breach",
+    recoveryType: "Account Recovery",
     recoveryDate: "Jun 12, 2026",
     review: {
       quote: "48 hours from panic to peace. I've never seen a team move with such clarity.",
