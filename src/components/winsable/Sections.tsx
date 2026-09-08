@@ -635,6 +635,21 @@ export function Process() {
   );
 }
 
+/* ----------------------------- WINSABLE SYMBOL ----------------------------- */
+
+export function WinsAbleSymbol() {
+  return (
+    <div className="shell py-12 flex justify-center">
+      <img
+        src="/logo-symbol.jpg"
+        alt="WinsAble"
+        className="h-16 w-auto object-contain opacity-30"
+        loading="lazy"
+      />
+    </div>
+  );
+}
+
 /* ----------------------------- FEATURED CASE ----------------------------- */
 
 export function FeaturedScenario() {
@@ -946,7 +961,10 @@ export function Footer() {
           <div className="md:col-span-5">
             <div className="flex items-center gap-3">
               <LogoMark className="h-10 w-10 rounded-sm object-cover" />
-              <span className="display text-2xl tracking-tight">WINSABLE</span>
+              <div>
+                <span className="display text-2xl tracking-tight">WINSABLE</span>
+                <span className="block text-xs tracking-[0.15em] text-gold/60 uppercase">Reputation Management</span>
+              </div>
             </div>
             <p className="mt-4 max-w-xs text-sm leading-relaxed text-white/40">
               Professional assistance for social media account recovery, appeals, impersonation,

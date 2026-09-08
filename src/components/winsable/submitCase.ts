@@ -5,14 +5,13 @@ import { generateCaseId } from "@/lib/validation";
 const caseFormValidator = (input: {
   fullName: string;
   email: string;
-  phone: string;
-  country: string;
   platform: string;
   otherPlatform: string;
   caseType: string;
   username: string;
-  profileUrl: string;
-  incidentDate: string;
+  followers: string;
+  alreadySubmittedAppeal: string;
+  canStillLogin: string;
   description: string;
 }) => input;
 
@@ -44,13 +43,12 @@ export const submitCaseFn = createServerFn({ method: "POST" as const })
       submittedAt,
       fullName: data.fullName,
       email: data.email,
-      phone: data.phone || "",
-      country: data.country || "",
       platform,
       caseType: data.caseType,
       username: data.username || "",
-      profileUrl: data.profileUrl || "",
-      incidentDate: data.incidentDate || "",
+      followers: data.followers || "",
+      alreadySubmittedAppeal: data.alreadySubmittedAppeal || "",
+      canStillLogin: data.canStillLogin || "",
       description: data.description,
       attachmentNames: [],
     });

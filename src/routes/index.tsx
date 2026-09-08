@@ -19,6 +19,7 @@ import {
   Services,
   TextBand,
   TrustBar,
+  WinsAbleSymbol,
 } from "@/components/winsable/Sections";
 
 const title = "WinsAble — Social Media Case & Support Assistance";
@@ -72,6 +73,7 @@ function Index() {
         <Services />
         <TextBand />
         <Process />
+        <WinsAbleSymbol />
         <Coverage />
         <FeaturedScenario />
         <Philosophy />

@@ -15,13 +15,12 @@ interface CaseEmailPayload {
   submittedAt: string;
   fullName: string;
   email: string;
-  phone: string;
-  country: string;
   platform: string;
   caseType: string;
   username: string;
-  profileUrl: string;
-  incidentDate: string;
+  followers: string;
+  alreadySubmittedAppeal: string;
+  canStillLogin: string;
   description: string;
   attachmentNames: string[];
 }
@@ -67,14 +66,6 @@ function internalCaseEmail(payload: CaseEmailPayload) {
                 <td style="padding:8px 0;color:#f5f5f5;font-size:14px;">${escapeHtml(payload.email)}</td>
               </tr>
               <tr>
-                <td style="padding:8px 0;color:#888;font-size:13px;">Phone</td>
-                <td style="padding:8px 0;color:#f5f5f5;font-size:14px;">${escapeHtml(payload.phone || "N/A")}</td>
-              </tr>
-              <tr>
-                <td style="padding:8px 0;color:#888;font-size:13px;">Country</td>
-                <td style="padding:8px 0;color:#f5f5f5;font-size:14px;">${escapeHtml(payload.country || "N/A")}</td>
-              </tr>
-              <tr>
                 <td style="padding:8px 0;color:#888;font-size:13px;">Platform</td>
                 <td style="padding:8px 0;color:#f5f5f5;font-size:14px;">${escapeHtml(payload.platform)}</td>
               </tr>
@@ -87,12 +78,16 @@ function internalCaseEmail(payload: CaseEmailPayload) {
                 <td style="padding:8px 0;color:#f5f5f5;font-size:14px;">${escapeHtml(payload.username || "N/A")}</td>
               </tr>
               <tr>
-                <td style="padding:8px 0;color:#888;font-size:13px;">Profile URL</td>
-                <td style="padding:8px 0;color:#f5f5f5;font-size:14px;">${escapeHtml(payload.profileUrl || "N/A")}</td>
+                <td style="padding:8px 0;color:#888;font-size:13px;">Followers</td>
+                <td style="padding:8px 0;color:#f5f5f5;font-size:14px;">${escapeHtml(payload.followers || "N/A")}</td>
               </tr>
               <tr>
-                <td style="padding:8px 0;color:#888;font-size:13px;">Incident Date</td>
-                <td style="padding:8px 0;color:#f5f5f5;font-size:14px;">${escapeHtml(payload.incidentDate || "N/A")}</td>
+                <td style="padding:8px 0;color:#888;font-size:13px;">Appeal Submitted?</td>
+                <td style="padding:8px 0;color:#f5f5f5;font-size:14px;">${escapeHtml(payload.alreadySubmittedAppeal || "N/A")}</td>
+              </tr>
+              <tr>
+                <td style="padding:8px 0;color:#888;font-size:13px;">Can Still Login?</td>
+                <td style="padding:8px 0;color:#f5f5f5;font-size:14px;">${escapeHtml(payload.canStillLogin || "N/A")}</td>
               </tr>
               <tr>
                 <td style="padding:8px 0;color:#888;font-size:13px;vertical-align:top;">Description</td>

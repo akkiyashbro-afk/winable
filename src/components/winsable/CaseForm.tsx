@@ -8,17 +8,30 @@ import { Reveal } from "./Reveal";
 
 const steps = ["Details", "Platform", "Case", "Review", "Done"] as const;
 
-const platforms = ["Instagram", "Facebook", "TikTok", "YouTube", "X (Twitter)", "LinkedIn", "Other"] as const;
-const caseTypes = [
-  "Account Recovery",
-  "Disabled Account",
-  "Impersonation",
-  "Copyright",
-  "Hacked Account",
-  "Phishing Breach",
-  "Business Manager Breach",
+const platforms = [
+  "Instagram",
+  "WhatsApp",
+  "Facebook",
+  "TikTok",
+  "YouTube",
+  "X (Twitter)",
+  "Telegram",
+  "Reddit",
+  "Discord",
   "Other",
 ] as const;
+
+const caseTypes = [
+  "Disabled / Suspended Account",
+  "Hacked / Compromised Account",
+  "Impersonation",
+  "Copyright / Content Issue",
+  "Other / Not Listed?",
+] as const;
+
+const MAX_FILES = 4;
+const MAX_SIZE_MB = 5;
+const ALLOWED_TYPES = ["image/jpeg", "image/png", "application/pdf"];
 
 export function CaseForm() {
   const [step, setStep] = useState(0);
@@ -27,6 +40,7 @@ export function CaseForm() {
     null,
   );
   const [files, setFiles] = useState<File[]>([]);
+  const [fileError, setFileError] = useState<string>("");
   const fileRef = useRef<HTMLInputElement>(null);
 
   const form = useForm<CaseFormInput>({
@@ -35,15 +49,11 @@ export function CaseForm() {
     defaultValues: {
       fullName: "",
       email: "",
-      phone: "",
-      country: "",
       platform: "Instagram",
       otherPlatform: "",
-      caseType: "Account Recovery",
+      caseType: "Disabled / Suspended Account",
       username: "",
       followers: "",
-      profileUrl: "",
-      incidentDate: "",
       alreadySubmittedAppeal: "no",
       canStillLogin: "no",
       description: "",
@@ -67,8 +77,37 @@ export function CaseForm() {
   }
 
   function handleFileChange(e: React.ChangeEvent<HTMLInputElement>) {
+    setFileError("");
     const selected = Array.from(e.target.files || []);
-    setFiles(selected.slice(0, 4));
+    const valid: File[] = [];
+
+    for (const file of selected) {
+      if (valid.length >= MAX_FILES) {
+        setFileError(`Maximum ${MAX_FILES} files allowed.`);
+        break;
+      }
+      if (!ALLOWED_TYPES.includes(file.type)) {
+        setFileError(`"${file.name}" is not a supported format. Use JPG, PNG, or PDF.`);
+        break;
+      }
+      if (file.size > MAX_SIZE_MB * 1024 * 1024) {
+        setFileError(`"${file.name}" exceeds ${MAX_SIZE_MB}MB limit.`);
+        break;
+      }
+      valid.push(file);
+    }
+
+    setFiles((prev) => {
+      const combined = [...prev, ...valid].slice(0, MAX_FILES);
+      return combined;
+    });
+
+    if (fileRef.current) fileRef.current.value = "";
+  }
+
+  function removeFile(index: number) {
+    setFiles((prev) => prev.filter((_, i) => i !== index));
+    setFileError("");
   }
 
   const submitCase = useServerFn(submitCaseFn);
@@ -80,15 +119,11 @@ export function CaseForm() {
         data: {
           fullName: data.fullName,
           email: data.email,
-          phone: data.phone || "",
-          country: data.country || "",
           platform: data.platform || "",
           otherPlatform: data.otherPlatform || "",
           caseType: data.caseType || "",
           username: data.username || "",
           followers: data.followers || "",
-          profileUrl: data.profileUrl || "",
-          incidentDate: data.incidentDate || "",
           alreadySubmittedAppeal: data.alreadySubmittedAppeal || "",
           canStillLogin: data.canStillLogin || "",
           description: data.description,
@@ -165,22 +200,6 @@ export function CaseForm() {
                     className={inputClass}
                   />
                 </Field>
-                <div className="grid grid-cols-2 gap-4">
-                  <Field label="Phone (optional)" error={errors.phone?.message}>
-                    <input
-                      {...register("phone")}
-                      placeholder="+1 234 567 890"
-                      className={inputClass}
-                    />
-                  </Field>
-                  <Field label="Country (optional)" error={errors.country?.message}>
-                    <input
-                      {...register("country")}
-                      placeholder="United States"
-                      className={inputClass}
-                    />
-                  </Field>
-                </div>
               </div>
               <NavButtons onNext={next} />
             </Reveal>
@@ -223,6 +242,11 @@ export function CaseForm() {
                   />
                 </Field>
               )}
+              {watched.platform === "Other" && (
+                <p className="mt-2 text-xs text-gold/60">
+                  Tell Me What Happened → Get a Custom Quote
+                </p>
+              )}
               <NavButtons onPrev={prev} onNext={next} />
             </Reveal>
           )}
@@ -233,7 +257,7 @@ export function CaseForm() {
               <div className="space-y-4">
                 <Field label="Case Type *" error={errors.caseType?.message}>
                   <select {...register("caseType")} className={inputClass}>
-                    <option value="">Select case type</option>
+                    <option value="">Select the issue you&apos;re facing</option>
                     {caseTypes.map((c) => (
                       <option key={c} value={c}>
                         {c}
@@ -241,30 +265,23 @@ export function CaseForm() {
                     ))}
                   </select>
                 </Field>
+                {watched.caseType === "Other / Not Listed?" && (
+                  <p className="text-xs text-gold/60">
+                    Tell Me How I Can Help → Get a Custom Quote
+                  </p>
+                )}
                 <div className="grid grid-cols-2 gap-4">
-                  <Field label="Username (optional)" error={errors.username?.message}>
+                  <Field label="Username" error={errors.username?.message}>
                     <input
                       {...register("username")}
                       placeholder="@username"
                       className={inputClass}
                     />
                   </Field>
-                  <Field label="Followers (optional)" error={errors.followers?.message}>
+                  <Field label="Followers Count" error={errors.followers?.message}>
                     <input
                       {...register("followers")}
                       placeholder="e.g. 128K"
-                      className={inputClass}
-                    />
-                  </Field>
-                </div>
-                <div className="grid grid-cols-2 gap-4">
-                  <Field label="Incident Date (optional)" error={errors.incidentDate?.message}>
-                    <input {...register("incidentDate")} type="date" className={inputClass} />
-                  </Field>
-                  <Field label="Profile URL (optional)" error={errors.profileUrl?.message}>
-                    <input
-                      {...register("profileUrl")}
-                      placeholder="https://..."
                       className={inputClass}
                     />
                   </Field>
@@ -287,11 +304,18 @@ export function CaseForm() {
                   <textarea
                     {...register("description")}
                     rows={5}
-                    placeholder="Describe what happened, when it started, and any steps you've already taken..."
+                    placeholder="Tell me what happened, when the issue started, and what you've already tried..."
                     className={`${inputClass} resize-none`}
                   />
+                  <p className="mt-1 text-xs text-white/30 italic">
+                    Don&apos;t Take Help From Any AI, Write Down Your Own
+                  </p>
                 </Field>
-                <Field label="Attachments (optional — max 4, JPG/PNG/PDF, 5MB each)">
+                <div>
+                  <label className="block text-sm font-medium text-white/70 mb-1.5">
+                    Screenshot Of Problem (max 4)
+                  </label>
+                  <p className="mb-2 text-xs text-white/40">JPG, PNG or PDF • 5MB each</p>
                   <input
                     ref={fileRef}
                     type="file"
@@ -311,6 +335,7 @@ export function CaseForm() {
                     </svg>
                     {files.length > 0 ? `${files.length} file(s) selected` : "Choose files"}
                   </button>
+                  {fileError && <p className="mt-1 text-xs text-red-400">{fileError}</p>}
                   {files.length > 0 && (
                     <div className="mt-2 space-y-1">
                       {files.map((f, i) => (
@@ -318,11 +343,11 @@ export function CaseForm() {
                           key={i}
                           className="flex items-center justify-between text-xs text-white/40"
                         >
-                          <span>{f.name}</span>
+                          <span className="truncate">{f.name}</span>
                           <button
                             type="button"
-                            onClick={() => setFiles(files.filter((_, j) => j !== i))}
-                            className="text-red-400 hover:text-red-300"
+                            onClick={() => removeFile(i)}
+                            className="ml-2 text-red-400 hover:text-red-300 shrink-0"
                           >
                             Remove
                           </button>
@@ -330,7 +355,7 @@ export function CaseForm() {
                       ))}
                     </div>
                   )}
-                </Field>
+                </div>
               </div>
               <NavButtons onPrev={prev} onNext={next} />
             </Reveal>
@@ -342,13 +367,12 @@ export function CaseForm() {
               <div className="space-y-3 text-sm">
                 <SummaryRow label="Name" value={watched.fullName} />
                 <SummaryRow label="Email" value={watched.email} />
-                <SummaryRow label="Phone" value={watched.phone || "N/A"} />
-                <SummaryRow label="Country" value={watched.country || "N/A"} />
                 <SummaryRow label="Platform" value={watched.platform} />
                 <SummaryRow label="Case Type" value={watched.caseType} />
                 <SummaryRow label="Username" value={watched.username || "N/A"} />
-                <SummaryRow label="Profile URL" value={watched.profileUrl || "N/A"} />
-                <SummaryRow label="Incident Date" value={watched.incidentDate || "N/A"} />
+                <SummaryRow label="Followers" value={watched.followers || "N/A"} />
+                <SummaryRow label="Appeal Submitted" value={watched.alreadySubmittedAppeal || "N/A"} />
+                <SummaryRow label="Can Login" value={watched.canStillLogin || "N/A"} />
                 <SummaryRow label="Description" value={watched.description} />
                 {files.length > 0 && (
                   <SummaryRow label="Attachments" value={files.map((f) => f.name).join(", ")} />
@@ -449,7 +473,7 @@ function NavButtons({ onPrev, onNext }: { onPrev?: () => void; onNext: () => voi
         onClick={onNext}
         className="flex-1 rounded-xl bg-gold px-6 py-3.5 text-sm font-bold text-black transition-all hover:brightness-110"
       >
-        Continue
+        Continue →
       </button>
     </div>
   );
