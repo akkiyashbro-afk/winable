@@ -51,7 +51,7 @@ export function Nav() {
       <div className="shell flex h-20 items-center justify-between gap-6">
         <a href="#top" className="flex items-center gap-3">
           <img
-            src="/logo-full.jpg"
+            src="/navbar.png"
             alt="WinsAble"
             className="h-9 w-auto object-contain"
             width={160}

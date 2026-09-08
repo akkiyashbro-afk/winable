@@ -1050,14 +1050,6 @@ function AdminDashboard() {
                     )}
                   </div>
                   <div className="flex gap-1">
-                    <a
-                      href={`/recovery/${t.slug}`}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="rounded px-2 py-1 text-xs text-white/40 hover:bg-white/5 hover:text-foreground"
-                    >
-                      View
-                    </a>
                     <button
                       onClick={() => {
                         setEditingTalent(t);

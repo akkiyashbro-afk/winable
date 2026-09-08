@@ -238,8 +238,7 @@ function TalentCard({
     .toUpperCase();
 
   return (
-    <a
-      href={`/recovery/${talent.slug}`}
+    <div
       className="editorial-card group relative shrink-0 overflow-hidden rounded-xl border border-white/[0.08] bg-surface/80 backdrop-blur-sm"
       style={{
         transform: `rotate(${rotation}deg)`,
@@ -320,12 +319,11 @@ function TalentCard({
               </svg>
             )}
             <span className="ml-auto text-[0.6rem] font-medium text-white/30 transition-colors group-hover:text-gold/60">
-              View Case →
             </span>
+          </div>
           </div>
         </div>
       </div>
-    </a>
   );
 }
 

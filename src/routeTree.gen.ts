@@ -11,7 +11,6 @@
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as AdminIndexRouteImport } from './routes/admin/index'
-import { Route as RecoverySlugRouteImport } from './routes/recovery/$slug'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
@@ -23,39 +22,30 @@ const AdminIndexRoute = AdminIndexRouteImport.update({
   path: '/admin/',
   getParentRoute: () => rootRouteImport,
 } as any)
-const RecoverySlugRoute = RecoverySlugRouteImport.update({
-  id: '/recovery/$slug',
-  path: '/recovery/$slug',
-  getParentRoute: () => rootRouteImport,
-} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
-  '/recovery/$slug': typeof RecoverySlugRoute
   '/admin/': typeof AdminIndexRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
-  '/recovery/$slug': typeof RecoverySlugRoute
   '/admin': typeof AdminIndexRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
-  '/recovery/$slug': typeof RecoverySlugRoute
   '/admin/': typeof AdminIndexRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/recovery/$slug' | '/admin/'
+  fullPaths: '/' | '/admin/'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/recovery/$slug' | '/admin'
-  id: '__root__' | '/' | '/recovery/$slug' | '/admin/'
+  to: '/' | '/admin'
+  id: '__root__' | '/' | '/admin/'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
-  RecoverySlugRoute: typeof RecoverySlugRoute
   AdminIndexRoute: typeof AdminIndexRoute
 }
 
@@ -75,19 +65,11 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AdminIndexRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/recovery/$slug': {
-      id: '/recovery/$slug'
-      path: '/recovery/$slug'
-      fullPath: '/recovery/$slug'
-      preLoaderRoute: typeof RecoverySlugRouteImport
-      parentRoute: typeof rootRouteImport
-    }
   }
 }
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
-  RecoverySlugRoute: RecoverySlugRoute,
   AdminIndexRoute: AdminIndexRoute,
 }
 export const routeTree = rootRouteImport
