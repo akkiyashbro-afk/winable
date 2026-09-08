@@ -96,10 +96,7 @@ export function Hero() {
         <div className="grid gap-14 lg:grid-cols-12 lg:gap-8">
           <div className="lg:col-span-7">
             <Reveal variant="left">
-              <span className="inline-flex items-center gap-3 rounded-full border border-gold/20 bg-gold/[0.06] px-2 py-1.5 pr-4">
-                <span className="rounded-full bg-gold px-2.5 py-1 text-[0.65rem] font-bold tracking-[0.12em] text-background">
-                  2026
-                </span>
+              <span className="inline-flex items-center rounded-full border border-gold/20 bg-gold/[0.06] px-4 py-1.5">
                 <span className="text-xs font-medium tracking-[0.06em] text-white/50">
                   Real Cases. Clearer Support.
                 </span>

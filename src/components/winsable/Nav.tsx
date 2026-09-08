@@ -53,9 +53,7 @@ export function Nav() {
           <img
             src="/navbar.png"
             alt="WinsAble"
-            className="h-9 w-auto object-contain"
-            width={160}
-            height={36}
+            className="h-10 w-auto object-contain"
           />
         </a>
 
