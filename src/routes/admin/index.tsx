@@ -1,5 +1,6 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { useState, useEffect, useCallback } from "react";
+import { getCasesFn, downloadExcelFn } from "@/components/winsable/cases";
 
 export const Route = createFileRoute("/admin/")({
   component: AdminPage,
@@ -203,7 +204,10 @@ function LoginScreen({ onLogin }: { onLogin: () => void }) {
 
 function AdminDashboard() {
   const [data, setData] = useState<SiteData | null>(null);
-  const [tab, setTab] = useState<"reviews" | "services" | "talents" | "content">("reviews");
+  const [tab, setTab] = useState<"reviews" | "services" | "talents" | "content" | "cases">("reviews");
+  const [cases, setCases] = useState<any[]>([]);
+  const [casesLoading, setCasesLoading] = useState(false);
+  const [excelLoading, setExcelLoading] = useState(false);
   const [editingReview, setEditingReview] = useState<Review | null>(null);
   const [editingService, setEditingService] = useState<Service | null>(null);
   const [editingTalent, setEditingTalent] = useState<Talent | null>(null);
@@ -273,7 +277,7 @@ function AdminDashboard() {
       {/* Tabs */}
       <div className="border-b border-white/[0.06]">
         <div className="shell flex gap-1 py-2">
-          {(["reviews", "services", "talents", "content"] as const).map((t) => (
+          {(["reviews", "services", "talents", "content", "cases"] as const).map((t) => (
             <button
               key={t}
               onClick={() => {
@@ -1207,13 +1211,120 @@ function AdminDashboard() {
             </div>
           </div>
         )}
+
+        {/* ---- CASES TAB ---- */}
+        {tab === "cases" && (
+          <div>
+            <div className="mb-6 flex items-center justify-between">
+              <h2 className="display text-2xl">Cases</h2>
+              <div className="flex gap-2">
+                <button
+                  onClick={async () => {
+                    setCasesLoading(true);
+                    const result = await getCasesFn();
+                    if (result.ok) setCases(result.cases);
+                    setCasesLoading(false);
+                  }}
+                  className="rounded-lg border border-white/10 px-4 py-2 text-sm text-white/50 hover:text-foreground"
+                >
+                  {casesLoading ? "Loading..." : "Refresh"}
+                </button>
+                <button
+                  onClick={async () => {
+                    setExcelLoading(true);
+                    const result = await downloadExcelFn();
+                    if (result.ok) {
+                      const binary = atob(result.data);
+                      const bytes = new Uint8Array(binary.length);
+                      for (let i = 0; i < binary.length; i++) bytes[i] = binary.charCodeAt(i);
+                      const blob = new Blob([bytes], {
+                        type: "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
+                      });
+                      const url = URL.createObjectURL(blob);
+                      const a = document.createElement("a");
+                      a.href = url;
+                      a.download = `cases-${new Date().toISOString().split("T")[0]}.xlsx`;
+                      a.click();
+                      URL.revokeObjectURL(url);
+                    }
+                    setExcelLoading(false);
+                  }}
+                  className="rounded-lg bg-gold px-4 py-2 text-sm font-semibold text-background hover:bg-gold-dim"
+                >
+                  {excelLoading ? "Generating..." : "Download Excel"}
+                </button>
+              </div>
+            </div>
+
+            {cases.length === 0 && !casesLoading && (
+              <div className="rounded-xl border border-white/[0.06] bg-surface/50 p-8 text-center">
+                <p className="text-white/40">
+                  No cases found. Click "Refresh" to load cases from MongoDB.
+                </p>
+                <p className="mt-2 text-xs text-white/25">
+                  Make sure MONGODB_URI is configured in your environment.
+                </p>
+              </div>
+            )}
+
+            {cases.length > 0 && (
+              <div className="overflow-x-auto">
+                <table className="w-full text-left text-sm">
+                  <thead>
+                    <tr className="border-b border-white/[0.06]">
+                      <th className="px-3 py-2 text-xs font-semibold text-gold">Case ID</th>
+                      <th className="px-3 py-2 text-xs font-semibold text-gold">Name</th>
+                      <th className="px-3 py-2 text-xs font-semibold text-gold">Email</th>
+                      <th className="px-3 py-2 text-xs font-semibold text-gold">Platform</th>
+                      <th className="px-3 py-2 text-xs font-semibold text-gold">Case Type</th>
+                      <th className="px-3 py-2 text-xs font-semibold text-gold">Status</th>
+                      <th className="px-3 py-2 text-xs font-semibold text-gold">Submitted</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {cases.map((c: any) => (
+                      <tr key={c.caseId} className="border-b border-white/[0.03] hover:bg-white/[0.02]">
+                        <td className="px-3 py-2 font-mono text-xs text-gold">{c.caseId}</td>
+                        <td className="px-3 py-2">{c.fullName}</td>
+                        <td className="px-3 py-2 text-white/50">{c.email}</td>
+                        <td className="px-3 py-2">
+                          <span className="rounded bg-gold/10 px-1.5 py-0.5 text-[10px] text-gold">
+                            {c.platform}
+                          </span>
+                        </td>
+                        <td className="px-3 py-2 text-white/50">{c.caseType}</td>
+                        <td className="px-3 py-2">
+                          <span className={`rounded px-1.5 py-0.5 text-[10px] ${
+                            c.status === "new" ? "bg-blue-400/10 text-blue-400" :
+                            c.status === "in_progress" ? "bg-yellow-400/10 text-yellow-400" :
+                            c.status === "resolved" ? "bg-green-400/10 text-green-400" :
+                            "bg-white/5 text-white/30"
+                          }`}>
+                            {c.status?.toUpperCase()}
+                          </span>
+                        </td>
+                        <td className="px-3 py-2 text-xs text-white/30">
+                          {c.submittedAt ? new Date(c.submittedAt).toLocaleDateString() : ""}
+                        </td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+              </div>
+            )}
+          </div>
+        )}
       </div>
     </div>
   );
 }
 
 function AdminPage() {
-  const [authed, setAuthed] = useState(() => sessionStorage.getItem(PASSWORD_KEY) === "1");
+  const [authed, setAuthed] = useState(false);
+
+  useEffect(() => {
+    setAuthed(sessionStorage.getItem(PASSWORD_KEY) === "1");
+  }, []);
 
   if (!authed) return <LoginScreen onLogin={() => setAuthed(true)} />;
   return <AdminDashboard />;

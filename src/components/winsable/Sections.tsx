@@ -615,21 +615,6 @@ export function Process() {
   );
 }
 
-/* ----------------------------- WINSABLE SYMBOL ----------------------------- */
-
-export function WinsAbleSymbol() {
-  return (
-    <div className="shell py-12 flex justify-center">
-      <img
-        src="/logo-symbol.jpg"
-        alt="WinsAble"
-        className="h-16 w-auto object-contain opacity-30"
-        loading="lazy"
-      />
-    </div>
-  );
-}
-
 /* ----------------------------- FEATURED CASE ----------------------------- */
 
 export function FeaturedScenario() {

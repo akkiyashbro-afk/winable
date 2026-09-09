@@ -1,6 +1,8 @@
 import { createServerFn } from "@tanstack/react-start";
 import { sendCaseEmails } from "@/lib/email";
 import { generateCaseId } from "@/lib/validation";
+import { getMongooseConnection } from "@/lib/mongodb";
+import { CaseModel } from "@/lib/models/Case";
 
 const caseFormValidator = (input: {
   fullName: string;
@@ -27,20 +29,48 @@ export const submitCaseFn = createServerFn({ method: "POST" as const })
     }
 
     const caseId = generateCaseId();
-    const submittedAt = new Date().toLocaleString("en-US", {
-      timeZone: "UTC",
-      dateStyle: "medium",
-      timeStyle: "short",
-    });
+    const submittedAt = new Date();
 
     const platform =
       data.platform === "Other" && data.otherPlatform
         ? `Other — ${data.otherPlatform}`
         : data.platform;
 
+    // 1. Save to MongoDB
+    let mongoSaved = false;
+    try {
+      await getMongooseConnection();
+      await CaseModel.create({
+        caseId,
+        fullName: data.fullName,
+        email: data.email,
+        platform,
+        otherPlatform: data.otherPlatform || undefined,
+        caseType: data.caseType,
+        username: data.username || undefined,
+        followers: data.followers || undefined,
+        alreadySubmittedAppeal: data.alreadySubmittedAppeal || undefined,
+        canStillLogin: data.canStillLogin || undefined,
+        description: data.description,
+        attachmentNames: [],
+        status: "new",
+        submittedAt,
+      });
+      mongoSaved = true;
+    } catch (err) {
+      console.error("MongoDB save failed:", err);
+    }
+
+    // 2. Send emails (independent — does not block MongoDB save)
+    const submittedAtStr = submittedAt.toLocaleString("en-US", {
+      timeZone: "UTC",
+      dateStyle: "medium",
+      timeStyle: "short",
+    });
+
     const outcome = await sendCaseEmails({
       caseId,
-      submittedAt,
+      submittedAt: submittedAtStr,
       fullName: data.fullName,
       email: data.email,
       platform,
@@ -57,6 +87,7 @@ export const submitCaseFn = createServerFn({ method: "POST" as const })
       ok: true,
       caseId,
       emailsSent: !outcome.skipped,
+      mongoSaved,
       error: "",
     };
   });

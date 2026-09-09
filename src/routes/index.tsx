@@ -2,24 +2,18 @@ import { createFileRoute } from "@tanstack/react-router";
 import { Nav } from "@/components/winsable/Nav";
 import { CornerMeta, ScrollProgress } from "@/components/winsable/Chrome";
 import { Boundaries, Coverage } from "@/components/winsable/Extras";
-import { EditorialWall } from "@/components/winsable/EditorialWall";
 import { IntroCurtain } from "@/components/winsable/Premium";
 import { CaseForm } from "@/components/winsable/CaseForm";
+import { EditorialWall } from "@/components/winsable/EditorialWall";
 
 import {
   About,
   Faq,
-  FeaturedScenario,
   FinalCta,
   Footer,
   Hero,
-  Philosophy,
-  PlatformStrip,
   Process,
-  Services,
-  TextBand,
   TrustBar,
-  WinsAbleSymbol,
 } from "@/components/winsable/Sections";
 
 const title = "WinsAble — Social Media Case & Support Assistance";
@@ -69,15 +63,9 @@ function Index() {
       <main>
         <Hero />
         <TrustBar />
-        <PlatformStrip />
-        <Services />
-        <TextBand />
-        <Process />
-        <WinsAbleSymbol />
-        <Coverage />
-        <FeaturedScenario />
-        <Philosophy />
         <EditorialWall />
+        <Process />
+        <Coverage />
         <Boundaries />
         <About />
         <Faq />

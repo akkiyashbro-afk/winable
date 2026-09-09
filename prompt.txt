@@ -1,0 +1,96 @@
+Add automatic Excel export for every Case Intake submission.
+
+IMPORTANT ARCHITECTURE:
+Case Intake Form
+→ Backend/API
+→ MongoDB (primary database)
+→ Resend (emails)
+→ Excel/CSV export (automatic record)
+
+Requirements:
+
+1. KEEP MONGODB
+   - MongoDB remains the primary source of truth.
+   - Every submitted case must first be saved successfully in MongoDB.
+
+2. AUTOMATIC EXCEL RECORD
+   - Every successful case submission must also be automatically added to one centralized Excel-compatible file.
+   - Do NOT create a separate Excel file for every submission.
+   - Maintain ONE master file for all cases.
+   - Every new submission should create a new row.
+
+3. MASTER FILE
+   Use a single file such as:
+   /data/cases.xlsx
+   or an equivalent persistent storage location suitable for the current deployment architecture.
+
+4. COLUMNS
+   Include all important Case Intake fields, for example:
+   - Case ID
+   - Name
+   - Email
+   - Phone
+   - Platform
+   - Username/Handle
+   - Case Type
+   - Case Description
+   - Original URL
+   - Additional Details
+   - Submitted At
+   - Status
+   - Any other fields currently collected by the Case Intake form
+
+   Do NOT invent fields that the form does not collect.
+   Map the actual existing form fields into the Excel columns.
+
+5. DUPLICATE PROTECTION
+   - One submitted case = one Excel row.
+   - Use the MongoDB case ID as the unique identifier.
+   - If the same case is processed again, do not create duplicate rows.
+
+6. ERROR HANDLING
+   - MongoDB save must happen first.
+   - Then update/export the Excel record.
+   - Then send Resend emails.
+   - If Excel export fails, do NOT delete the MongoDB case.
+   - Log the failure clearly so it can be retried.
+   - If Resend fails, the MongoDB case and Excel record should still remain saved.
+
+7. IMPORTANT DEPLOYMENT REQUIREMENT
+   Before implementing file-based Excel storage, inspect the current deployment environment.
+   If the production environment has ephemeral/read-only filesystem behavior, DO NOT rely on a local server file as the permanent source.
+   In that case, keep MongoDB as the permanent source of truth and implement a reliable Excel export/sync mechanism instead.
+
+8. ADMIN PANEL
+   Structure the implementation so the admin panel can later:
+   - view all cases
+   - update case status
+   - export/download the latest Excel file
+   - regenerate the Excel file from MongoDB if necessary
+
+9. KEEP EXISTING UI
+   - Do not redesign the Case Intake form.
+   - Do not change the Recovery Wall.
+   - Do not alter the existing homepage design.
+   - Only implement the backend/data/export functionality required here.
+
+10. FINAL FLOW MUST BE:
+
+   Case Intake submission
+   → validate
+   → save to MongoDB
+   → add/sync case to master Excel export
+   → send Resend notifications
+   → return success to frontend
+
+11. Reuse the existing MongoDB connection/API structure.
+   Do not create duplicate database connections or unnecessary infrastructure.
+
+12. At the end, report:
+   - files changed
+   - MongoDB collection used
+   - Excel/CSV storage strategy
+   - API endpoint used
+   - required environment variables
+   - how duplicate prevention works
+   - how the Excel export can be downloaded from the admin panel
