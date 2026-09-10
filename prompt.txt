@@ -1,96 +1,69 @@
-Add automatic Excel export for every Case Intake submission.
+The deployment/build succeeded, but the LIVE Vercel Admin Panel still shows:
 
-IMPORTANT ARCHITECTURE:
-Case Intake Form
-→ Backend/API
-→ MongoDB (primary database)
-→ Resend (emails)
-→ Excel/CSV export (automatic record)
+Recoveries (0)
+Failed to fetch recoveries
 
-Requirements:
+Do NOT make another UI change.
 
-1. KEEP MONGODB
-   - MongoDB remains the primary source of truth.
-   - Every submitted case must first be saved successfully in MongoDB.
+I need you to diagnose the ACTUAL runtime MongoDB failure.
 
-2. AUTOMATIC EXCEL RECORD
-   - Every successful case submission must also be automatically added to one centralized Excel-compatible file.
-   - Do NOT create a separate Excel file for every submission.
-   - Maintain ONE master file for all cases.
-   - Every new submission should create a new row.
+The latest recovery implementation already uses MongoDB + idempotent upsert seeding from recoveredProfiles. Do not replace it with mock data or localStorage.
 
-3. MASTER FILE
-   Use a single file such as:
-   /data/cases.xlsx
-   or an equivalent persistent storage location suitable for the current deployment architecture.
+DO THIS NOW:
 
-4. COLUMNS
-   Include all important Case Intake fields, for example:
-   - Case ID
-   - Name
-   - Email
-   - Phone
-   - Platform
-   - Username/Handle
-   - Case Type
-   - Case Description
-   - Original URL
-   - Additional Details
-   - Submitted At
-   - Status
-   - Any other fields currently collected by the Case Intake form
+1. Run the app locally.
+2. Verify that MONGODB_URI is actually loaded by the server runtime.
+3. Test the MongoDB connection directly.
+4. Test getRecoveriesFn() directly.
+5. Verify the RecoveryModel can read/write.
+6. Verify the recoveredProfiles seed/upsert runs.
+7. Verify 36 recovery records exist after the first successful connection.
+8. If MongoDB connection fails, expose a useful SERVER-SIDE diagnostic error instead of the generic "Failed to fetch recoveries".
+9. Never expose the actual MONGODB_URI/password in the browser, logs visible to users, or GitHub.
+10. Check whether the problem is:
+   - missing MONGODB_URI
+   - wrong MongoDB URI
+   - wrong database-user password
+   - special characters in password not URL encoded
+   - MongoDB Atlas Network Access/IP restriction
+   - MongoDB user permissions
+   - connection timeout
+   - Mongoose/server runtime issue
+   - Vercel environment variable not available to Production
+   - wrong deployment/environment
+11. Check Vercel Production environment specifically.
+12. Do NOT assume that "deployment successful" means MongoDB works.
+13. Do NOT silently fall back to fake data in Admin.
+14. Do NOT change the public Recovery Wall design.
 
-   Do NOT invent fields that the form does not collect.
-   Map the actual existing form fields into the Excel columns.
+IMPORTANT:
 
-5. DUPLICATE PROTECTION
-   - One submitted case = one Excel row.
-   - Use the MongoDB case ID as the unique identifier.
-   - If the same case is processed again, do not create duplicate rows.
+The Vercel deployment must have these server environment variables:
 
-6. ERROR HANDLING
-   - MongoDB save must happen first.
-   - Then update/export the Excel record.
-   - Then send Resend emails.
-   - If Excel export fails, do NOT delete the MongoDB case.
-   - Log the failure clearly so it can be retried.
-   - If Resend fails, the MongoDB case and Excel record should still remain saved.
+MONGODB_URI=[I WILL PROVIDE THIS]
+RESEND_API_KEY=[I WILL PROVIDE THIS]
+CASE_RECEIVER_EMAIL=[I WILL PROVIDE THIS]
+FROM_EMAIL=[I WILL PROVIDE THIS]
 
-7. IMPORTANT DEPLOYMENT REQUIREMENT
-   Before implementing file-based Excel storage, inspect the current deployment environment.
-   If the production environment has ephemeral/read-only filesystem behavior, DO NOT rely on a local server file as the permanent source.
-   In that case, keep MongoDB as the permanent source of truth and implement a reliable Excel export/sync mechanism instead.
+Do not hardcode them.
 
-8. ADMIN PANEL
-   Structure the implementation so the admin panel can later:
-   - view all cases
-   - update case status
-   - export/download the latest Excel file
-   - regenerate the Excel file from MongoDB if necessary
+After diagnosing the issue, tell me EXACTLY what is failing and what I need to change.
 
-9. KEEP EXISTING UI
-   - Do not redesign the Case Intake form.
-   - Do not change the Recovery Wall.
-   - Do not alter the existing homepage design.
-   - Only implement the backend/data/export functionality required here.
+Then fix the code if the issue is code-related.
 
-10. FINAL FLOW MUST BE:
+If the issue is Vercel/Atlas configuration, do not fake a code fix. Tell me the exact configuration step required.
 
-   Case Intake submission
-   → validate
-   → save to MongoDB
-   → add/sync case to master Excel export
-   → send Resend notifications
-   → return success to frontend
+After fixing:
 
-11. Reuse the existing MongoDB connection/API structure.
-   Do not create duplicate database connections or unnecessary infrastructure.
+1. local MongoDB connection test
+2. local /admin test
+3. verify Recoveries count
+4. verify all 36 profiles
+5. edit one recovery
+6. reload and verify persistence
+7. verify public Recovery Wall gets the same updated data
+8. deploy to Vercel
+9. verify production /admin
+10. verify production Recovery Wall
 
-12. At the end, report:
-   - files changed
-   - MongoDB collection used
-   - Excel/CSV storage strategy
-   - API endpoint used
-   - required environment variables
-   - how duplicate prevention works
-   - how the Excel export can be downloaded from the admin panel
+Do not report success until the production /admin page actually loads the recovery records.

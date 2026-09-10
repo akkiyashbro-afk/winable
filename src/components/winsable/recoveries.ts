@@ -42,9 +42,10 @@ export const getRecoveriesFn = createServerFn({ method: "GET" as const }).handle
       await seedIfNeeded();
       const recoveries = await RecoveryModel.find().sort({ order: 1, createdAt: 1 }).lean();
       return { ok: true, recoveries: JSON.parse(JSON.stringify(recoveries)), error: "" };
-    } catch (err) {
-      console.error("Failed to fetch recoveries:", err);
-      return { ok: false, recoveries: [], error: "Failed to fetch recoveries" };
+    } catch (err: any) {
+      const msg = err?.message || "Failed to fetch recoveries";
+      console.error("Failed to fetch recoveries:", msg);
+      return { ok: false, recoveries: [], error: msg };
     }
   },
 );
@@ -56,9 +57,10 @@ export const getPublicRecoveriesFn = createServerFn({ method: "GET" as const }).
       await seedIfNeeded();
       const recoveries = await RecoveryModel.find({ enabled: true }).sort({ order: 1, createdAt: 1 }).lean();
       return { ok: true, recoveries: JSON.parse(JSON.stringify(recoveries)), error: "" };
-    } catch (err) {
-      console.error("Failed to fetch public recoveries:", err);
-      return { ok: false, recoveries: [], error: "Failed to fetch recoveries" };
+    } catch (err: any) {
+      const msg = err?.message || "Failed to fetch recoveries";
+      console.error("Failed to fetch public recoveries:", msg);
+      return { ok: false, recoveries: [], error: msg };
     }
   },
 );
