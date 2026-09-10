@@ -90,10 +90,12 @@ function AdminDashboard() {
 
   const [cases, setCases] = useState<any[]>([]);
   const [casesLoading, setCasesLoading] = useState(false);
+  const [casesError, setCasesError] = useState("");
   const [excelLoading, setExcelLoading] = useState(false);
 
   const [recoveries, setRecoveries] = useState<Recovery[]>([]);
   const [recoveriesLoading, setRecoveriesLoading] = useState(false);
+  const [recoveriesError, setRecoveriesError] = useState("");
   const [editingRecovery, setEditingRecovery] = useState<Recovery | null>(null);
   const [newRecovery, setNewRecovery] = useState(false);
   const [recoverySearch, setRecoverySearch] = useState("");
@@ -102,14 +104,37 @@ function AdminDashboard() {
 
   const loadRecoveries = useCallback(async () => {
     setRecoveriesLoading(true);
+    setRecoveriesError("");
     const result = await getRecoveriesFn();
-    if (result.ok) setRecoveries(result.recoveries);
+    if (result.ok) {
+      setRecoveries(result.recoveries);
+    } else {
+      setRecoveriesError(result.error || "Failed to load recoveries");
+    }
     setRecoveriesLoading(false);
+  }, []);
+
+  const loadCases = useCallback(async () => {
+    setCasesLoading(true);
+    setCasesError("");
+    const result = await getCasesFn();
+    if (result.ok) {
+      setCases(result.cases);
+    } else {
+      setCasesError(result.error || "Failed to load cases");
+    }
+    setCasesLoading(false);
   }, []);
 
   useEffect(() => {
     loadRecoveries();
   }, [loadRecoveries]);
+
+  useEffect(() => {
+    if (tab === "cases" && cases.length === 0 && !casesLoading) {
+      loadCases();
+    }
+  }, [tab, cases.length, casesLoading, loadCases]);
 
   const handleLogout = () => {
     sessionStorage.removeItem(PASSWORD_KEY);
@@ -162,7 +187,12 @@ function AdminDashboard() {
         {tab === "recoveries" && (
           <div>
             <div className="mb-6 flex items-center justify-between">
-              <h2 className="display text-2xl">Recoveries ({recoveries.length})</h2>
+              <div>
+                <h2 className="display text-2xl">Recoveries ({recoveries.length})</h2>
+                {recoveriesError && (
+                  <p className="mt-1 text-sm text-red-400">{recoveriesError}</p>
+                )}
+              </div>
               <button
                 onClick={() => {
                   setNewRecovery(true);
@@ -391,6 +421,16 @@ function AdminDashboard() {
               <div className="rounded-xl border border-white/[0.06] bg-surface/50 p-8 text-center">
                 <p className="text-white/40">Loading recoveries...</p>
               </div>
+            ) : recoveriesError ? (
+              <div className="rounded-xl border border-red-400/20 bg-red-400/5 p-8 text-center">
+                <p className="text-sm text-red-400">{recoveriesError}</p>
+                <button
+                  onClick={loadRecoveries}
+                  className="mt-3 rounded-lg border border-white/10 px-4 py-2 text-sm text-white/50 hover:text-foreground"
+                >
+                  Retry
+                </button>
+              </div>
             ) : (
               <div className="space-y-2">
                 {recoveries
@@ -499,6 +539,13 @@ function AdminDashboard() {
                             if (!r._id) return;
                             await deleteRecoveryFn({ data: { id: r._id } });
                             await loadRecoveries();
+                            // Reindex remaining recoveries
+                            const remaining = recoveries.filter((x) => x._id !== r._id);
+                            const ids = remaining.map((x) => x._id!).filter(Boolean);
+                            if (ids.length > 0) {
+                              await reorderRecoveriesFn({ data: { ids } });
+                              await loadRecoveries();
+                            }
                           }}
                           className="rounded px-2 py-1 text-xs text-red-400/60 hover:bg-red-400/10 hover:text-red-400"
                         >
@@ -529,12 +576,7 @@ function AdminDashboard() {
               <h2 className="display text-2xl">Cases</h2>
               <div className="flex gap-2">
                 <button
-                  onClick={async () => {
-                    setCasesLoading(true);
-                    const result = await getCasesFn();
-                    if (result.ok) setCases(result.cases);
-                    setCasesLoading(false);
-                  }}
+                  onClick={loadCases}
                   className="rounded-lg border border-white/10 px-4 py-2 text-sm text-white/50 hover:text-foreground"
                 >
                   {casesLoading ? "Loading..." : "Refresh"}
@@ -566,13 +608,25 @@ function AdminDashboard() {
               </div>
             </div>
 
-            {cases.length === 0 && !casesLoading && (
+            {casesError && (
+              <div className="mb-4 rounded-xl border border-red-400/20 bg-red-400/5 p-4 text-center">
+                <p className="text-sm text-red-400">{casesError}</p>
+                <button
+                  onClick={loadCases}
+                  className="mt-2 rounded-lg border border-white/10 px-3 py-1 text-xs text-white/50 hover:text-foreground"
+                >
+                  Retry
+                </button>
+              </div>
+            )}
+
+            {cases.length === 0 && !casesLoading && !casesError && (
               <div className="rounded-xl border border-white/[0.06] bg-surface/50 p-8 text-center">
                 <p className="text-white/40">
-                  No cases found. Click "Refresh" to load cases from MongoDB.
+                  No cases found yet. Cases will appear here when users submit the intake form.
                 </p>
                 <p className="mt-2 text-xs text-white/25">
-                  Make sure MONGODB_URI is configured in your environment.
+                  Make sure MONGODB_URI and RESEND_API_KEY are configured.
                 </p>
               </div>
             )}

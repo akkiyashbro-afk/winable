@@ -99,7 +99,7 @@ export function EditorialWall() {
         if (result.ok && result.recoveries.length > 0) {
           setDbProfiles(
             result.recoveries.map((r: any) => ({
-              id: r._id || r.username,
+              id: r.id || String(r._id) || r.username,
               name: r.name,
               role: r.role,
               username: r.username,

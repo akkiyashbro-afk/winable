@@ -7,25 +7,31 @@ async function ensureConnection() {
   await getMongooseConnection();
 }
 
-// Seed initial data from recoveredProfiles if collection is empty
+// Seed initial data from recoveredProfiles using upsert for idempotency
 async function seedIfNeeded() {
-  const count = await RecoveryModel.countDocuments();
-  if (count === 0 && recoveredProfiles.length > 0) {
-    const docs = recoveredProfiles.map((p, i) => ({
-      name: p.name || "",
-      role: p.role || "",
-      username: p.username,
-      platform: p.platform,
-      followers: p.followers,
-      verified: p.verified,
-      avatar: p.avatar,
-      recoveryType: p.recoveryType,
-      recoveryDate: p.recoveryDate,
-      popupId: p.popupId,
-      enabled: true,
-      order: i,
-    }));
-    await RecoveryModel.insertMany(docs);
+  for (let i = 0; i < recoveredProfiles.length; i++) {
+    const p = recoveredProfiles[i]!;
+    const id = p.id || `p-${String(i + 1).padStart(3, "0")}`;
+    await RecoveryModel.findOneAndUpdate(
+      { id },
+      {
+        $setOnInsert: { id, order: i },
+        $set: {
+          name: p.name || "",
+          role: p.role || "",
+          username: p.username,
+          platform: p.platform,
+          followers: p.followers,
+          verified: p.verified,
+          avatar: p.avatar,
+          recoveryType: p.recoveryType,
+          recoveryDate: p.recoveryDate,
+          popupId: p.popupId,
+          enabled: true,
+        },
+      },
+      { upsert: true, new: true },
+    );
   }
 }
 
@@ -81,7 +87,8 @@ export const saveRecoveryFn = createServerFn({ method: "POST" as const })
         const updated = await RecoveryModel.findByIdAndUpdate(_id, updateData, { new: true }).lean();
         return { ok: true, recovery: JSON.parse(JSON.stringify(updated)), error: "" };
       } else {
-        const maxOrder = await RecoveryModel.countDocuments();
+        const maxOrderDoc = await RecoveryModel.findOne().sort({ order: -1 }).select("order").lean();
+        const maxOrder = maxOrderDoc ? (maxOrderDoc.order ?? 0) + 1 : 0;
         const created = await RecoveryModel.create({ ...data, order: maxOrder });
         return { ok: true, recovery: JSON.parse(JSON.stringify(created)), error: "" };
       }

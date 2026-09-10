@@ -1,6 +1,7 @@
 import mongoose, { Schema, Document, Model } from "mongoose";
 
 export interface IRecovery extends Document {
+  id: string;
   name: string;
   role: string;
   username: string;
@@ -19,6 +20,7 @@ export interface IRecovery extends Document {
 
 const RecoverySchema = new Schema<IRecovery>(
   {
+    id: { type: String, required: true, unique: true },
     name: { type: String, required: true },
     role: { type: String, default: "" },
     username: { type: String, required: true },
