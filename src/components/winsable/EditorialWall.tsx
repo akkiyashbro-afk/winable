@@ -1,8 +1,9 @@
-import { useMemo } from "react";
+import { useMemo, useState, useEffect } from "react";
 import {
-  recoveredProfiles,
+  recoveredProfiles as fallbackProfiles,
   type RecoveredProfile,
 } from "./recoveredProfiles";
+import { getPublicRecoveriesFn } from "./recoveries";
 
 const gradients = [
   "from-amber-900/40 via-yellow-900/20 to-stone-900/60",
@@ -90,15 +91,41 @@ function TalentCard({
 }
 
 export function EditorialWall() {
+  const [dbProfiles, setDbProfiles] = useState<RecoveredProfile[]>([]);
+
+  useEffect(() => {
+    getPublicRecoveriesFn()
+      .then((result) => {
+        if (result.ok && result.recoveries.length > 0) {
+          setDbProfiles(
+            result.recoveries.map((r: any) => ({
+              id: r._id || r.username,
+              name: r.name,
+              role: r.role,
+              username: r.username,
+              platform: r.platform,
+              followers: r.followers,
+              verified: r.verified,
+              avatar: r.avatar,
+              recoveryType: r.recoveryType,
+              recoveryDate: r.recoveryDate,
+              popupId: r.popupId,
+            })),
+          );
+        }
+      })
+      .catch(() => {});
+  }, []);
+
   const profiles = useMemo(() => {
-    const data = recoveredProfiles;
+    const data = dbProfiles.length > 0 ? dbProfiles : fallbackProfiles;
     if (data.length === 0) return [];
     const minCards = Math.ceil(2400 / (data.length * 250)) * 2;
     const repeats = Math.max(6, minCards);
     const result: RecoveredProfile[] = [];
     for (let i = 0; i < repeats; i++) result.push(...data);
     return result;
-  }, []);
+  }, [dbProfiles]);
 
   const topRow = profiles.filter((_, i) => i % 2 === 0);
   const bottomRow = profiles.filter((_, i) => i % 2 === 1);
