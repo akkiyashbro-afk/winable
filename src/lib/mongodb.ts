@@ -16,23 +16,18 @@ export async function getMongooseConnection(): Promise<mongoose.Connection> {
   }
 
   if (!MONGODB_URI) {
-    console.error("[mongodb] MONGODB_URI is EMPTY or undefined");
     throw new Error(
       "MONGODB_URI environment variable is not set. " +
       "Add it to your .env file and to Vercel Production environment variables.",
     );
   }
 
-  const uriLength = MONGODB_URI.length;
-  console.log(`[mongodb] MONGODB_URI present (${uriLength} chars), connecting...`);
-
   try {
     const conn = await mongoose.connect(MONGODB_URI, {
-      serverSelectionTimeoutMS: 8000,
-      connectTimeoutMS: 8000,
-      socketTimeoutMS: 8000,
+      serverSelectionTimeoutMS: 10000,
+      connectTimeoutMS: 10000,
+      socketTimeoutMS: 10000,
     });
-    console.log(`[mongodb] Connected successfully to ${conn.connection.host}`);
     cached.mongooseConn = conn.connection;
     return cached.mongooseConn;
   } catch (err: any) {
