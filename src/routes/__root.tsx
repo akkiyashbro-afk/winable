@@ -84,7 +84,7 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
           "Professional assistance for social media account recovery, appeals, impersonation, copyright-related complaints and platform support requests.",
       },
       { name: "theme-color", content: "#0d0d0d" },
-      { property: "og:site_name", content: "WinsAble" },
+      { property: "og:site_name", content: "WinsAble™ Media" },
       { property: "og:type", content: "website" },
       { property: "og:title", content: "WinsAble — Social Media Case & Support Assistance" },
       {

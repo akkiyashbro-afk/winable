@@ -1,6 +1,5 @@
-import { useState } from "react";
 import { Reveal } from "./Reveal";
-import { ArrowUpRight, PlatformMark } from "./Bits";
+import { PlatformMark } from "./Bits";
 
 /** Staggered word-by-word rise for large editorial headings. */
 export function WordReveal({
@@ -55,12 +54,15 @@ const rows = [
     cases: "Recovery · Impersonation",
     note: "Support tickets written once, written clearly.",
   },
+  {
+    name: "LinkedIn",
+    cases: "Recovery · Impersonation",
+    note: "Professional identity protection and account recovery.",
+  },
 ];
 
-/** Hover-expanding editorial index of platforms. */
+/** Clean editorial index of platforms — no accordion expansion. */
 export function Coverage() {
-  const [active, setActive] = useState<number | null>(0);
-
   return (
     <section id="coverage" className="border-y border-white/[0.06] bg-surface/20 py-24 md:py-36">
       <div className="shell grid gap-12 lg:grid-cols-[minmax(0,0.8fr)_minmax(0,1.6fr)] lg:gap-20">
@@ -79,56 +81,27 @@ export function Coverage() {
         </div>
 
         <ul className="border-t border-white/[0.06]">
-          {rows.map((row, i) => {
-            const open = active === i;
-            return (
-              <li
-                key={row.name}
-                onMouseEnter={() => setActive(i)}
-                onFocus={() => setActive(i)}
-                className="group relative border-b border-white/[0.06]"
-              >
-                <div
-                  className="absolute inset-0 origin-left bg-surface transition-transform duration-500 ease-[cubic-bezier(0.22,1,0.36,1)]"
-                  style={{ transform: open ? "scaleX(1)" : "scaleX(0)" }}
-                  aria-hidden="true"
-                />
-                <button
-                  type="button"
-                  onClick={() => setActive(open ? null : i)}
-                  className="relative grid w-full grid-cols-[auto_minmax(0,1fr)_auto] items-center gap-4 px-3 py-6 text-left md:px-6 md:py-8"
-                >
-                  <span
-                    className={`text-[11px] font-semibold tracking-[0.28em] tabular-nums transition-colors duration-500 ${open ? "text-gold" : "text-white/30"}`}
-                  >
+          {rows.map((row, i) => (
+            <Reveal as="li" key={row.name} delay={i * 60} variant="right">
+              <div className="group relative border-b border-white/[0.06]">
+                <div className="grid w-full grid-cols-[auto_minmax(0,1fr)_auto] items-center gap-4 px-3 py-6 md:px-6 md:py-8">
+                  <span className="text-[11px] font-semibold tracking-[0.28em] tabular-nums text-white/30">
                     {String(i + 1).padStart(2, "0")}
                   </span>
                   <span className="min-w-0">
-                    <span
-                      className={`flex items-center gap-3 font-display text-[clamp(1.6rem,3vw,2.6rem)] leading-none transition-colors duration-500 ${open ? "text-foreground" : "text-foreground/70"}`}
-                    >
+                    <span className="flex items-center gap-3 font-display text-[clamp(1.6rem,3vw,2.6rem)] leading-none text-foreground/70 transition-colors duration-300 group-hover:text-foreground">
                       <PlatformMark name={row.name} className="size-6 shrink-0 opacity-70" />
                       {row.name}
                     </span>
-                    <span
-                      className="block overflow-hidden transition-all duration-500 ease-[cubic-bezier(0.22,1,0.36,1)]"
-                      style={{ maxHeight: open ? "5rem" : "0px", opacity: open ? 1 : 0 }}
-                    >
-                      <span className="mt-3 block text-sm text-white/50">{row.note}</span>
-                      <span className="mt-1 block text-[11px] tracking-[0.22em] text-purple uppercase">
-                        {row.cases}
-                      </span>
+                    <span className="mt-3 block text-sm text-white/50">{row.note}</span>
+                    <span className="mt-1 block text-[11px] tracking-[0.22em] text-purple uppercase">
+                      {row.cases}
                     </span>
                   </span>
-                  <span
-                    className={`text-lg leading-none transition-all duration-500 ${open ? "translate-x-0 text-purple rotate-45" : "-translate-x-2 text-white/30 opacity-0"}`}
-                  >
-                    +
-                  </span>
-                </button>
-              </li>
-            );
-          })}
+                </div>
+              </div>
+            </Reveal>
+          ))}
         </ul>
       </div>
     </section>

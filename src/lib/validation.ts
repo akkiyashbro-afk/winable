@@ -7,7 +7,7 @@ export const caseFormSchema = z.object({
     .max(120, "Name must be under 120 characters"),
   email: z.string().email("Please enter a valid email address"),
   platform: z.enum(
-    ["Instagram", "WhatsApp", "Facebook", "TikTok", "YouTube", "X (Twitter)", "Telegram", "Reddit", "Discord", "Other"],
+    ["Instagram", "WhatsApp", "Facebook", "TikTok", "YouTube", "X (Twitter)", "LinkedIn", "Telegram", "Reddit", "Discord", "Other / Anything"],
     { required_error: "Please select a platform" },
   ),
   otherPlatform: z.string().optional(),

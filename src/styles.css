@@ -558,6 +558,18 @@
   }
 }
 
+@utility editorial-card-width {
+  width: 150px;
+
+  @media (min-width: 640px) {
+    width: clamp(200px, 20vw, 280px);
+  }
+
+  @media (min-width: 1024px) {
+    width: clamp(220px, 22vw, 300px);
+  }
+}
+
 @utility glow-purple {
   position: absolute;
   border-radius: 9999px;
@@ -567,6 +579,17 @@
 }
 
 /* ========================= REDUCED MOTION ========================= */
+
+@keyframes nav-enter {
+  from {
+    opacity: 0;
+    transform: translateY(-12px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
 
 @media (prefers-reduced-motion: reduce) {
   html {
@@ -612,6 +635,12 @@
 
   .intro-word {
     animation: none;
+  }
+
+  header[style*="nav-enter"] {
+    animation: none !important;
+    opacity: 1 !important;
+    transform: none !important;
   }
 }
 

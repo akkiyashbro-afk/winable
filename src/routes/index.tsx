@@ -8,6 +8,7 @@ import { EditorialWall } from "@/components/winsable/EditorialWall";
 
 import {
   About,
+  Contact,
   Faq,
   FinalCta,
   Footer,
@@ -37,7 +38,7 @@ export const Route = createFileRoute("/")({
         children: JSON.stringify({
           "@context": "https://schema.org",
           "@type": "ProfessionalService",
-          name: "WinsAble",
+          name: "WinsAble™ Media",
           description,
           serviceType: [
             "Account Recovery",
@@ -71,6 +72,7 @@ function Index() {
         <Faq />
         <FinalCta />
         <CaseForm />
+        <Contact />
       </main>
       <Footer />
       <CornerMeta />

@@ -31,13 +31,12 @@ function TalentCard({
 
   return (
     <div
-      className="corner-marks editorial-card group relative shrink-0 overflow-hidden rounded-xl border border-white/[0.08] bg-surface/80 backdrop-blur-sm"
+      className="corner-marks editorial-card editorial-card-width group relative shrink-0 overflow-hidden rounded-xl border border-white/[0.08] bg-surface/80 backdrop-blur-sm"
       style={{
         transform: `rotate(${rotation}deg)`,
-        width: "clamp(220px, 22vw, 300px)",
       }}
     >
-      <div className={`aspect-[3/4] relative flex flex-col justify-end`}>
+      <div className="aspect-[3/4] sm:aspect-[3/4] relative flex flex-col justify-end">
         {/* Full-card profile image */}
         {profile.avatar ? (
           <img
@@ -54,19 +53,19 @@ function TalentCard({
         <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/40 to-transparent" />
 
         {/* Category badge */}
-        <span className="absolute top-4 right-4 z-20 rounded-full border border-white/10 bg-black/50 px-2.5 py-1 text-[0.6rem] font-semibold tracking-[0.12em] text-white/70 uppercase backdrop-blur-sm">
+        <span className="absolute top-2 right-2 z-20 rounded-full border border-white/10 bg-black/50 px-1.5 py-0.5 text-[0.5rem] font-semibold tracking-[0.12em] text-white/70 uppercase backdrop-blur-sm sm:top-4 sm:right-4 sm:px-2.5 sm:py-1 sm:text-[0.6rem]">
           {profile.platform}
         </span>
 
         {/* Content overlay */}
-        <div className="relative z-10 p-5">
+        <div className="relative z-10 p-3 sm:p-5">
           {/* Name */}
-          <h3 className="display text-xl leading-tight text-white transition-colors duration-300 group-hover:text-gold md:text-2xl">
+          <h3 className="display text-base leading-tight text-white transition-colors duration-300 group-hover:text-gold sm:text-xl md:text-2xl">
             {displayName}
           </h3>
 
           {/* Followers */}
-          <p className="mt-1.5 text-[0.7rem] font-semibold tracking-[0.14em] text-gold/80 uppercase">
+          <p className="mt-1 text-[0.6rem] font-semibold tracking-[0.14em] text-gold/80 uppercase sm:text-[0.7rem]">
             {profile.followers} followers
           </p>
 
