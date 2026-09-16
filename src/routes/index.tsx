@@ -1,5 +1,6 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { Nav } from "@/components/winsable/Nav";
+import { AmbientBackground } from "@/components/winsable/AmbientBackground";
 import { CornerMeta, ScrollProgress } from "@/components/winsable/Chrome";
 import { Boundaries, Coverage } from "@/components/winsable/Extras";
 import { IntroCurtain } from "@/components/winsable/Premium";
@@ -58,6 +59,7 @@ function Index() {
   return (
     <div className="min-h-screen w-full bg-background text-foreground">
       <IntroCurtain />
+      <AmbientBackground />
       <ScrollProgress />
       <Nav />
       <main>
