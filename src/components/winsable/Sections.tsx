@@ -939,8 +939,11 @@ export function Footer() {
   }
 
   return (
-    <footer className="border-t border-white/[0.06]">
-      <div className="shell py-16 md:py-20">
+    <footer className="relative overflow-hidden border-t border-white/[0.06]">
+      {/* Subtle animated background glow */}
+      <div className="footer-gold-glow footer-glow -bottom-20 left-1/2 h-[28rem] w-[36rem] -translate-x-1/2 opacity-60 max-md:h-[20rem] max-md:w-[24rem]" />
+
+      <div className="shell relative z-10 py-16 md:py-20">
 
         {/* ── Footer info ── */}
         <div className="grid gap-10 md:grid-cols-12">
