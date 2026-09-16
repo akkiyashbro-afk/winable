@@ -207,10 +207,6 @@ export function EditorialWall() {
           </div>
         </div>
       </div>
-
-      <p className="relative z-20 mt-10 text-center text-xs text-white/25">
-        Recovery cases managed through the WinsAble admin panel.
-      </p>
     </section>
   );
 }
