@@ -90,7 +90,14 @@
     border-color: var(--color-border);
   }
 
+  html {
+    width: 100%;
+    -webkit-text-size-adjust: 100%;
+  }
+
   body {
+    width: 100%;
+    min-width: 0;
     background-color: var(--color-background);
     color: var(--color-foreground);
     font-family: var(--font-sans-family);
@@ -111,14 +118,17 @@
   width: 100%;
   max-width: 90rem;
   margin-inline: auto;
-  padding-inline: 1.5rem;
+  padding-inline: max(1.5rem, env(safe-area-inset-left));
+  padding-inline-end: max(1.5rem, env(safe-area-inset-right));
 
   @media (min-width: 768px) {
-    padding-inline: 3rem;
+    padding-inline: max(3rem, env(safe-area-inset-left));
+    padding-inline-end: max(3rem, env(safe-area-inset-right));
   }
 
   @media (min-width: 1280px) {
-    padding-inline: 5.5rem;
+    padding-inline: max(5.5rem, env(safe-area-inset-left));
+    padding-inline-end: max(5.5rem, env(safe-area-inset-right));
   }
 }
 
@@ -506,6 +516,8 @@
 @utility editorial-wall-container {
   overflow: hidden;
   position: relative;
+  width: 100%;
+  max-width: 100vw;
 }
 
 @utility editorial-row {
