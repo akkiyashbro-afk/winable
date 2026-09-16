@@ -29,36 +29,12 @@ export function WordReveal({
 }
 
 const rows = [
-  {
-    name: "Instagram",
-    cases: "Recovery · Disabled · Impersonation",
-    note: "Identity checks, appeal forms and impersonation reports.",
-  },
-  {
-    name: "Facebook",
-    cases: "Recovery · Disabled · Copyright",
-    note: "Account review requests and rights-holder notices.",
-  },
-  {
-    name: "TikTok",
-    cases: "Recovery · Impersonation",
-    note: "Appeals prepared against the stated policy reason.",
-  },
-  {
-    name: "YouTube",
-    cases: "Copyright · Platform Support",
-    note: "Claim and counter-notice paperwork, organized properly.",
-  },
-  {
-    name: "X",
-    cases: "Recovery · Impersonation",
-    note: "Support tickets written once, written clearly.",
-  },
-  {
-    name: "LinkedIn",
-    cases: "Recovery · Impersonation",
-    note: "Professional identity protection and account recovery.",
-  },
+  { name: "Instagram" },
+  { name: "Facebook" },
+  { name: "TikTok" },
+  { name: "YouTube" },
+  { name: "X" },
+  { name: "LinkedIn" },
 ];
 
 /** Clean editorial index of platforms — no accordion expansion. */
@@ -84,19 +60,13 @@ export function Coverage() {
           {rows.map((row, i) => (
             <Reveal as="li" key={row.name} delay={i * 60} variant="right">
               <div className="group relative border-b border-white/[0.06]">
-                <div className="grid w-full grid-cols-[auto_minmax(0,1fr)_auto] items-center gap-4 px-3 py-6 md:px-6 md:py-8">
+                <div className="flex items-center gap-4 px-3 py-6 md:px-6 md:py-8">
                   <span className="text-[11px] font-semibold tracking-[0.28em] tabular-nums text-white/30">
                     {String(i + 1).padStart(2, "0")}
                   </span>
-                  <span className="min-w-0">
-                    <span className="flex items-center gap-3 font-display text-[clamp(1.6rem,3vw,2.6rem)] leading-none text-foreground/70 transition-colors duration-300 group-hover:text-foreground">
-                      <PlatformMark name={row.name} className="size-6 shrink-0 opacity-70" />
-                      {row.name}
-                    </span>
-                    <span className="mt-3 block text-sm text-white/50">{row.note}</span>
-                    <span className="mt-1 block text-[11px] tracking-[0.22em] text-purple uppercase">
-                      {row.cases}
-                    </span>
+                  <span className="flex items-center gap-3 font-display text-[clamp(1.6rem,3vw,2.6rem)] leading-none text-foreground/70 transition-colors duration-300 group-hover:text-foreground">
+                    <PlatformMark name={row.name} className="size-6 shrink-0 opacity-70" />
+                    {row.name}
                   </span>
                 </div>
               </div>

@@ -939,10 +939,9 @@ export function Contact() {
   }
 
   return (
-    <section id="contact" className="relative overflow-hidden bg-[oklch(0.1_0.005_260)] py-32 md:py-48 lg:py-56">
+    <section id="contact" className="relative overflow-hidden bg-[oklch(0.1_0.005_260)] py-24 md:py-36">
       {/* Ambient glows */}
       <span className="glow-gold -top-40 right-[-10rem] h-[30rem] w-[30rem] opacity-10" />
-      <span className="glow-gold bottom-0 left-[-8rem] h-[20rem] w-[20rem] opacity-8" />
 
       <div className="shell relative z-10">
         {/* Eyebrow */}
@@ -960,18 +959,18 @@ export function Contact() {
 
         {/* Subtext */}
         <Reveal delay={80}>
-          <p className="mt-14 max-w-lg text-lg md:text-xl leading-relaxed text-white/50">
+          <p className="mt-12 max-w-lg text-lg leading-relaxed text-white/50">
             Working on something that should run without you?
             <br />
             Send one line about it.
           </p>
         </Reveal>
 
-        {/* Giant email — the hero of this section */}
+        {/* Email */}
         <Reveal delay={160}>
           <a
             href="mailto:hello@winsable.com"
-            className="mt-12 md:mt-16 block font-display text-[clamp(2.2rem,8vw,7rem)] leading-[0.92] tracking-tight text-foreground transition-colors duration-500 hover:text-gold break-all sm:break-words"
+            className="mt-10 block font-display text-[clamp(1.8rem,5vw,4rem)] leading-[1.05] tracking-tight text-foreground transition-colors duration-500 hover:text-gold"
           >
             HELLO@WINSABLE.COM
           </a>
@@ -979,7 +978,7 @@ export function Contact() {
 
         {/* Copy address + social */}
         <Reveal delay={240}>
-          <div className="mt-12 md:mt-16 flex flex-col gap-8 sm:flex-row sm:items-center sm:gap-10">
+          <div className="mt-10 flex flex-wrap items-center gap-x-8 gap-y-4">
             {/* Copy button */}
             <button
               type="button"
@@ -992,16 +991,16 @@ export function Contact() {
             </button>
 
             {/* Separator */}
-            <span className="hidden sm:block h-px w-12 bg-white/[0.12]" />
+            <span className="h-px w-12 bg-white/[0.12]" />
 
-            {/* Social */}
+            {/* LinkedIn */}
             <a
-              href="https://instagram.com"
+              href="https://linkedin.com"
               target="_blank"
               rel="noopener noreferrer"
               className="group inline-flex items-center gap-2 text-sm font-semibold tracking-[0.12em] text-white/40 uppercase transition-colors duration-300 hover:text-foreground"
             >
-              Instagram
+              LinkedIn
               <svg
                 viewBox="0 0 16 16"
                 fill="none"
@@ -1016,15 +1015,29 @@ export function Contact() {
                 />
               </svg>
             </a>
-          </div>
-        </Reveal>
 
-        {/* Brand presence — large WinsAble identity */}
-        <Reveal delay={320}>
-          <div className="mt-20 md:mt-28 border-t border-white/[0.06] pt-10">
-            <span className="display text-[clamp(1.8rem,4vw,3.2rem)] text-white/[0.06] tracking-tight">
-              WinsAble™ Media
-            </span>
+            {/* X */}
+            <a
+              href="https://x.com"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="group inline-flex items-center gap-2 text-sm font-semibold tracking-[0.12em] text-white/40 uppercase transition-colors duration-300 hover:text-foreground"
+            >
+              X
+              <svg
+                viewBox="0 0 16 16"
+                fill="none"
+                className="size-3 transition-transform duration-300 group-hover:translate-x-0.5 group-hover:-translate-y-0.5"
+              >
+                <path
+                  d="M4.5 11.5 11.5 4.5M6 4.5h5.5V10"
+                  stroke="currentColor"
+                  strokeWidth="1.3"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                />
+              </svg>
+            </a>
           </div>
         </Reveal>
       </div>

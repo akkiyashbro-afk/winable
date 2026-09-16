@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from "react";
-import { ArrowUpRight, LogoMark } from "./Bits";
+import { ArrowUpRight } from "./Bits";
 
 const links = [
   { label: "Services", href: "#services" },
@@ -16,7 +16,7 @@ export function Nav() {
   const headerRef = useRef<HTMLElement | null>(null);
 
   useEffect(() => {
-    const onScroll = () => setScrolled(window.scrollY > 30);
+    const onScroll = () => setScrolled(window.scrollY > 12);
     onScroll();
     window.addEventListener("scroll", onScroll, { passive: true });
     return () => window.removeEventListener("scroll", onScroll);
@@ -41,7 +41,6 @@ export function Nav() {
     return () => observer.disconnect();
   }, []);
 
-  // Close on Escape + outside click
   useEffect(() => {
     if (!open) return;
     const onKey = (e: KeyboardEvent) => {
@@ -60,7 +59,6 @@ export function Nav() {
     };
   }, [open]);
 
-  // Lock body scroll when mobile menu open
   useEffect(() => {
     if (open) {
       document.body.style.overflow = "hidden";
@@ -70,142 +68,95 @@ export function Nav() {
     return () => { document.body.style.overflow = ""; };
   }, [open]);
 
-  const glassActive = scrolled || open;
-
   return (
-    <>
-      {/* Mobile backdrop overlay */}
-      <div
-        className={`fixed inset-0 z-40 bg-black/40 backdrop-blur-xl transition-opacity duration-300 lg:hidden ${
-          open ? "opacity-100 pointer-events-auto" : "opacity-0 pointer-events-none"
-        }`}
-        onClick={() => setOpen(false)}
-        aria-hidden="true"
-      />
+    <header
+      ref={headerRef}
+      className={`sticky top-0 z-50 transition-all duration-500 ${
+        scrolled
+          ? "border-b border-white/[0.08] bg-black/60 backdrop-blur-2xl backdrop-saturate-150"
+          : "border-transparent bg-black/20 backdrop-blur-md"
+      }`}
+    >
+      <div className="shell flex h-20 items-center justify-between gap-6">
+        <a href="#top" className="flex items-center gap-3">
+          <img
+            src="/navbar.png"
+            alt="WinsAble"
+            className="h-10 w-auto object-contain"
+          />
+        </a>
 
-      <header
-        ref={headerRef}
-        className={`fixed top-3 inset-x-0 mx-auto z-50 w-[min(96%,1200px)] transition-all duration-500 ${
-          open ? "lg:z-50 z-[60]" : "z-50"
-        }`}
-        style={{
-          animation: "nav-enter 0.7s cubic-bezier(0.16,1,0.3,1) 0.1s both",
-        }}
-      >
-        <div
-          className={`flex items-center justify-between h-14 px-4 sm:px-6 rounded-full transition-all duration-500 ${
-            glassActive
-              ? "bg-white/[0.04] backdrop-blur-2xl border border-white/[0.08] shadow-[0_20px_50px_-30px_rgba(0,0,0,0.9)]"
-              : "bg-transparent border border-transparent"
-          }`}
-        >
-          {/* Logo */}
-          <a href="#top" className="group flex items-center gap-2.5">
-            <LogoMark className="h-7 w-7 rounded-sm object-cover" />
-            <span className="font-display text-[15px] font-bold tracking-[0.02em] uppercase text-white/90 transition-colors group-hover:text-white">
-              WinsAble
-            </span>
+        <nav className="hidden items-center gap-8 lg:flex" aria-label="Primary">
+          {links.map((l) => (
+            <a
+              key={l.href}
+              href={l.href}
+              aria-current={active === l.href ? "true" : undefined}
+              className={`relative text-sm transition-colors duration-300 ${
+                active === l.href ? "text-gold" : "text-white/50 hover:text-white/80"
+              }`}
+            >
+              {l.label}
+              <span
+                aria-hidden="true"
+                className={`absolute -bottom-1.5 left-0 h-px w-full origin-left bg-gold transition-transform duration-500 ease-out ${
+                  active === l.href ? "scale-x-100" : "scale-x-0"
+                }`}
+              />
+            </a>
+          ))}
+        </nav>
+
+        <div className="flex items-center gap-2">
+          <a
+            href="#case-form"
+            className="group hidden items-center gap-2 rounded-full border border-gold/30 bg-gold/10 px-5 py-2.5 text-sm font-semibold text-gold transition-all duration-300 hover:border-gold/60 hover:bg-gold/20 hover:shadow-[0_0_24px_oklch(0.55_0.22_295/0.2)] sm:inline-flex"
+          >
+            Start a Case
+            <ArrowUpRight className="size-3.5 transition-transform duration-300 group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
           </a>
+          <button
+            type="button"
+            aria-label={open ? "Close menu" : "Open menu"}
+            aria-expanded={open}
+            onClick={() => setOpen((v) => !v)}
+            className="grid size-11 place-items-center rounded-full border border-white/10 lg:hidden"
+          >
+            <span className="relative block h-3 w-4">
+              <span
+                className={`absolute left-0 h-px w-4 bg-foreground transition-transform duration-300 ${open ? "top-1.5 rotate-45" : "top-0"}`}
+              />
+              <span
+                className={`absolute left-0 h-px w-4 bg-foreground transition-transform duration-300 ${open ? "top-1.5 -rotate-45" : "top-3"}`}
+              />
+            </span>
+          </button>
+        </div>
+      </div>
 
-          {/* Desktop nav */}
-          <nav className="hidden lg:flex items-center gap-8" aria-label="Primary">
+      {open && (
+        <div className="border-t border-white/[0.08] bg-black/70 backdrop-blur-2xl backdrop-saturate-150 lg:hidden">
+          <nav className="shell flex flex-col py-4" aria-label="Mobile">
             {links.map((l) => (
               <a
                 key={l.href}
                 href={l.href}
-                aria-current={active === l.href ? "true" : undefined}
-                className={`relative text-[12px] uppercase tracking-[0.22em] font-medium transition-colors duration-300 ${
-                  active === l.href
-                    ? "text-white"
-                    : "text-white/50 hover:text-white"
-                }`}
+                onClick={() => setOpen(false)}
+                className="border-b border-white/[0.06] py-4 text-lg text-white/70 transition-colors hover:text-gold"
               >
                 {l.label}
-                <span
-                  aria-hidden="true"
-                  className={`absolute -bottom-1.5 left-0 h-px w-full origin-left bg-gold transition-transform duration-500 ease-out ${
-                    active === l.href ? "scale-x-100" : "scale-x-0"
-                  }`}
-                />
               </a>
             ))}
-          </nav>
-
-          <div className="flex items-center gap-2">
-            {/* CTA */}
             <a
               href="#case-form"
-              className="group relative hidden sm:inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white/[0.04] backdrop-blur-xl border border-white/[0.1] hover:border-white/40 hover:bg-white/[0.06] transition-all overflow-hidden"
-              style={{ boxShadow: "0 0 24px -8px rgba(255,255,255,0.15)" }}
+              onClick={() => setOpen(false)}
+              className="mt-5 inline-flex items-center justify-center gap-2 rounded-full border border-gold/30 bg-gold/10 px-5 py-3 text-sm font-semibold text-gold"
             >
-              <span className="relative text-[13px] font-medium text-white">
-                Start a Case
-              </span>
-              <ArrowUpRight className="relative h-3.5 w-3.5 text-white/80 transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
+              Start a Case <ArrowUpRight className="size-3.5" />
             </a>
-
-            {/* Hamburger */}
-            <button
-              type="button"
-              aria-label={open ? "Close menu" : "Open menu"}
-              aria-expanded={open}
-              onClick={() => setOpen((v) => !v)}
-              className="lg:hidden inline-flex h-10 w-10 items-center justify-center rounded-full bg-white/[0.05] backdrop-blur-xl border border-white/[0.12] hover:border-white/40 hover:bg-white/[0.08] active:scale-95 transition-all text-white focus:outline-none focus:ring-2 focus:ring-white/30"
-            >
-              <span className="relative block h-4 w-4">
-                <span
-                  className={`absolute left-0 h-px w-4 bg-white transition-all duration-300 ease-[cubic-bezier(0.16,1,0.3,1)] ${
-                    open ? "top-2 rotate-45" : "top-0.5 rotate-0"
-                  }`}
-                />
-                <span
-                  className={`absolute left-0 h-px w-4 bg-white transition-all duration-300 ease-[cubic-bezier(0.16,1,0.3,1)] ${
-                    open ? "top-2 -rotate-45" : "top-[9px] rotate-0"
-                  }`}
-                />
-              </span>
-            </button>
-          </div>
-        </div>
-
-        {/* Mobile slide-down menu */}
-        <div
-          className={`lg:hidden absolute left-0 right-0 mt-3 origin-top rounded-3xl bg-white/[0.05] backdrop-blur-2xl border border-white/[0.1] shadow-[0_30px_70px_-30px_rgba(0,0,0,0.95)] p-3 overflow-hidden transition-all duration-300 ease-[cubic-bezier(0.16,1,0.3,1)] ${
-            open
-              ? "opacity-100 scale-100 translate-y-0 pointer-events-auto"
-              : "opacity-0 scale-[0.98] -translate-y-3 pointer-events-none"
-          }`}
-        >
-          <nav className="flex flex-col" aria-label="Mobile">
-            {links.map((l, i) => (
-              <a
-                key={l.href}
-                href={l.href}
-                onClick={() => setOpen(false)}
-                className="flex items-center justify-between rounded-2xl px-4 py-3.5 text-[13px] uppercase tracking-[0.2em] font-medium text-white/75 hover:text-white hover:bg-white/[0.06] transition-colors"
-                style={{
-                  transitionDelay: open ? `${i * 40 + 50}ms` : "0ms",
-                  opacity: open ? 1 : 0,
-                  transform: open ? "translateX(0)" : "translateX(-8px)",
-                  transition: "opacity 0.3s ease, transform 0.3s ease, color 0.2s ease, background-color 0.2s ease",
-                }}
-              >
-                {l.label}
-                <ArrowUpRight className="h-4 w-4 text-white/40" />
-              </a>
-            ))}
           </nav>
-
-          <a
-            href="#case-form"
-            onClick={() => setOpen(false)}
-            className="mt-2 w-full inline-flex items-center justify-center gap-2 rounded-2xl bg-white/[0.07] border border-white/[0.15] hover:border-white/40 hover:bg-white/[0.1] active:scale-[0.98] px-4 py-3.5 text-[14px] font-medium text-white transition-all"
-          >
-            Start a Case
-            <ArrowUpRight className="h-4 w-4" />
-          </a>
         </div>
-      </header>
-    </>
+      )}
+    </header>
   );
 }
