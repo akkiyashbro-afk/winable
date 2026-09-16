@@ -939,16 +939,13 @@ export function Contact() {
   }
 
   return (
-    <section id="contact" className="relative overflow-hidden bg-[oklch(0.1_0.005_260)] py-24 md:py-36">
-      {/* Ambient glows */}
-      <span className="glow-gold -top-40 right-[-10rem] h-[30rem] w-[30rem] opacity-10" />
-
-      <div className="shell relative z-10">
-        {/* Eyebrow */}
+    <section id="contact" className="shell py-24 md:py-32">
+      <div className="mx-auto" style={{ maxWidth: "960px" }}>
+        {/* Section header — editorial style matching the rest of the site */}
         <Reveal variant="left">
-          <div className="flex items-center gap-4">
+          <div className="flex items-baseline gap-3">
             <span className="text-xs font-bold tracking-[0.16em] text-gold">(06)</span>
-            <span className="text-sm font-semibold tracking-wide text-white/70">Contact</span>
+            <h2 className="text-sm font-semibold tracking-wide text-white/70">Contact</h2>
             <span className="flex-1 h-px bg-white/[0.08]" />
             <span className="flex items-center gap-2 text-[0.65rem] font-semibold tracking-[0.14em] text-white/30 uppercase">
               <span className="size-1.5 rounded-full bg-gold animate-pulse" />
@@ -957,29 +954,28 @@ export function Contact() {
           </div>
         </Reveal>
 
-        {/* Subtext */}
+        {/* Intro copy */}
         <Reveal delay={80}>
-          <p className="mt-12 max-w-lg text-lg leading-relaxed text-white/50">
+          <p className="mt-10 max-w-lg text-lg leading-relaxed text-white/50">
             Working on something that should run without you?
             <br />
             Send one line about it.
           </p>
         </Reveal>
 
-        {/* Email */}
+        {/* Email — responsive, never breaks .COM */}
         <Reveal delay={160}>
           <a
             href="mailto:hello@winsable.com"
-            className="mt-10 block font-display text-[clamp(1.8rem,5vw,4rem)] leading-[1.05] tracking-tight text-foreground transition-colors duration-500 hover:text-gold"
+            className="mt-8 block font-display text-[clamp(1.6rem,4.2vw,3.2rem)] leading-[1.1] tracking-tight text-foreground transition-colors duration-500 hover:text-gold whitespace-nowrap"
           >
             HELLO@WINSABLE.COM
           </a>
         </Reveal>
 
-        {/* Copy address + social */}
+        {/* Copy address + social links */}
         <Reveal delay={240}>
-          <div className="mt-10 flex flex-wrap items-center gap-x-8 gap-y-4">
-            {/* Copy button */}
+          <div className="mt-8 flex flex-wrap items-center gap-x-8 gap-y-4">
             <button
               type="button"
               onClick={handleCopy}
@@ -990,10 +986,8 @@ export function Contact() {
               <span className="h-px w-8 bg-white/20 transition-all duration-500 group-hover:w-14 group-hover:bg-gold/50" />
             </button>
 
-            {/* Separator */}
             <span className="h-px w-12 bg-white/[0.12]" />
 
-            {/* LinkedIn */}
             <a
               href="https://linkedin.com"
               target="_blank"
@@ -1001,22 +995,11 @@ export function Contact() {
               className="group inline-flex items-center gap-2 text-sm font-semibold tracking-[0.12em] text-white/40 uppercase transition-colors duration-300 hover:text-foreground"
             >
               LinkedIn
-              <svg
-                viewBox="0 0 16 16"
-                fill="none"
-                className="size-3 transition-transform duration-300 group-hover:translate-x-0.5 group-hover:-translate-y-0.5"
-              >
-                <path
-                  d="M4.5 11.5 11.5 4.5M6 4.5h5.5V10"
-                  stroke="currentColor"
-                  strokeWidth="1.3"
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                />
+              <svg viewBox="0 0 16 16" fill="none" className="size-3 transition-transform duration-300 group-hover:translate-x-0.5 group-hover:-translate-y-0.5">
+                <path d="M4.5 11.5 11.5 4.5M6 4.5h5.5V10" stroke="currentColor" strokeWidth="1.3" strokeLinecap="round" strokeLinejoin="round" />
               </svg>
             </a>
 
-            {/* X */}
             <a
               href="https://x.com"
               target="_blank"
@@ -1024,18 +1007,8 @@ export function Contact() {
               className="group inline-flex items-center gap-2 text-sm font-semibold tracking-[0.12em] text-white/40 uppercase transition-colors duration-300 hover:text-foreground"
             >
               X
-              <svg
-                viewBox="0 0 16 16"
-                fill="none"
-                className="size-3 transition-transform duration-300 group-hover:translate-x-0.5 group-hover:-translate-y-0.5"
-              >
-                <path
-                  d="M4.5 11.5 11.5 4.5M6 4.5h5.5V10"
-                  stroke="currentColor"
-                  strokeWidth="1.3"
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                />
+              <svg viewBox="0 0 16 16" fill="none" className="size-3 transition-transform duration-300 group-hover:translate-x-0.5 group-hover:-translate-y-0.5">
+                <path d="M4.5 11.5 11.5 4.5M6 4.5h5.5V10" stroke="currentColor" strokeWidth="1.3" strokeLinecap="round" strokeLinejoin="round" />
               </svg>
             </a>
           </div>
@@ -1087,13 +1060,26 @@ export function Footer() {
           </nav>
           <div className="md:col-span-2">
             <p className="eyebrow">Social</p>
-            <a
-              href="https://instagram.com"
-              className="group mt-5 inline-flex items-center gap-2 text-sm text-white/40 transition-colors hover:text-purple"
-            >
-              Instagram
-              <ArrowUpRight className="size-3 transition-transform duration-300 group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
-            </a>
+            <div className="mt-5 flex flex-col gap-3">
+              <a
+                href="https://linkedin.com"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="group inline-flex items-center gap-2 text-sm text-white/40 transition-colors hover:text-foreground"
+              >
+                LinkedIn
+                <ArrowUpRight className="size-3 transition-transform duration-300 group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
+              </a>
+              <a
+                href="https://x.com"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="group inline-flex items-center gap-2 text-sm text-white/40 transition-colors hover:text-foreground"
+              >
+                X
+                <ArrowUpRight className="size-3 transition-transform duration-300 group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
+              </a>
+            </div>
           </div>
         </div>
         <div className="mt-14 flex flex-wrap items-center justify-between gap-3 border-t border-white/[0.06] pt-6 text-xs text-white/30">
