@@ -31,7 +31,7 @@ function TalentCard({
 
   return (
     <div
-      className="corner-marks editorial-card editorial-card-width group relative shrink-0 overflow-hidden rounded-xl border border-white/[0.08] bg-surface/80 backdrop-blur-sm"
+      className="corner-marks editorial-card editorial-card-width group relative shrink-0 overflow-hidden rounded-xl border border-white/[0.08] bg-surface/80 max-md:backdrop-blur-[0.5px] backdrop-blur-sm"
       style={{
         transform: `rotate(${rotation}deg)`,
       }}
@@ -159,27 +159,23 @@ export function EditorialWall() {
       <div className="editorial-wall-container relative z-10">
         {/* Left edge mask — progressive blur + fade */}
         <div
-          className="pointer-events-none absolute inset-y-0 left-0 z-30"
+          className="pointer-events-none absolute inset-y-0 left-0 z-30 max-md:backdrop-blur-[0.5px] max-md:saturate-[0.9] backdrop-blur-[3px] backdrop-saturate-[0.8]"
           style={{
             width: "10%",
             minWidth: "50px",
             background:
               "linear-gradient(to right, oklch(0.13 0.005 260 / 0.5) 0%, oklch(0.13 0.005 260 / 0.25) 40%, transparent 100%)",
-            backdropFilter: "blur(3px) saturate(0.8)",
-            WebkitBackdropFilter: "blur(3px) saturate(0.8)",
           }}
         />
 
         {/* Right edge mask — progressive blur + fade */}
         <div
-          className="pointer-events-none absolute inset-y-0 right-0 z-30"
+          className="pointer-events-none absolute inset-y-0 right-0 z-30 max-md:backdrop-blur-[0.5px] max-md:saturate-[0.9] backdrop-blur-[3px] backdrop-saturate-[0.8]"
           style={{
             width: "10%",
             minWidth: "50px",
             background:
               "linear-gradient(to left, oklch(0.13 0.005 260 / 0.5) 0%, oklch(0.13 0.005 260 / 0.25) 40%, transparent 100%)",
-            backdropFilter: "blur(3px) saturate(0.8)",
-            WebkitBackdropFilter: "blur(3px) saturate(0.8)",
           }}
         />
 

@@ -1,5 +1,5 @@
 import { Fragment, useEffect, useRef, useState } from "react";
-import { ArrowUpRight, CtaLink, PlatformMark, ServiceIcon, LogoMark, LogoFull } from "./Bits";
+import { CtaLink, PlatformMark, ServiceIcon, LogoMark, LogoFull } from "./Bits";
 import { Reveal } from "./Reveal";
 import { ScrollText } from "./ScrollText";
 import { Magnetic, Scramble, Seal, Spotlight, Parallax } from "./Fx";
@@ -942,83 +942,8 @@ export function Footer() {
     <footer className="border-t border-white/[0.06]">
       <div className="shell py-16 md:py-20">
 
-        {/* ── Contact editorial block ── */}
-        <div id="contact" className="mb-16 md:mb-20">
-          <Reveal variant="left">
-            <div className="flex items-baseline gap-3">
-              <span className="text-xs font-bold tracking-[0.16em] text-gold">(06)</span>
-              <h2 className="text-sm font-semibold tracking-wide text-white/70">Contact</h2>
-              <span className="flex-1 h-px bg-white/[0.08]" />
-              <span className="flex items-center gap-2 text-[0.65rem] font-semibold tracking-[0.14em] text-white/30 uppercase">
-                <span className="size-1.5 rounded-full bg-gold animate-pulse" />
-                Reading Every Message
-              </span>
-            </div>
-          </Reveal>
-
-          <Reveal delay={80}>
-            <p className="mt-8 max-w-lg text-lg leading-relaxed text-white/50">
-              Working on something that should run without you?
-              <br />
-              Send one line about it.
-            </p>
-          </Reveal>
-
-          <Reveal delay={160}>
-            <a
-              href="mailto:hello@winsable.com"
-              className="mt-6 block font-display text-[clamp(1.6rem,4.2vw,3.2rem)] leading-[1.1] tracking-tight text-foreground transition-colors duration-500 hover:text-gold whitespace-nowrap"
-            >
-              HELLO@WINSABLE.COM
-            </a>
-          </Reveal>
-
-          <Reveal delay={240}>
-            <div className="mt-6 flex flex-wrap items-center gap-x-8 gap-y-4">
-              <button
-                type="button"
-                onClick={handleCopy}
-                className="group flex items-center gap-3 text-sm font-semibold tracking-[0.12em] text-white/50 uppercase transition-colors duration-300 hover:text-foreground"
-                aria-label={copied ? "Email address copied" : "Copy email address to clipboard"}
-              >
-                <span>{copied ? "COPIED ✓" : "COPY ADDRESS"}</span>
-                <span className="h-px w-8 bg-white/20 transition-all duration-500 group-hover:w-14 group-hover:bg-gold/50" />
-              </button>
-
-              <span className="h-px w-12 bg-white/[0.12]" />
-
-              <a
-                href="https://linkedin.com"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="group inline-flex items-center gap-2 text-sm font-semibold tracking-[0.12em] text-white/40 uppercase transition-colors duration-300 hover:text-foreground"
-              >
-                LinkedIn
-                <svg viewBox="0 0 16 16" fill="none" className="size-3 transition-transform duration-300 group-hover:translate-x-0.5 group-hover:-translate-y-0.5">
-                  <path d="M4.5 11.5 11.5 4.5M6 4.5h5.5V10" stroke="currentColor" strokeWidth="1.3" strokeLinecap="round" strokeLinejoin="round" />
-                </svg>
-              </a>
-
-              <a
-                href="https://x.com"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="group inline-flex items-center gap-2 text-sm font-semibold tracking-[0.12em] text-white/40 uppercase transition-colors duration-300 hover:text-foreground"
-              >
-                X
-                <svg viewBox="0 0 16 16" fill="none" className="size-3 transition-transform duration-300 group-hover:translate-x-0.5 group-hover:-translate-y-0.5">
-                  <path d="M4.5 11.5 11.5 4.5M6 4.5h5.5V10" stroke="currentColor" strokeWidth="1.3" strokeLinecap="round" strokeLinejoin="round" />
-                </svg>
-              </a>
-            </div>
-          </Reveal>
-        </div>
-
-        {/* ── Divider ── */}
-        <div className="h-px w-full bg-white/[0.06]" />
-
         {/* ── Footer info ── */}
-        <div className="mt-12 grid gap-10 md:grid-cols-12">
+        <div className="grid gap-10 md:grid-cols-12">
           <div className="md:col-span-5">
             <div className="flex items-center gap-3">
               <LogoMark className="h-10 w-10 rounded-sm object-cover" />
@@ -1032,48 +957,63 @@ export function Footer() {
               copyright-related complaints and platform support requests.
             </p>
           </div>
-          <nav className="md:col-span-4 md:col-start-7" aria-label="Footer">
-            <p className="eyebrow">Navigate</p>
-            <ul className="mt-5 grid grid-cols-2 gap-3 text-sm">
-              {[
-                ["Services", "#services"],
-                ["How It Works", "#process"],
-                ["About", "#about"],
-                ["FAQ", "#faq"],
-              ].map(([label, href]) => (
-                <li key={label}>
-                  <a
-                    href={href}
-                    className="link-underline text-white/40 transition-colors hover:text-foreground"
-                  >
-                    {label}
-                  </a>
-                </li>
-              ))}
-            </ul>
-          </nav>
-          <div className="md:col-span-2">
-            <p className="eyebrow">Social</p>
-            <div className="mt-5 flex flex-col gap-3">
+          <div className="md:col-span-6 md:col-start-7">
+            <Reveal>
+              <p className="text-lg leading-relaxed text-white/50">
+                Working on something that should run without you?
+                <br />
+                Send one line about it.
+              </p>
+            </Reveal>
+
+            <Reveal delay={80}>
               <a
-                href="https://linkedin.com"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="group inline-flex items-center gap-2 text-sm text-white/40 transition-colors hover:text-foreground"
+                href="mailto:hello@winsable.com"
+                className="mt-6 block font-display text-[clamp(1.6rem,4.2vw,3.2rem)] leading-[1.1] tracking-tight text-foreground transition-colors duration-500 hover:text-gold whitespace-nowrap"
               >
-                LinkedIn
-                <ArrowUpRight className="size-3 transition-transform duration-300 group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
+                HELLO@WINSABLE.COM
               </a>
-              <a
-                href="https://x.com"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="group inline-flex items-center gap-2 text-sm text-white/40 transition-colors hover:text-foreground"
-              >
-                X
-                <ArrowUpRight className="size-3 transition-transform duration-300 group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
-              </a>
-            </div>
+            </Reveal>
+
+            <Reveal delay={160}>
+              <div className="mt-6 flex flex-wrap items-center gap-x-8 gap-y-4">
+                <button
+                  type="button"
+                  onClick={handleCopy}
+                  className="group flex items-center gap-3 text-sm font-semibold tracking-[0.12em] text-white/50 uppercase transition-colors duration-300 hover:text-foreground"
+                  aria-label={copied ? "Email address copied" : "Copy email address to clipboard"}
+                >
+                  <span>{copied ? "COPIED ✓" : "COPY ADDRESS"}</span>
+                  <span className="h-px w-8 bg-white/20 transition-all duration-500 group-hover:w-14 group-hover:bg-gold/50" />
+                </button>
+
+                <span className="h-px w-12 bg-white/[0.12]" />
+
+                <a
+                  href="https://linkedin.com"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="group inline-flex items-center gap-2 text-sm font-semibold tracking-[0.12em] text-white/40 uppercase transition-colors duration-300 hover:text-foreground"
+                >
+                  LinkedIn
+                  <svg viewBox="0 0 16 16" fill="none" className="size-3 transition-transform duration-300 group-hover:translate-x-0.5 group-hover:-translate-y-0.5">
+                    <path d="M4.5 11.5 11.5 4.5M6 4.5h5.5V10" stroke="currentColor" strokeWidth="1.3" strokeLinecap="round" strokeLinejoin="round" />
+                  </svg>
+                </a>
+
+                <a
+                  href="https://x.com"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="group inline-flex items-center gap-2 text-sm font-semibold tracking-[0.12em] text-white/40 uppercase transition-colors duration-300 hover:text-foreground"
+                >
+                  X
+                  <svg viewBox="0 0 16 16" fill="none" className="size-3 transition-transform duration-300 group-hover:translate-x-0.5 group-hover:-translate-y-0.5">
+                    <path d="M4.5 11.5 11.5 4.5M6 4.5h5.5V10" stroke="currentColor" strokeWidth="1.3" strokeLinecap="round" strokeLinejoin="round" />
+                  </svg>
+                </a>
+              </div>
+            </Reveal>
           </div>
         </div>
         <div className="mt-14 flex flex-wrap items-center justify-between gap-3 border-t border-white/[0.06] pt-6 text-xs text-white/30">
