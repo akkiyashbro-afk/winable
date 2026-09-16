@@ -22,10 +22,7 @@ export function Reveal({
     const io = new IntersectionObserver(
       (entries) => {
         for (const entry of entries) {
-          if (entry.isIntersecting) {
-            setShown(true);
-            io.disconnect();
-          }
+          setShown(entry.isIntersecting);
         }
       },
       { rootMargin: "0px 0px -8% 0px", threshold: 0.06 },

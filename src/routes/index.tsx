@@ -8,7 +8,6 @@ import { EditorialWall } from "@/components/winsable/EditorialWall";
 
 import {
   About,
-  Contact,
   Faq,
   FinalCta,
   Footer,
@@ -72,7 +71,6 @@ function Index() {
         <Faq />
         <FinalCta />
         <CaseForm />
-        <Contact />
       </main>
       <Footer />
       <CornerMeta />
