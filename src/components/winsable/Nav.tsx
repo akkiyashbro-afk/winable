@@ -84,9 +84,9 @@ export function Nav() {
                 key={l.href}
                 href={l.href}
                 aria-current={active === l.href ? "true" : undefined}
-                className={`relative text-sm transition-colors duration-300 ${
-                  active === l.href ? "text-gold" : "text-white/50 hover:text-white/80"
-                }`}
+              className={`relative text-sm transition-all duration-300 ${
+                active === l.href ? "text-gold -translate-y-px" : "text-white/50 hover:text-white/80 hover:-translate-y-px"
+              }`}
               >
                 {l.label}
                 <span

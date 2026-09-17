@@ -15,6 +15,7 @@ export function Reveal({
 }) {
   const ref = useRef<HTMLElement | null>(null);
   const [shown, setShown] = useState(false);
+  const hasRevealed = useRef(false);
 
   useEffect(() => {
     const el = ref.current;
@@ -22,7 +23,12 @@ export function Reveal({
     const io = new IntersectionObserver(
       (entries) => {
         for (const entry of entries) {
-          setShown(entry.isIntersecting);
+          if (entry.isIntersecting) {
+            setShown(true);
+            hasRevealed.current = true;
+          } else if (hasRevealed.current) {
+            setShown(false);
+          }
         }
       },
       { rootMargin: "0px 0px -8% 0px", threshold: 0.06 },
@@ -49,6 +55,7 @@ export function Reveal({
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
       ref={ref as any}
       data-shown={shown}
+      data-revealed={hasRevealed.current || undefined}
       style={{ transitionDelay: `${delay}ms` }}
       className={`${variantClass} ${className}`}
     >

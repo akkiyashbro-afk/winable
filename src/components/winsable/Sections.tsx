@@ -894,8 +894,8 @@ export function Faq() {
 export function FinalCta() {
   return (
     <section id="start" className="relative overflow-hidden py-28 md:py-40">
-      <span className="glow-gold top-1/2 left-1/2 h-[30rem] w-[30rem] -translate-x-1/2 -translate-y-1/2 opacity-25" />
-      <div className="corner-marks shell relative text-center">
+      <span className="glow-glow-ambient glow-gold top-1/2 left-1/2 h-[30rem] w-[30rem] -translate-x-1/2 -translate-y-1/2 opacity-25" />
+      <div className="corner-marks corner-breathe shell relative text-center">
         <Reveal variant="scale">
           <p className="eyebrow">Start here</p>
           <h2 className="display mx-auto mt-8 max-w-4xl text-[clamp(2.7rem,9vw,7rem)]">
@@ -995,11 +995,11 @@ export function Footer() {
                 <button
                   type="button"
                   onClick={handleCopy}
-                  className="group flex items-center gap-3 text-sm font-semibold tracking-[0.12em] text-white/50 uppercase transition-colors duration-300 hover:text-foreground"
+                  className="group flex items-center gap-3 text-sm font-semibold tracking-[0.12em] text-white/50 uppercase transition-all duration-300 hover:text-foreground"
                   aria-label={copied ? "Email address copied" : "Copy email address to clipboard"}
                 >
-                  <span>{copied ? "COPIED ✓" : "COPY ADDRESS"}</span>
-                  <span className="h-px w-8 bg-white/20 transition-all duration-500 group-hover:w-14 group-hover:bg-gold/50" />
+                  <span className={`transition-colors duration-300 ${copied ? "text-gold" : ""}`}>{copied ? "COPIED ✓" : "COPY ADDRESS"}</span>
+                  <span className={`h-px w-8 transition-all duration-500 group-hover:w-14 ${copied ? "w-14 bg-gold/60" : "bg-white/20 group-hover:bg-gold/50"}`} />
                 </button>
 
                 <span className="h-px w-12 bg-white/[0.12]" />

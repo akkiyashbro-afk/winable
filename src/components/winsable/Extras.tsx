@@ -59,8 +59,8 @@ export function Coverage() {
         <ul className="border-t border-white/[0.06]">
           {rows.map((row, i) => (
             <Reveal as="li" key={row.name} delay={i * 60} variant="right">
-              <div className="group relative border-b border-white/[0.06]">
-                <div className="flex items-center gap-4 px-3 py-6 md:px-6 md:py-8">
+              <div className="group relative border-b border-white/[0.06] transition-all duration-500 hover:bg-white/[0.02]">
+                <div className="flex items-center gap-4 px-3 py-6 md:px-6 md:py-8 transition-transform duration-500 group-hover:translate-x-1">
                   <span className="text-[11px] font-semibold tracking-[0.28em] tabular-nums text-white/30">
                     {String(i + 1).padStart(2, "0")}
                   </span>
