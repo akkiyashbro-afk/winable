@@ -9,11 +9,25 @@ const links = [
   { label: "About", href: "#about" },
 ];
 
+function useReducedMotion() {
+  const [reduced, setReduced] = useState(false);
+  useEffect(() => {
+    const mq = window.matchMedia("(prefers-reduced-motion: reduce)");
+    setReduced(mq.matches);
+    const handler = (e: MediaQueryListEvent) => setReduced(e.matches);
+    mq.addEventListener("change", handler);
+    return () => mq.removeEventListener("change", handler);
+  }, []);
+  return reduced;
+}
+
 export function Nav() {
   const [open, setOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
   const [active, setActive] = useState<string | null>(null);
   const headerRef = useRef<HTMLElement | null>(null);
+  const reducedMotion = useReducedMotion();
+  const duration = reducedMotion ? "duration-0" : "duration-500";
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 12);
@@ -64,7 +78,7 @@ export function Nav() {
   return (
     <header
       ref={headerRef}
-      className={`sticky top-0 z-50 transition-all duration-500 ${
+      className={`sticky top-0 z-50 transition-all ${duration} ${
         scrolled
           ? "border-b border-white/[0.08] bg-black/60 backdrop-blur-2xl backdrop-saturate-150"
           : "border-transparent bg-black/20 backdrop-blur-md"
@@ -148,7 +162,7 @@ export function Nav() {
       >
         {/* Backdrop */}
         <div
-          className={`absolute inset-0 bg-black transition-opacity duration-500 ease-[cubic-bezier(0.22,1,0.36,1)] ${
+          className={`absolute inset-0 bg-black transition-opacity ${duration} ease-[cubic-bezier(0.22,1,0.36,1)] ${
             open ? "opacity-100" : "opacity-0"
           }`}
           onClick={() => setOpen(false)}
@@ -157,7 +171,7 @@ export function Nav() {
         {/* Panel */}
         <nav
           aria-label="Mobile"
-          className={`relative h-full overflow-y-auto bg-background transition-all duration-500 ease-[cubic-bezier(0.22,1,0.36,1)] ${
+          className={`relative h-full overflow-y-auto bg-background transition-all ${duration} ease-[cubic-bezier(0.22,1,0.36,1)] ${
             open
               ? "opacity-100 translate-y-0"
               : "opacity-0 -translate-y-4"
@@ -202,7 +216,7 @@ export function Nav() {
                   <a
                     href={l.href}
                     onClick={() => setOpen(false)}
-                    className={`group flex items-baseline gap-5 border-b border-white/[0.04] py-5 sm:py-6 transition-all duration-500 ease-[cubic-bezier(0.22,1,0.36,1)] ${
+                    className={`group flex items-baseline gap-5 border-b border-white/[0.04] py-5 sm:py-6 transition-all ${duration} ease-[cubic-bezier(0.22,1,0.36,1)] ${
                       open
                         ? "opacity-100 translate-y-0"
                         : "opacity-0 translate-y-4"
@@ -222,7 +236,7 @@ export function Nav() {
 
             {/* Bottom CTA */}
             <div
-              className={`mt-8 transition-all duration-500 ease-[cubic-bezier(0.22,1,0.36,1)] ${
+              className={`mt-8 transition-all ${duration} ease-[cubic-bezier(0.22,1,0.36,1)] ${
                 open
                   ? "opacity-100 translate-y-0"
                   : "opacity-0 translate-y-4"

@@ -6,6 +6,7 @@ import { Magnetic, Scramble, Spotlight, Parallax } from "./Fx";
 import { useSpotlight } from "./useSpotlight";
 import { Counter } from "./Counter";
 import { useSiteData, type Review as ReviewType, type Service as ServiceType } from "./useSiteData";
+import { getPublicFaqsFn } from "./faqs";
 
 /* ---------------------------------- HERO --------------------------------- */
 
@@ -822,6 +823,18 @@ const faqs = [
 
 export function Faq() {
   const [open, setOpen] = useState<number | null>(0);
+  const [dbFaqs, setDbFaqs] = useState<{ q: string; a: string }[] | null>(null);
+
+  useEffect(() => {
+    getPublicFaqsFn().then((res) => {
+      if (res.ok && res.faqs.length > 0) {
+        setDbFaqs(res.faqs.map((f: { q: string; a: string }) => ({ q: f.q, a: f.a })));
+      }
+    }).catch(() => {});
+  }, []);
+
+  const displayFaqs = dbFaqs || faqs;
+
   return (
     <section id="faq" className="border-y border-white/[0.06] bg-surface/30 py-24 md:py-32">
       <div className="shell grid gap-12 lg:grid-cols-12">
@@ -830,7 +843,7 @@ export function Faq() {
           <h2 className="display mt-6 text-[clamp(2.2rem,4.6vw,3.6rem)]">Straight answers.</h2>
         </Reveal>
         <div className="corner-marks lg:col-span-7 lg:col-start-6">
-          {faqs.map((f, i) => {
+          {displayFaqs.map((f, i) => {
             const isOpen = open === i;
             return (
               <Reveal key={f.q} delay={i * 70} variant="right">

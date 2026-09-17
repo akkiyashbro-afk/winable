@@ -8,6 +8,13 @@ import {
   toggleRecoveryFn,
   reorderRecoveriesFn,
 } from "@/components/winsable/recoveries";
+import {
+  getFaqsFn,
+  saveFaqFn,
+  deleteFaqFn,
+  toggleFaqFn,
+  reorderFaqsFn,
+} from "@/components/winsable/faqs";
 
 export const Route = createFileRoute("/admin/")({
   component: AdminPage,
@@ -86,7 +93,7 @@ function LoginScreen({ onLogin }: { onLogin: () => void }) {
 }
 
 function AdminDashboard() {
-  const [tab, setTab] = useState<"recoveries" | "cases">("recoveries");
+  const [tab, setTab] = useState<"recoveries" | "cases" | "faq">("recoveries");
 
   const [cases, setCases] = useState<any[]>([]);
   const [casesLoading, setCasesLoading] = useState(false);
@@ -101,6 +108,12 @@ function AdminDashboard() {
   const [recoverySearch, setRecoverySearch] = useState("");
   const [recoveryPlatformFilter, setRecoveryPlatformFilter] = useState("");
   const [recoveryEnabledFilter, setRecoveryEnabledFilter] = useState<"all" | "enabled" | "disabled">("all");
+
+  const [faqs, setFaqs] = useState<any[]>([]);
+  const [faqsLoading, setFaqsLoading] = useState(false);
+  const [faqsError, setFaqsError] = useState("");
+  const [editingFaq, setEditingFaq] = useState<any | null>(null);
+  const [newFaq, setNewFaq] = useState(false);
 
   const loadRecoveries = useCallback(async () => {
     setRecoveriesLoading(true);
@@ -126,6 +139,18 @@ function AdminDashboard() {
     setCasesLoading(false);
   }, []);
 
+  const loadFaqs = useCallback(async () => {
+    setFaqsLoading(true);
+    setFaqsError("");
+    const result = await getFaqsFn();
+    if (result.ok) {
+      setFaqs(result.faqs);
+    } else {
+      setFaqsError(result.error || "Failed to load FAQs");
+    }
+    setFaqsLoading(false);
+  }, []);
+
   useEffect(() => {
     loadRecoveries();
   }, [loadRecoveries]);
@@ -135,6 +160,12 @@ function AdminDashboard() {
       loadCases();
     }
   }, [tab, cases.length, casesLoading, loadCases]);
+
+  useEffect(() => {
+    if (tab === "faq" && faqs.length === 0 && !faqsLoading) {
+      loadFaqs();
+    }
+  }, [tab, faqs.length, faqsLoading, loadFaqs]);
 
   const handleLogout = () => {
     sessionStorage.removeItem(PASSWORD_KEY);
@@ -164,19 +195,21 @@ function AdminDashboard() {
       {/* Tabs */}
       <div className="border-b border-white/[0.06]">
         <div className="shell flex gap-1 py-2">
-          {(["recoveries", "cases"] as const).map((t) => (
+          {(["recoveries", "cases", "faq"] as const).map((t) => (
             <button
               key={t}
               onClick={() => {
                 setTab(t);
                 setEditingRecovery(null);
                 setNewRecovery(false);
+                setEditingFaq(null);
+                setNewFaq(false);
               }}
               className={`rounded-lg px-4 py-2 text-sm font-medium capitalize transition-colors ${
                 tab === t ? "bg-gold/10 text-gold" : "text-white/40 hover:text-white/70"
               }`}
             >
-              {t}
+              {t === "faq" ? "FAQ" : t}
             </button>
           ))}
         </div>
@@ -674,6 +707,217 @@ function AdminDashboard() {
                     ))}
                   </tbody>
                 </table>
+              </div>
+            )}
+          </div>
+        )}
+
+        {/* ---- FAQ TAB ---- */}
+        {tab === "faq" && (
+          <div>
+            <div className="mb-6 flex items-center justify-between">
+              <div>
+                <h2 className="display text-2xl">FAQ ({faqs.length})</h2>
+                {faqsError && (
+                  <p className="mt-1 text-sm text-red-400">{faqsError}</p>
+                )}
+              </div>
+              <button
+                onClick={() => {
+                  setNewFaq(true);
+                  setEditingFaq({
+                    q: "",
+                    a: "",
+                    enabled: true,
+                    order: faqs.length,
+                  });
+                }}
+                className="rounded-lg bg-gold px-4 py-2 text-sm font-semibold text-background hover:bg-gold-dim"
+              >
+                + Add FAQ
+              </button>
+            </div>
+
+            {/* Edit form */}
+            {editingFaq && (
+              <div className="mb-8 rounded-xl border border-gold/20 bg-surface p-6">
+                <h3 className="mb-4 text-sm font-semibold text-gold">
+                  {newFaq ? "New FAQ" : "Edit FAQ"}
+                </h3>
+                <div className="space-y-4">
+                  <div>
+                    <label className="mb-1 block text-xs text-white/40">Question *</label>
+                    <input
+                      value={editingFaq.q}
+                      onChange={(e) => setEditingFaq({ ...editingFaq, q: e.target.value })}
+                      placeholder="Enter the question"
+                      className="w-full rounded-lg border border-white/10 bg-background px-3 py-2 text-sm text-foreground focus:border-gold/50 focus:outline-none"
+                    />
+                  </div>
+                  <div>
+                    <label className="mb-1 block text-xs text-white/40">Answer *</label>
+                    <textarea
+                      value={editingFaq.a}
+                      onChange={(e) => setEditingFaq({ ...editingFaq, a: e.target.value })}
+                      placeholder="Enter the answer"
+                      rows={4}
+                      className="w-full rounded-lg border border-white/10 bg-background px-3 py-2 text-sm text-foreground focus:border-gold/50 focus:outline-none resize-none"
+                    />
+                  </div>
+                </div>
+                <div className="mt-4 flex items-center gap-6">
+                  <label className="flex items-center gap-2 text-sm">
+                    <input
+                      type="checkbox"
+                      checked={editingFaq.enabled}
+                      onChange={(e) => setEditingFaq({ ...editingFaq, enabled: e.target.checked })}
+                      className="accent-gold"
+                    />
+                    Enabled
+                  </label>
+                </div>
+                <div className="mt-4">
+                  <label className="mb-1 block text-xs text-white/40">Display Order</label>
+                  <input
+                    type="number"
+                    value={editingFaq.order}
+                    onChange={(e) => setEditingFaq({ ...editingFaq, order: parseInt(e.target.value) || 0 })}
+                    className="w-32 rounded-lg border border-white/10 bg-background px-3 py-2 text-sm text-foreground focus:border-gold/50 focus:outline-none"
+                  />
+                </div>
+                <div className="mt-6 flex gap-2">
+                  <button
+                    onClick={async () => {
+                      if (!editingFaq.q || !editingFaq.a) return;
+                      const result = await saveFaqFn({ data: editingFaq });
+                      if (result.ok) {
+                        await loadFaqs();
+                        setEditingFaq(null);
+                        setNewFaq(false);
+                      }
+                    }}
+                    className="rounded-lg bg-gold px-4 py-2 text-sm font-semibold text-background hover:bg-gold-dim"
+                  >
+                    Save
+                  </button>
+                  <button
+                    onClick={() => {
+                      setEditingFaq(null);
+                      setNewFaq(false);
+                    }}
+                    className="rounded-lg border border-white/10 px-4 py-2 text-sm text-white/50 hover:text-foreground"
+                  >
+                    Cancel
+                  </button>
+                </div>
+              </div>
+            )}
+
+            {/* FAQ list */}
+            {faqsLoading ? (
+              <div className="rounded-xl border border-white/[0.06] bg-surface/50 p-8 text-center">
+                <p className="text-white/40">Loading FAQs...</p>
+              </div>
+            ) : faqsError ? (
+              <div className="rounded-xl border border-red-400/20 bg-red-400/5 p-8 text-center">
+                <p className="text-sm text-red-400">{faqsError}</p>
+                <button
+                  onClick={loadFaqs}
+                  className="mt-3 rounded-lg border border-white/10 px-4 py-2 text-sm text-white/50 hover:text-foreground"
+                >
+                  Retry
+                </button>
+              </div>
+            ) : (
+              <div className="space-y-2">
+                {faqs.map((f: any, index: number) => (
+                  <div
+                    key={f._id || f.id}
+                    className={`rounded-xl border p-4 transition-colors ${
+                      f.enabled
+                        ? "border-white/[0.06] bg-surface/50"
+                        : "border-white/[0.03] bg-surface/20 opacity-50"
+                    }`}
+                  >
+                    <div className="flex items-start gap-4">
+                      <div className="flex flex-col gap-1">
+                        <button
+                          onClick={async () => {
+                            const idx = faqs.findIndex((x: any) => x._id === f._id);
+                            if (idx <= 0) return;
+                            const ids = faqs.map((x: any) => x._id!);
+                            [ids[idx], ids[idx - 1]] = [ids[idx - 1]!, ids[idx]!];
+                            await reorderFaqsFn({ data: { ids } });
+                            await loadFaqs();
+                          }}
+                          disabled={index === 0}
+                          className="rounded px-1 py-0.5 text-xs text-white/30 hover:bg-white/5 hover:text-foreground disabled:opacity-20"
+                        >
+                          \u25B2
+                        </button>
+                        <button
+                          onClick={async () => {
+                            const idx = faqs.findIndex((x: any) => x._id === f._id);
+                            if (idx >= faqs.length - 1) return;
+                            const ids = faqs.map((x: any) => x._id!);
+                            [ids[idx], ids[idx + 1]] = [ids[idx + 1]!, ids[idx]!];
+                            await reorderFaqsFn({ data: { ids } });
+                            await loadFaqs();
+                          }}
+                          disabled={index === faqs.length - 1}
+                          className="rounded px-1 py-0.5 text-xs text-white/30 hover:bg-white/5 hover:text-foreground disabled:opacity-20"
+                        >
+                          \u25BC
+                        </button>
+                      </div>
+                      <div className="min-w-0 flex-1">
+                        <div className="flex items-center gap-2">
+                          <span className="text-[11px] font-bold tracking-widest text-gold tabular-nums">
+                            {String(index + 1).padStart(2, "0")}
+                          </span>
+                          {!f.enabled && (
+                            <span className="rounded bg-white/5 px-1.5 py-0.5 text-[10px] text-white/30">
+                              DISABLED
+                            </span>
+                          )}
+                        </div>
+                        <p className="mt-1 font-semibold">{f.q}</p>
+                        <p className="mt-1 text-sm text-white/50 line-clamp-2">{f.a}</p>
+                      </div>
+                      <div className="flex gap-1">
+                        <button
+                          onClick={() => {
+                            setEditingFaq(f);
+                            setNewFaq(false);
+                          }}
+                          className="rounded px-2 py-1 text-xs text-white/40 hover:bg-white/5 hover:text-foreground"
+                        >
+                          Edit
+                        </button>
+                        <button
+                          onClick={async () => {
+                            if (!f._id) return;
+                            await deleteFaqFn({ data: { id: f._id } });
+                            await loadFaqs();
+                          }}
+                          className="rounded px-2 py-1 text-xs text-red-400/60 hover:bg-red-400/10 hover:text-red-400"
+                        >
+                          Delete
+                        </button>
+                        <button
+                          onClick={async () => {
+                            if (!f._id) return;
+                            await toggleFaqFn({ data: { id: f._id, enabled: !f.enabled } });
+                            await loadFaqs();
+                          }}
+                          className="rounded px-2 py-1 text-xs text-white/40 hover:bg-white/5 hover:text-foreground"
+                        >
+                          {f.enabled ? "Hide" : "Show"}
+                        </button>
+                      </div>
+                    </div>
+                  </div>
+                ))}
               </div>
             )}
           </div>
