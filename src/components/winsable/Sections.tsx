@@ -2,7 +2,7 @@ import { Fragment, useEffect, useRef, useState } from "react";
 import { CtaLink, PlatformMark, ServiceIcon, LogoMark, LogoFull } from "./Bits";
 import { Reveal } from "./Reveal";
 import { ScrollText } from "./ScrollText";
-import { Magnetic, Scramble, Seal, Spotlight, Parallax } from "./Fx";
+import { Magnetic, Scramble, Spotlight, Parallax } from "./Fx";
 import { useSpotlight } from "./useSpotlight";
 import { Counter } from "./Counter";
 import { useSiteData, type Review as ReviewType, type Service as ServiceType } from "./useSiteData";
@@ -899,7 +899,6 @@ export function FinalCta() {
         </Reveal>
         <Reveal delay={160} variant="scale">
           <div className="relative mt-12 flex justify-center">
-            <Seal className="absolute top-1/2 right-4 size-24 -translate-y-1/2 text-white/10 md:right-24 md:size-28" />
             <Magnetic strength={0.28}>
               <CtaLink
                 href="#case-form"

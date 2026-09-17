@@ -46,16 +46,9 @@ export function Nav() {
     const onKey = (e: KeyboardEvent) => {
       if (e.key === "Escape") setOpen(false);
     };
-    const onPointer = (e: PointerEvent) => {
-      if (headerRef.current && !headerRef.current.contains(e.target as Node)) {
-        setOpen(false);
-      }
-    };
     window.addEventListener("keydown", onKey);
-    document.addEventListener("pointerdown", onPointer);
     return () => {
       window.removeEventListener("keydown", onKey);
-      document.removeEventListener("pointerdown", onPointer);
     };
   }, [open]);
 
@@ -77,12 +70,12 @@ export function Nav() {
           : "border-transparent bg-black/20 backdrop-blur-md"
       }`}
     >
-      <div className="shell flex h-20 items-center justify-between gap-6">
+      <div className="shell flex h-14 items-center justify-between gap-6 lg:h-20">
         <a href="#top" className="flex items-center gap-3">
           <img
             src="/navbar.png"
             alt="WinsAble"
-            className="h-10 w-auto object-contain"
+            className="h-8 w-auto object-contain lg:h-10"
           />
         </a>
 
@@ -120,43 +113,133 @@ export function Nav() {
             aria-label={open ? "Close menu" : "Open menu"}
             aria-expanded={open}
             onClick={() => setOpen((v) => !v)}
-            className="grid size-11 place-items-center rounded-full border border-white/10 lg:hidden"
+            className="group relative flex items-center gap-2.5 rounded-full border border-white/10 pr-3.5 pl-3 py-2 lg:hidden"
           >
-            <span className="relative block h-3 w-4">
+            <span className="relative block h-[11px] w-[15px]">
               <span
-                className={`absolute left-0 h-px w-4 bg-foreground transition-transform duration-300 ${open ? "top-1.5 rotate-45" : "top-0"}`}
+                className={`absolute left-0 h-px w-full bg-foreground transition-all duration-300 ease-[cubic-bezier(0.22,1,0.36,1)] ${
+                  open ? "top-[5px] rotate-45" : "top-0"
+                }`}
               />
               <span
-                className={`absolute left-0 h-px w-4 bg-foreground transition-transform duration-300 ${open ? "top-1.5 -rotate-45" : "top-3"}`}
+                className={`absolute left-0 top-[5px] h-px w-full bg-foreground transition-all duration-300 ease-[cubic-bezier(0.22,1,0.36,1)] ${
+                  open ? "scale-x-0 opacity-0" : "scale-x-100 opacity-100"
+                }`}
               />
+              <span
+                className={`absolute left-0 h-px w-full bg-foreground transition-all duration-300 ease-[cubic-bezier(0.22,1,0.36,1)] ${
+                  open ? "top-[5px] -rotate-45" : "top-[10px]"
+                }`}
+              />
+            </span>
+            <span className="text-[9px] font-semibold tracking-[0.2em] text-white/40 uppercase transition-colors duration-300 group-hover:text-white/60">
+              Menu
             </span>
           </button>
         </div>
       </div>
 
-      {open && (
-        <div className="border-t border-white/[0.08] bg-black/70 backdrop-blur-2xl backdrop-saturate-150 lg:hidden">
-          <nav className="shell flex flex-col py-4" aria-label="Mobile">
-            {links.map((l) => (
-              <a
-                key={l.href}
-                href={l.href}
+      {/* ── Full-screen mobile menu overlay ── */}
+      <div
+        className={`fixed inset-0 top-14 z-40 lg:hidden ${
+          open ? "pointer-events-auto" : "pointer-events-none"
+        }`}
+        aria-hidden={!open}
+      >
+        {/* Backdrop */}
+        <div
+          className={`absolute inset-0 bg-black transition-opacity duration-500 ease-[cubic-bezier(0.22,1,0.36,1)] ${
+            open ? "opacity-100" : "opacity-0"
+          }`}
+          onClick={() => setOpen(false)}
+        />
+
+        {/* Panel */}
+        <nav
+          aria-label="Mobile"
+          className={`relative h-full overflow-y-auto bg-background transition-all duration-500 ease-[cubic-bezier(0.22,1,0.36,1)] ${
+            open
+              ? "opacity-100 translate-y-0"
+              : "opacity-0 -translate-y-4"
+          }`}
+          style={{
+            backgroundImage: open
+              ? "linear-gradient(oklch(0.13 0.005 260 / 0.5) 1px, transparent 1px), linear-gradient(90deg, oklch(0.13 0.005 260 / 0.5) 1px, transparent 1px)"
+              : "none",
+            backgroundSize: open ? "60px 60px" : "0 0",
+          }}
+        >
+          <div className="shell flex flex-col py-6 sm:py-8">
+            {/* Top row — branding + close */}
+            <div className="flex items-center justify-between border-b border-white/[0.06] pb-5">
+              <span className="font-display text-lg tracking-tight text-white/60">
+                WinsAble
+              </span>
+              <button
+                type="button"
+                aria-label="Close menu"
                 onClick={() => setOpen(false)}
-                className="border-b border-white/[0.06] py-4 text-lg text-white/70 transition-colors hover:text-gold"
+                className="group flex items-center gap-2 text-xs font-semibold tracking-[0.2em] text-white/40 uppercase transition-colors duration-300 hover:text-foreground"
               >
-                {l.label}
-              </a>
-            ))}
-            <a
-              href="#case-form"
-              onClick={() => setOpen(false)}
-              className="mt-5 inline-flex items-center justify-center gap-2 rounded-full border border-gold/30 bg-gold/10 px-5 py-3 text-sm font-semibold text-gold"
+                Close
+                <span className="grid size-7 place-items-center rounded-full border border-white/10 transition-colors duration-300 group-hover:border-white/25">
+                  <svg viewBox="0 0 16 16" className="size-3" fill="none">
+                    <path
+                      d="M4 4l8 8M12 4l-8 8"
+                      stroke="currentColor"
+                      strokeWidth="1.2"
+                      strokeLinecap="round"
+                    />
+                  </svg>
+                </span>
+              </button>
+            </div>
+
+            {/* Navigation items — numbered editorial rows */}
+            <ol className="mt-2 flex flex-col">
+              {links.map((l, i) => (
+                <li key={l.href}>
+                  <a
+                    href={l.href}
+                    onClick={() => setOpen(false)}
+                    className={`group flex items-baseline gap-5 border-b border-white/[0.04] py-5 sm:py-6 transition-all duration-500 ease-[cubic-bezier(0.22,1,0.36,1)] ${
+                      open
+                        ? "opacity-100 translate-y-0"
+                        : "opacity-0 translate-y-4"
+                    }`}
+                    style={{ transitionDelay: open ? `${120 + i * 60}ms` : "0ms" }}
+                  >
+                    <span className="text-[11px] font-bold tracking-[0.2em] text-white/25 tabular-nums transition-colors duration-300 group-hover:text-gold">
+                      {String(i + 1).padStart(2, "0")}
+                    </span>
+                    <span className="display text-[clamp(1.6rem,5vw,2.4rem)] leading-none text-foreground/70 transition-colors duration-300 group-hover:text-foreground">
+                      {l.label}
+                    </span>
+                  </a>
+                </li>
+              ))}
+            </ol>
+
+            {/* Bottom CTA */}
+            <div
+              className={`mt-8 transition-all duration-500 ease-[cubic-bezier(0.22,1,0.36,1)] ${
+                open
+                  ? "opacity-100 translate-y-0"
+                  : "opacity-0 translate-y-4"
+              }`}
+              style={{ transitionDelay: open ? `${120 + links.length * 60}ms` : "0ms" }}
             >
-              Start a Case <ArrowUpRight className="size-3.5" />
-            </a>
-          </nav>
-        </div>
-      )}
+              <a
+                href="#case-form"
+                onClick={() => setOpen(false)}
+                className="inline-flex items-center gap-2 rounded-full border border-gold/30 bg-gold/10 px-5 py-3 text-sm font-semibold text-gold transition-all duration-300 hover:bg-gold/20"
+              >
+                Start a Case <ArrowUpRight className="size-3.5" />
+              </a>
+            </div>
+          </div>
+        </nav>
+      </div>
     </header>
   );
 }
