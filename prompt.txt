@@ -1,401 +1,474 @@
-PREMIUM MOTION PASS — ADD LIFE WITHOUT OVER-ANIMATING
+IMPORTANT MOBILE MENU ANIMATION FIX
 
-The current WinsAble website design is already established and should NOT be redesigned.
+The mobile menu is currently opening and closing almost instantly.
 
-I want to add subtle, premium motion so the website feels alive and professionally crafted, while preserving the existing editorial/minimal aesthetic.
+I do NOT want a simple conditional render where the menu suddenly appears/disappears.
+
+Make the EXISTING mobile menu fully animated in BOTH directions:
+
+OPEN:
+MENU button tap
+→ overlay/background smoothly enters
+→ grid/background fades in
+→ menu header reveals
+→ navigation rows animate in sequentially
+→ bottom CTA reveals last
+
+CLOSE:
+Close/X or MENU button tap
+→ CTA smoothly exits
+→ navigation rows smoothly exit
+→ header smoothly exits
+→ background/grid fades away
+→ overlay completely disappears
+
+The entire transition must feel intentional, premium and fluid.
+
+==================================================
+DO NOT JUST USE DISPLAY NONE
+==================================================
+
+Do NOT implement the menu using an instant:
+
+display: none
+→ display: block
+
+or:
+
+conditional && <Menu />
+
+that causes the element to disappear before its exit animation can play.
+
+The menu must remain mounted long enough for the CLOSE animation to complete.
+
+Use an animation/state architecture that supports both:
+
+ENTER
+and
+EXIT
+
+animations.
+
+You may use the existing animation utilities already present in the project, or clean CSS transitions/keyframes.
+
+Do NOT install a new animation library unless absolutely necessary.
+
+==================================================
+OPEN ANIMATION
+==================================================
+
+When the user taps the mobile MENU button:
+
+1. The dark menu background should smoothly fade/expand into view.
+
+2. The subtle editorial grid should fade in with the background.
+
+3. The menu header:
+
+WinsAble™ Media •
+
+and:
+
+CLOSE + X
+
+should reveal smoothly.
+
+4. Navigation items should enter sequentially.
+
+Existing navigation:
+
+01 Services
+02 How It Works
+03 Platforms
+04 FAQ
+05 About
+
+Use:
+
+first item delay: 120ms
+
+then +60ms for every next item:
+
+Services → 120ms
+How It Works → 180ms
+Platforms → 240ms
+FAQ → 300ms
+About → 360ms
+
+Each row should animate using a combination of:
+
+opacity
+translateY
+possibly subtle clip/reveal
+
+Do NOT overdo blur or scale.
+
+The text should feel like it is sliding/revealing naturally into position.
+
+5. Bottom:
+
+Start a Case ↗
+
+should reveal AFTER the navigation rows.
+
+==================================================
+CLOSE ANIMATION
+==================================================
+
+This is equally important.
+
+When the user closes the menu:
+
+DO NOT instantly remove it.
+
+Play a proper exit animation.
+
+Recommended sequence:
+
+Start a Case CTA
+→ exits/fades
+
+Navigation rows
+→ exit smoothly, preferably with a subtle reverse stagger
+
+Header
+→ fades/slides away
+
+Grid/background
+→ fades out
+
+Entire overlay
+→ fades out
+
+Then remove the menu from interaction/DOM.
+
+The close animation should be fast enough to feel responsive, but visibly animated.
+
+Target approximately:
+
+400–650ms overall
+
+depending on the existing animation system.
+
+Do NOT make closing take several seconds.
+
+==================================================
+REVERSE STAGGER
+==================================================
+
+For closing, use a reverse/staggered exit rather than making everything disappear simultaneously.
+
+For example:
+
+05 About
+04 FAQ
+03 Platforms
+02 How It Works
+01 Services
+
+can begin exiting in sequence.
+
+Keep the effect subtle.
+
+The user should clearly perceive that the menu is closing as one cohesive animation.
+
+==================================================
+HAMBURGER ANIMATION
+==================================================
+
+The hamburger itself must also animate continuously with the menu.
+
+CLOSED:
+
+—
+—
+—
+
+OPEN:
+
+X
+
+The transformation should happen smoothly at the same time the menu opens.
+
+On close:
+
+X
+→
+—
+—
+—
+
+Do NOT instantly swap between two icons.
+
+Use transforms/opacity so the three lines physically transition into the X.
+
+Middle line:
+fade/scale out
+
+Top/bottom:
+rotate into X
+
+==================================================
+MENU LABEL ANIMATION
+==================================================
+
+The:
+
+MENU
+
+label should also transition naturally.
+
+Do not let the label pop/change instantly.
+
+If the label remains "MENU", keep it stable.
+
+If its visual state changes when opened, animate that transition.
+
+==================================================
+CLOSE BUTTON ANIMATION
+==================================================
+
+The circular X close control should:
+
+- fade/scale in during opening
+- respond subtly on tap
+- fade/scale out during closing
+
+The:
+
+CLOSE
+
+text should also reveal smoothly.
+
+==================================================
+BACKGROUND ANIMATION
+==================================================
+
+The menu background should not simply appear.
+
+Animate:
+
+- dark overlay opacity
+- subtle grid opacity
+- optional very subtle background transform
+
+Keep the grid extremely restrained.
+
+Do NOT use particles.
+
+Do NOT use flashy gradients.
+
+Do NOT use gaming-style effects.
+
+==================================================
+PAGE CONTENT
+==================================================
+
+When opening:
+
+The page behind the menu should visually recede behind the overlay.
+
+When closing:
+
+The page should smoothly become visible again.
+
+Do not animate the entire underlying website unnecessarily.
+
+Do not cause layout shifts.
+
+==================================================
+POINTER EVENTS
+==================================================
+
+During opening:
+
+Allow interaction only when the menu is sufficiently visible/active.
+
+During closing:
+
+Prevent accidental clicks on navigation links after the close has started.
+
+After the exit animation:
+
+- remove pointer interaction
+- restore page interaction
+- restore body scrolling
+
+Do not leave an invisible full-screen layer blocking the page.
+
+==================================================
+BODY SCROLL LOCK
+==================================================
+
+Keep the existing body scroll lock.
+
+Opening:
+lock background scrolling.
+
+Closing:
+keep scrolling locked until the exit animation is finished.
+
+ONLY after the menu has completely disappeared:
+
+restore body scrolling.
+
+This prevents the page from moving underneath the closing animation.
+
+==================================================
+ESCAPE
+==================================================
+
+Escape should trigger the SAME close animation.
+
+Do not instantly unmount the menu when Escape is pressed.
+
+The exact same animated close sequence should play.
+
+==================================================
+NAVIGATION LINKS
+==================================================
+
+Clicking:
+
+Services
+How It Works
+Platforms
+FAQ
+About
+
+should trigger:
+
+1. Start closing animation.
+2. Disable menu interaction.
+3. Finish menu exit animation.
+4. Restore body scrolling.
+5. Navigate/scroll to the requested section.
+
+Do not instantly jump to the section while the menu is still visually covering the page.
+
+==================================================
+START A CASE
+==================================================
+
+The:
+
+Start a Case ↗
+
+CTA should use the same closing sequence.
+
+CTA tap:
+
+→ start close animation
+→ finish overlay exit
+→ restore scrolling
+→ navigate to #case-form
+
+==================================================
+ANIMATION QUALITY
+==================================================
+
+The final menu should feel like a premium editorial creative-site interaction.
 
 Think:
-high-end creative studio / editorial portfolio / premium digital agency.
 
-DO NOT make it flashy.
-DO NOT add generic floating particles.
-DO NOT add excessive glowing circles.
-DO NOT turn the website into a gaming-style animated website.
-
-The animation should be something users FEEL rather than immediately notice.
-
-==================================================
-1. PRESERVE EVERYTHING
-==================================================
-
-Do NOT remove or rewrite existing:
-
-- layout
-- typography
-- sections
-- content
-- navbar
-- mobile navbar
-- Contact placement
-- footer
-- Recovery Wall
-- Case Form
-- platform rows
-- existing scroll reveals
-- hover effects
-- smooth scrolling
-- clipboard functionality
-- LinkedIn link
-- X link
-- existing responsive fixes
-
-This is ONLY a motion/visual polish pass.
-
-==================================================
-2. AMBIENT BACKGROUND MOTION
-==================================================
-
-Add a very subtle animated ambient background layer.
-
-Use the existing black/dark WinsAble visual language.
-
-Create extremely soft, low-opacity purple/indigo atmospheric gradients that slowly move behind the content.
-
-The movement should be:
-
-VERY SLOW
-SMOOTH
-CONTINUOUS
-NON-DISTRACTING
-
-Think of extremely subtle light moving through a dark room.
-
-The gradient must never become bright enough to compete with text.
-
-Use CSS animations or the existing animation library where appropriate.
-
-Prefer GPU-friendly transforms/opacity.
-
-Do not animate expensive blur effects continuously if avoidable.
-
-==================================================
-3. EDITORIAL GRID / TEXTURE
-==================================================
-
-If the existing design already contains grid lines, borders, or editorial guides:
-
-make them subtly breathe/move.
-
-For example:
-
-- extremely slow horizontal/vertical drift
-- tiny opacity variation
-- subtle parallax relative to scroll
-
-Keep this almost imperceptible.
-
-DO NOT add a large obvious grid.
-
-The current minimal editorial lines are part of the design language.
-
-==================================================
-4. SCROLL PARALLAX
-==================================================
-
-Add very subtle scroll-linked movement to selected visual elements.
-
-Examples:
-
-Hero background:
-5–15px movement
-
-Large editorial headings:
-3–8px movement
-
-Ambient gradient:
-10–25px movement
-
-Recovery Wall:
-very subtle depth/parallax
-
-Contact background:
-5–10px movement
-
-IMPORTANT:
-
-Do NOT move entire sections dramatically.
-
-Do NOT create motion sickness.
-
-Do NOT make text float independently too much.
-
-The effect should create DEPTH, not chaos.
-
-==================================================
-5. SCROLL REVEALS SHOULD NOT FEEL ONE-TIME ONLY
-==================================================
-
-The current website becomes static after the initial reveal.
-
-Improve this carefully.
-
-Use IntersectionObserver / existing animation system so selected elements can animate again when they re-enter the viewport.
-
-However:
-
-DO NOT replay dramatic entrance animations continuously.
-
-Use two levels:
-
-FIRST ENTRY:
-slightly stronger reveal
-
-SUBSEQUENT ENTRIES:
-very subtle opacity/translate movement
-
-For example:
-
-First appearance:
-opacity 0 → 1
-translateY 20px → 0
-
-Later appearances:
-opacity 0.85 → 1
-translateY 6px → 0
-
-This should make scrolling back through the website feel alive without becoming repetitive.
-
-==================================================
-6. SECTION HEADINGS
-==================================================
-
-Give major editorial headings subtle motion.
-
-Examples:
-
-"Recent Recoveries."
-"Where we work."
-"Contact"
-etc.
-
-Use tiny translateY / opacity / letter-spacing adjustments.
-
-Do NOT animate every word individually unless an existing component already does so.
-
-Avoid flashy text scrambling.
-
-Keep the typography premium.
-
-==================================================
-7. RECOVERY WALL
-==================================================
-
-Keep the existing Recovery Wall animation exactly as the foundation.
-
-Add only subtle depth:
-
-- tiny card parallax
-- slight perspective response
-- very subtle hover movement on desktop
-- restrained movement while scrolling
-
-DO NOT increase blur.
-
-DO NOT make cards spin excessively.
-
-DO NOT make the mobile Recovery Wall larger.
-
-The existing mobile card sizing and reduced blur must remain.
-
-==================================================
-8. PLATFORM / COVERAGE SECTION
-==================================================
-
-Keep the current clean platform list.
-
-Add subtle interaction when a row enters the viewport:
-
-number → slight fade/translate
-platform name → subtle reveal
-row divider → gentle opacity transition
-
-Do NOT restore the old accordion.
-
-Do NOT add descriptions back.
-
-Platform rows should remain clean.
-
-==================================================
-9. CURSOR EFFECT — DESKTOP ONLY
-==================================================
-
-Add an optional extremely subtle cursor-following ambient glow on desktop.
-
-The glow should be:
-
-small
-soft
-very low opacity
-purple/indigo
-slowly follow the cursor
-
-It should NOT look like a spotlight.
-
-Disable this completely on touch/mobile devices.
-
-Respect prefers-reduced-motion.
-
-==================================================
-10. HOVER MICRO-INTERACTIONS
-==================================================
-
-Add premium micro-interactions to interactive elements:
-
-Navbar links:
-very subtle underline/opacity movement
-
-Start a Case:
-tiny arrow movement
-
-LinkedIn:
-tiny arrow movement
-
-X:
-tiny arrow movement
-
-COPY ADDRESS:
-subtle state transition to "COPIED ✓"
-
-Buttons should feel responsive but NOT bounce.
-
-Use short elegant easing.
-
-==================================================
-11. CONTACT / FOOTER BACKGROUND
-==================================================
-
-The Contact + footer area should have a very subtle atmospheric background.
-
-Use a low-opacity moving radial gradient behind the Contact content.
-
-It should make the final section feel like a deliberate ending.
-
-The background movement should be extremely slow.
-
-Do NOT make the footer brighter than the rest of the website.
-
-Do NOT add a giant background image.
-
-==================================================
-12. FOOTER MOTION
-==================================================
-
-The footer should remain calm.
-
-Add only:
-
-- subtle reveal when entering viewport
-- tiny opacity transitions
-- subtle link hover movement
-- slow ambient background movement
-
-Do NOT animate the entire footer continuously.
-
-==================================================
-13. PERFORMANCE
-==================================================
-
-This is extremely important.
-
-Prefer:
-
-transform
-opacity
-CSS gradients
-requestAnimationFrame where actually needed
-IntersectionObserver
-
-Avoid:
-
-continuous layout-triggering animations
-heavy DOM particle systems
-large canvas effects
-massive box-shadow animations
-constant expensive filter/blur calculations
-
-The website must remain smooth on normal phones.
-
-==================================================
-14. MOBILE
-==================================================
-
-Mobile gets a lighter version of the motion.
-
-Keep:
-
-ambient background movement
-subtle scroll reveals
-small parallax
-button/link micro-interactions
-
-Disable:
-
-cursor effects
-heavy parallax
-large transforms
-expensive effects
-
-The website must remain fast and full-width.
-
-==================================================
-15. REDUCED MOTION
-==================================================
-
-Respect:
-
-prefers-reduced-motion: reduce
-
-When enabled, significantly reduce or disable non-essential motion.
-
-==================================================
-16. OVERALL MOTION PHILOSOPHY
-==================================================
-
-The final website should feel:
-
-alive
-expensive
-calm
-editorial
-modern
-intentional
 smooth
+layered
+cinematic
+responsive
+precise
 
 NOT:
 
-flashy
-overanimated
-gaming-like
-template-like
-particle-heavy
-AI-generated-looking
+instant
+basic dropdown
+generic hamburger
+gaming HUD
+overly bouncy
+excessively blurred
 
-A visitor should notice that the website feels unusually polished, but should NOT be thinking:
-
-"Wow, there are animations everywhere."
-
-That is the target.
+The animation should be noticeable without slowing the user down.
 
 ==================================================
-17. IMPORTANT FINAL CHECK
+IMPORTANT IMPLEMENTATION
 ==================================================
 
-After implementation:
+Inspect:
 
-scroll from the very top to the bottom slowly.
+src/components/winsable/Nav.tsx
 
-Then scroll back upward.
+and the existing animation utilities before editing.
 
-The page should still have subtle movement and depth.
+Do not create another mobile navigation component.
 
-No section should feel completely dead/static.
+Do not duplicate menu state.
 
-But no animation should become annoying through repeated scrolling.
+Do not add a second overlay.
 
-Keep the current WinsAble visual identity intact.
+Modify the existing menu implementation.
 
-DO NOT redesign.
-DO NOT change content.
-DO NOT change layout.
+If the current code uses:
 
-ONLY add this restrained premium motion layer.
+isOpen && ...
+
+change the architecture as necessary so the menu can remain mounted during its exit animation.
+
+A clean approach is to distinguish:
+
+menu open state
+and
+menu mounted/animating state
+
+or use the existing animation mechanism if one already supports exit transitions.
+
+==================================================
+MOBILE ONLY
+==================================================
+
+This animation applies to the mobile full-screen menu.
+
+Desktop navigation must remain untouched.
+
+Keep the existing desktop breakpoint behavior.
+
+==================================================
+FINAL TEST
+==================================================
+
+Test these exact interactions:
+
+1. Closed → tap MENU
+   → smooth full opening animation.
+
+2. Open → tap X
+   → smooth complete closing animation.
+
+3. Open → press Escape
+   → same smooth closing animation.
+
+4. Open → tap Services
+   → close animation → scroll to Services.
+
+5. Open → tap FAQ
+   → close animation → scroll to FAQ.
+
+6. Open → tap Start a Case
+   → close animation → scroll to Case Form.
+
+7. Open → immediately tap Close during the opening animation
+   → animation must handle this gracefully without glitches.
+
+8. Open → close → immediately reopen
+   → no stuck state, no invisible overlay, no broken animation.
+
+9. Repeatedly open/close the menu
+   → no memory leaks, no duplicate listeners, no body-scroll-lock bugs.
+
+FINAL RESULT:
+
+The menu must feel FULLY ANIMATED both ON and OFF.
+
+Opening should not feel instant.
+
+Closing should not feel instant.
+
+Every major layer — hamburger, background, header, navigation rows, separators, CTA and overlay — should participate in a coordinated, smooth transition.
