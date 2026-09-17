@@ -47,9 +47,7 @@ export function Nav() {
       if (e.key === "Escape") setOpen(false);
     };
     window.addEventListener("keydown", onKey);
-    return () => {
-      window.removeEventListener("keydown", onKey);
-    };
+    return () => window.removeEventListener("keydown", onKey);
   }, [open]);
 
   useEffect(() => {
@@ -62,104 +60,107 @@ export function Nav() {
   }, [open]);
 
   return (
-    <header
-      ref={headerRef}
-      className={`sticky top-0 z-50 transition-all duration-500 ${
-        scrolled
-          ? "border-b border-white/[0.08] bg-black/60 backdrop-blur-2xl backdrop-saturate-150"
-          : "border-transparent bg-black/20 backdrop-blur-md"
-      }`}
-    >
-      <div className="shell flex h-14 items-center justify-between gap-6 lg:h-20">
-        <a href="#top" className="flex items-center gap-3">
-          <img
-            src="/navbar.png"
-            alt="WinsAble"
-            className="h-8 w-auto object-contain lg:h-10"
-          />
-        </a>
-
-        <nav className="hidden items-center gap-8 lg:flex" aria-label="Primary">
-          {links.map((l) => (
-            <a
-              key={l.href}
-              href={l.href}
-              aria-current={active === l.href ? "true" : undefined}
-              className={`relative text-sm transition-colors duration-300 ${
-                active === l.href ? "text-gold" : "text-white/50 hover:text-white/80"
-              }`}
-            >
-              {l.label}
-              <span
-                aria-hidden="true"
-                className={`absolute -bottom-1.5 left-0 h-px w-full origin-left bg-gold transition-transform duration-500 ease-out ${
-                  active === l.href ? "scale-x-100" : "scale-x-0"
-                }`}
-              />
-            </a>
-          ))}
-        </nav>
-
-        <div className="flex items-center gap-2">
-          <a
-            href="#case-form"
-            className="group hidden items-center gap-2 rounded-full border border-gold/30 bg-gold/10 px-5 py-2.5 text-sm font-semibold text-gold transition-all duration-300 hover:border-gold/60 hover:bg-gold/20 hover:shadow-[0_0_24px_oklch(0.55_0.22_295/0.2)] sm:inline-flex"
-          >
-            Start a Case
-            <ArrowUpRight className="size-3.5 transition-transform duration-300 group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
+    <>
+      <header
+        ref={headerRef}
+        className={`sticky top-0 z-50 transition-all duration-500 ${
+          scrolled
+            ? "border-b border-white/[0.08] bg-black/60 backdrop-blur-2xl backdrop-saturate-150"
+            : "border-transparent bg-black/20 backdrop-blur-md"
+        }`}
+      >
+        <div className="shell flex h-14 items-center justify-between gap-6 lg:h-20">
+          <a href="#top" className="flex items-center gap-3">
+            <img
+              src="/navbar.png"
+              alt="WinsAble"
+              className="h-8 w-auto object-contain lg:h-10"
+            />
           </a>
-          <button
-            type="button"
-            aria-label={open ? "Close menu" : "Open menu"}
-            aria-expanded={open}
-            onClick={() => setOpen((v) => !v)}
-            className="group relative flex items-center gap-2.5 rounded-full border border-white/10 pr-3.5 pl-3 py-2 lg:hidden"
-          >
-            <span className="relative block h-[11px] w-[15px]">
-              <span
-                className={`absolute left-0 h-px w-full bg-foreground transition-all duration-300 ease-[cubic-bezier(0.22,1,0.36,1)] ${
-                  open ? "top-[5px] rotate-45" : "top-0"
+
+          <nav className="hidden items-center gap-8 lg:flex" aria-label="Primary">
+            {links.map((l) => (
+              <a
+                key={l.href}
+                href={l.href}
+                aria-current={active === l.href ? "true" : undefined}
+                className={`relative text-sm transition-colors duration-300 ${
+                  active === l.href ? "text-gold" : "text-white/50 hover:text-white/80"
                 }`}
-              />
-              <span
-                className={`absolute left-0 top-[5px] h-px w-full bg-foreground transition-all duration-300 ease-[cubic-bezier(0.22,1,0.36,1)] ${
-                  open ? "scale-x-0 opacity-0" : "scale-x-100 opacity-100"
-                }`}
-              />
-              <span
-                className={`absolute left-0 h-px w-full bg-foreground transition-all duration-300 ease-[cubic-bezier(0.22,1,0.36,1)] ${
-                  open ? "top-[5px] -rotate-45" : "top-[10px]"
-                }`}
-              />
-            </span>
-            <span className="text-[9px] font-semibold tracking-[0.2em] text-white/40 uppercase transition-colors duration-300 group-hover:text-white/60">
-              Menu
-            </span>
-          </button>
+              >
+                {l.label}
+                <span
+                  aria-hidden="true"
+                  className={`absolute -bottom-1.5 left-0 h-px w-full origin-left bg-gold transition-transform duration-500 ease-out ${
+                    active === l.href ? "scale-x-100" : "scale-x-0"
+                  }`}
+                />
+              </a>
+            ))}
+          </nav>
+
+          <div className="flex items-center gap-2">
+            <a
+              href="#case-form"
+              className="group hidden items-center gap-2 rounded-full border border-gold/30 bg-gold/10 px-5 py-2.5 text-sm font-semibold text-gold transition-all duration-300 hover:border-gold/60 hover:bg-gold/20 hover:shadow-[0_0_24px_oklch(0.55_0.22_295/0.2)] sm:inline-flex"
+            >
+              Start a Case
+              <ArrowUpRight className="size-3.5 transition-transform duration-300 group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
+            </a>
+            <button
+              type="button"
+              aria-label={open ? "Close menu" : "Open menu"}
+              aria-expanded={open}
+              onClick={() => setOpen((v) => !v)}
+              className="relative flex items-center gap-2.5 rounded-full border border-white/10 px-3 py-2.5 lg:hidden"
+              style={{ minWidth: "44px", minHeight: "44px" }}
+            >
+              <span className="relative block h-[14px] w-[18px]">
+                <span
+                  className={`absolute left-0 h-[1.5px] w-full rounded-full bg-white transition-all duration-300 ease-[cubic-bezier(0.22,1,0.36,1)] ${
+                    open ? "top-[6px] rotate-45" : "top-0"
+                  }`}
+                />
+                <span
+                  className={`absolute left-0 top-[6px] h-[1.5px] w-full rounded-full bg-white transition-all duration-300 ease-[cubic-bezier(0.22,1,0.36,1)] ${
+                    open ? "scale-x-0 opacity-0" : "scale-x-100 opacity-100"
+                  }`}
+                />
+                <span
+                  className={`absolute left-0 h-[1.5px] w-full rounded-full bg-white transition-all duration-300 ease-[cubic-bezier(0.22,1,0.36,1)] ${
+                    open ? "top-[6px] -rotate-45" : "top-[12px]"
+                  }`}
+                />
+              </span>
+              <span className="text-[10px] font-semibold tracking-[0.2em] text-white/50 uppercase">
+                Menu
+              </span>
+            </button>
+          </div>
         </div>
-      </div>
+      </header>
 
       {open && (
         <div
-          className="fixed inset-0 top-14 z-40 lg:hidden"
+          className="fixed inset-0 z-[100]"
           role="dialog"
           aria-label="Mobile navigation"
         >
           <div
-            className="absolute inset-0 bg-black/80"
+            className="absolute inset-0 bg-black/90"
             onClick={() => setOpen(false)}
           />
 
           <nav
             aria-label="Mobile"
-            className="relative h-full overflow-y-auto bg-background"
+            className="absolute inset-x-0 bottom-0 top-14 overflow-y-auto bg-background"
             style={{
               backgroundImage:
                 "linear-gradient(oklch(0.13 0.005 260 / 0.5) 1px, transparent 1px), linear-gradient(90deg, oklch(0.13 0.005 260 / 0.5) 1px, transparent 1px)",
               backgroundSize: "60px 60px",
             }}
           >
-            <div className="shell flex flex-col py-6 sm:py-8">
+            <div className="px-5 py-6 sm:px-8 sm:py-8">
               <div className="flex items-center justify-between border-b border-white/[0.06] pb-5">
                 <span className="font-display text-lg tracking-tight text-white/60">
                   WinsAble
@@ -168,10 +169,11 @@ export function Nav() {
                   type="button"
                   aria-label="Close menu"
                   onClick={() => setOpen(false)}
-                  className="group flex items-center gap-2 text-xs font-semibold tracking-[0.2em] text-white/40 uppercase transition-colors duration-300 hover:text-foreground"
+                  className="flex items-center gap-2 text-xs font-semibold tracking-[0.2em] text-white/40 uppercase transition-colors duration-300 hover:text-white"
+                  style={{ minWidth: "44px", minHeight: "44px" }}
                 >
                   Close
-                  <span className="grid size-7 place-items-center rounded-full border border-white/10 transition-colors duration-300 group-hover:border-white/25">
+                  <span className="grid size-7 place-items-center rounded-full border border-white/10 transition-colors duration-300 hover:border-white/25">
                     <svg viewBox="0 0 16 16" className="size-3" fill="none">
                       <path
                         d="M4 4l8 8M12 4l-8 8"
@@ -184,18 +186,19 @@ export function Nav() {
                 </button>
               </div>
 
-              <ol className="mt-2 flex flex-col">
+              <ol className="mt-4 flex flex-col">
                 {links.map((l, i) => (
                   <li key={l.href}>
                     <a
                       href={l.href}
                       onClick={() => setOpen(false)}
-                      className="group flex items-baseline gap-5 border-b border-white/[0.04] py-5 sm:py-6"
+                      className="flex items-baseline gap-5 border-b border-white/[0.04] py-5 sm:py-6"
+                      style={{ minHeight: "56px" }}
                     >
-                      <span className="text-[11px] font-bold tracking-[0.2em] text-white/25 tabular-nums transition-colors duration-300 group-hover:text-gold">
+                      <span className="text-[11px] font-bold tracking-[0.2em] text-white/25 tabular-nums">
                         {String(i + 1).padStart(2, "0")}
                       </span>
-                      <span className="display text-[clamp(1.6rem,5vw,2.4rem)] leading-none text-foreground/70 transition-colors duration-300 group-hover:text-foreground">
+                      <span className="display text-[clamp(1.5rem,5vw,2.2rem)] leading-none text-foreground/80">
                         {l.label}
                       </span>
                     </a>
@@ -216,6 +219,6 @@ export function Nav() {
           </nav>
         </div>
       )}
-    </header>
+    </>
   );
 }
