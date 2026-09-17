@@ -194,6 +194,7 @@
 @utility reveal {
   opacity: 0;
   transform: translateY(30px);
+  will-change: opacity, transform;
   transition:
     opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1),
     transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
@@ -207,6 +208,7 @@
 @utility reveal-left {
   opacity: 0;
   transform: translateX(-60px) rotate(-2deg);
+  will-change: opacity, transform;
   transition:
     opacity 0.9s cubic-bezier(0.16, 1, 0.3, 1),
     transform 0.9s cubic-bezier(0.16, 1, 0.3, 1);
@@ -220,6 +222,7 @@
 @utility reveal-right {
   opacity: 0;
   transform: translateX(60px) rotate(2deg);
+  will-change: opacity, transform;
   transition:
     opacity 0.9s cubic-bezier(0.16, 1, 0.3, 1),
     transform 0.9s cubic-bezier(0.16, 1, 0.3, 1);
@@ -233,6 +236,7 @@
 @utility reveal-scale {
   opacity: 0;
   transform: scale(0.92);
+  will-change: opacity, transform;
   transition:
     opacity 0.9s cubic-bezier(0.16, 1, 0.3, 1),
     transform 0.9s cubic-bezier(0.16, 1, 0.3, 1);
@@ -245,6 +249,7 @@
 
 @utility reveal-clip {
   clip-path: inset(0 100% 0 0);
+  will-change: clip-path;
   transition: clip-path 1s cubic-bezier(0.16, 1, 0.3, 1);
 
   &[data-shown="true"] {
@@ -255,6 +260,7 @@
 @utility reveal-rotate {
   opacity: 0;
   transform: rotate(-4deg) translateY(40px) scale(0.95);
+  will-change: opacity, transform;
   transition:
     opacity 1s cubic-bezier(0.16, 1, 0.3, 1),
     transform 1s cubic-bezier(0.16, 1, 0.3, 1);
@@ -270,6 +276,7 @@
 @utility marquee-track {
   display: flex;
   width: max-content;
+  will-change: transform;
   animation: winsable-marquee 34s linear infinite;
 }
 
@@ -285,6 +292,7 @@
 @utility band-marquee {
   display: flex;
   width: max-content;
+  will-change: transform;
   animation: winsable-marquee 26s linear infinite;
 }
 
@@ -357,6 +365,7 @@
 
 @utility float-slow {
   animation: winsable-float 7s ease-in-out infinite;
+  will-change: transform;
 }
 
 @keyframes winsable-float {
@@ -371,6 +380,7 @@
 
 @utility seal-spin {
   animation: winsable-spin 22s linear infinite;
+  will-change: transform;
 }
 
 @keyframes winsable-spin {
@@ -464,6 +474,7 @@
 
 @utility scroll-cue {
   overflow: hidden;
+  will-change: transform;
 
   &::after {
     content: "";
@@ -533,10 +544,12 @@
 
 @utility editorial-track-left {
   animation: editorial-scroll-left 60s linear infinite;
+  will-change: transform;
 }
 
 @utility editorial-track-right {
   animation: editorial-scroll-right 55s linear infinite;
+  will-change: transform;
 }
 
 @keyframes editorial-scroll-left {
@@ -667,17 +680,6 @@
 
 /* ========================= REDUCED MOTION ========================= */
 
-@keyframes nav-enter {
-  from {
-    opacity: 0;
-    transform: translateY(-12px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
-
 @media (prefers-reduced-motion: reduce) {
   html {
     scroll-behavior: auto;
@@ -725,12 +727,6 @@
   .intro-word {
     animation: none;
   }
-
-  header[style*="nav-enter"] {
-    animation: none !important;
-    opacity: 1 !important;
-    transform: none !important;
-  }
 }
 
 html {
@@ -740,10 +736,4 @@ html {
 section[id],
 [id="top"] {
   scroll-margin-top: 6rem;
-}
-
-@media (prefers-reduced-motion: reduce) {
-  html {
-    scroll-behavior: auto;
-  }
 }

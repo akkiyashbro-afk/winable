@@ -1,8 +1,9 @@
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef } from "react";
 
 /**
  * Scroll-linked word reveal: words brighten one by one as the block
- * travels through the viewport. Pure CSS opacity, one rAF-throttled listener.
+ * travels through the viewport. Uses direct DOM manipulation to avoid
+ * React re-renders on scroll — each span's opacity is set imperatively.
  */
 export function ScrollText({
   text,
@@ -15,14 +16,20 @@ export function ScrollText({
   dim?: number;
   as?: "p" | "h2" | "h3";
 }) {
-  const ref = useRef<HTMLElement | null>(null);
-  const [progress, setProgress] = useState(0);
+  const containerRef = useRef<HTMLElement | null>(null);
+  const spansRef = useRef<HTMLSpanElement[]>([]);
 
   useEffect(() => {
-    const el = ref.current;
+    const el = containerRef.current;
     if (!el) return;
+
+    const words = text.split(" ");
+
+    // If reduced motion, show everything at full opacity
     if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
-      setProgress(1);
+      spansRef.current.forEach((span) => {
+        if (span) span.style.opacity = "1";
+      });
       return;
     }
 
@@ -32,8 +39,15 @@ export function ScrollText({
       const r = el.getBoundingClientRect();
       const start = window.innerHeight * 0.9;
       const end = window.innerHeight * 0.3;
-      const p = (start - r.top) / Math.max(start - end + r.height * 0.6, 1);
-      setProgress(Math.min(1, Math.max(0, p)));
+      const p = Math.min(1, Math.max(0, (start - r.top) / Math.max(start - end + r.height * 0.6, 1)));
+
+      for (let i = 0; i < words.length; i++) {
+        const span = spansRef.current[i];
+        if (!span) continue;
+        const at = i / words.length;
+        const lit = Math.min(1, Math.max(0, (p - at) * words.length * 0.8 + 0.15));
+        span.style.opacity = String(dim + (1 - dim) * lit);
+      }
     };
     const onScroll = () => {
       if (!frame) frame = window.requestAnimationFrame(update);
@@ -47,26 +61,23 @@ export function ScrollText({
       window.removeEventListener("resize", onScroll);
       if (frame) window.cancelAnimationFrame(frame);
     };
-  }, []);
+  }, [text, dim]);
 
   const words = text.split(" ");
 
   return (
-    <Tag ref={ref as never} className={className}>
-      {words.map((w, i) => {
-        const at = i / words.length;
-        const lit = Math.min(1, Math.max(0, (progress - at) * words.length * 0.8 + 0.15));
-        return (
-          <span
-            key={`${w}-${i}`}
-            className="transition-opacity duration-300 ease-out"
-            style={{ opacity: dim + (1 - dim) * lit }}
-          >
-            {w}
-            {i < words.length - 1 ? " " : ""}
-          </span>
-        );
-      })}
+    <Tag ref={containerRef as never} className={className}>
+      {words.map((w, i) => (
+        <span
+          key={`${w}-${i}`}
+          ref={(el) => { spansRef.current[i] = el as HTMLSpanElement; }}
+          className="will-change-[opacity]"
+          style={{ opacity: dim }}
+        >
+          {w}
+          {i < words.length - 1 ? " " : ""}
+        </span>
+      ))}
     </Tag>
   );
 }

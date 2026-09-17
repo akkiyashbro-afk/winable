@@ -137,7 +137,7 @@ export function Seal({ className = "" }: { className?: string }) {
   );
 }
 
-/** Parallax wrapper — moves children based on scroll position. */
+/** Parallax wrapper — moves children based on scroll position. Uses direct DOM updates. */
 export function Parallax({
   children,
   speed = 0.15,
@@ -148,7 +148,6 @@ export function Parallax({
   className?: string;
 }) {
   const ref = useRef<HTMLDivElement | null>(null);
-  const [offset, setOffset] = useState(0);
 
   useEffect(() => {
     if (reduced()) return;
@@ -161,7 +160,8 @@ export function Parallax({
       const r = el.getBoundingClientRect();
       const center = r.top + r.height / 2;
       const viewCenter = window.innerHeight / 2;
-      setOffset((center - viewCenter) * speed);
+      const offset = (center - viewCenter) * speed;
+      el.style.transform = `translate3d(0, ${offset}px, 0)`;
     };
     const onScroll = () => {
       if (!frame) frame = requestAnimationFrame(update);
@@ -177,7 +177,7 @@ export function Parallax({
   }, [speed]);
 
   return (
-    <div ref={ref} className={className} style={{ transform: `translate3d(0, ${offset}px, 0)` }}>
+    <div ref={ref} className={`will-change-transform ${className}`}>
       {children}
     </div>
   );

@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from "react";
 
-/** Animates a number from 0 to target when entering viewport. */
+/** Animates a number from 0 to target when entering viewport. Skips animation if reduced motion. */
 export function useCounter(target: number, duration = 1800) {
   const ref = useRef<HTMLSpanElement | null>(null);
   const [value, setValue] = useState(0);
@@ -8,6 +8,11 @@ export function useCounter(target: number, duration = 1800) {
   useEffect(() => {
     const el = ref.current;
     if (!el) return;
+
+    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
+      setValue(target);
+      return;
+    }
 
     let started = false;
     const io = new IntersectionObserver(
