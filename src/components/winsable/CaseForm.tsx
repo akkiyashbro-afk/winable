@@ -1,8 +1,8 @@
-import { useState, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useServerFn } from "@tanstack/react-start";
-import { caseFormSchema, type CaseFormInput } from "@/lib/validation";
+import { caseFormSchema, platformCaseTypes, type CaseFormInput } from "@/lib/validation";
 import { submitCaseFn } from "./submitCase";
 import { Reveal } from "./Reveal";
 
@@ -20,14 +20,6 @@ const platforms = [
   "Reddit",
   "Discord",
   "Other / Anything",
-] as const;
-
-const caseTypes = [
-  "Disabled / Suspended Account",
-  "Hacked / Compromised Account",
-  "Impersonation",
-  "Copyright / Content Issue",
-  "Other / Not Listed?",
 ] as const;
 
 const MAX_FILES = 4;
@@ -140,6 +132,19 @@ export function CaseForm() {
     formState: { errors },
   } = form;
   const watched = watch();
+  const isOther = watched.platform === "Other / Anything";
+  const currentCaseTypes = isOther ? [] : (platformCaseTypes[watched.platform] ?? []);
+
+  useEffect(() => {
+    if (isOther) {
+      form.setValue("caseType", "");
+    } else {
+      const types = platformCaseTypes[watched.platform];
+      if (types && types.length > 0 && !types.includes(watched.caseType || "")) {
+        form.setValue("caseType", types[0]);
+      }
+    }
+  }, [watched.platform]);
 
   function next() {
     if (watched.platform === "Other / Anything" && files.length === 0) {
@@ -365,11 +370,12 @@ export function CaseForm() {
               </Reveal>
 
               {/* Section 03 — Case Details */}
+              {!isOther && (
               <Reveal delay={120}>
                 <div className="mt-10">
                   <SectionHeader number="03" title="Case Details" />
                   <div className="mt-7 space-y-2">
-                    {caseTypes.map((c) => (
+                    {currentCaseTypes.map((c) => (
                       <label
                         key={c}
                         className={`group flex items-center gap-3.5 px-4 py-3.5 rounded-md border cursor-pointer transition-all duration-200 ${
@@ -465,7 +471,7 @@ export function CaseForm() {
                     <button
                       type="button"
                       onClick={() => fileRef.current?.click()}
-                      className="flex items-center gap-2.5 rounded-md border border-dashed border-white/[0.12] bg-white/[0.02] px-5 py-4 text-sm text-white/45 transition-all hover:border-white/[0.22] hover:bg-white/[0.04] hover:text-white/65"
+                      className="flex items-center gap-2.5 rounded-md border border-dashed border-white/[0.12] bg-white/[0.02] px-5 py-4 text-sm text-white/45 transition-all duration-300 hover:border-white/[0.22] hover:bg-white/[0.04] hover:text-white/65 active:scale-[0.98]"
                     >
                       <svg viewBox="0 0 20 20" fill="currentColor" className="size-4.5 shrink-0">
                         <path d="M9.25 13.25a.75.75 0 001.5 0V4.636l2.955 3.129a.75.75 0 001.09-1.03l-4.25-4.5a.75.75 0 00-1.09 0l-4.25 4.5a.75.75 0 101.09 1.03L9.25 4.636v8.614z" />
@@ -485,7 +491,7 @@ export function CaseForm() {
                             <button
                               type="button"
                               onClick={() => removeFile(i)}
-                              className="ml-4 text-white/25 hover:text-red-400 shrink-0 transition-colors"
+                              className="ml-4 text-white/25 hover:text-red-400 shrink-0 transition-colors duration-200"
                             >
                               Remove
                             </button>
@@ -496,18 +502,119 @@ export function CaseForm() {
                   </div>
                 </div>
               </Reveal>
+              )}
 
-              {/* CTA */}
+              {/* Other / Anything — Custom Flow */}
+              {isOther && (
+              <Reveal delay={120}>
+                <div className="mt-10">
+                  <SectionHeader number="03" title="Tell Us Everything" />
+
+                  <div className="mt-8 rounded-lg border border-white/[0.06] bg-white/[0.02] p-6 md:p-8">
+                    <h4 className="text-lg font-bold text-foreground tracking-tight">
+                      ARE YOU WORRIED ABOUT SOMETHING?
+                    </h4>
+                    <p className="mt-1 text-base font-semibold text-gold">
+                      LET&apos;S CONNECT.
+                    </p>
+                    <p className="mt-4 text-sm text-white/50 leading-relaxed max-w-lg">
+                      You bring the situation. We&apos;ll help make sense of it. Tell us what
+                      happened, what changed, what you&apos;re finding, and anything else you
+                      want us to see.
+                    </p>
+                  </div>
+
+                  <div className="mt-8">
+                    <Field label="What happened? *" error={errors.description?.message}>
+                      <textarea
+                        {...register("description")}
+                        rows={7}
+                        placeholder="Describe what happened, when it started, and what you've already tried..."
+                        className={`${inputClass} resize-none`}
+                      />
+                    </Field>
+                  </div>
+
+                  <div className="mt-8">
+                    <label className="block text-sm font-medium text-white/60 mb-2">
+                      Supporting Files
+                    </label>
+                    <p className="mb-3 text-xs text-white/30">
+                      Provide anything relevant — screenshots, emails, notifications, error
+                      messages, documents, or other supporting information.
+                    </p>
+                    <input
+                      ref={fileRef}
+                      type="file"
+                      accept=".jpg,.jpeg,.png,.pdf"
+                      multiple
+                      onChange={handleFileChange}
+                      className="hidden"
+                    />
+                    <button
+                      type="button"
+                      onClick={() => fileRef.current?.click()}
+                      className="flex items-center gap-2.5 rounded-md border border-dashed border-white/[0.12] bg-white/[0.02] px-5 py-4 text-sm text-white/45 transition-all duration-300 hover:border-white/[0.22] hover:bg-white/[0.04] hover:text-white/65 active:scale-[0.98]"
+                    >
+                      <svg viewBox="0 0 20 20" fill="currentColor" className="size-4.5 shrink-0">
+                        <path d="M9.25 13.25a.75.75 0 001.5 0V4.636l2.955 3.129a.75.75 0 001.09-1.03l-4.25-4.5a.75.75 0 00-1.09 0l-4.25 4.5a.75.75 0 101.09 1.03L9.25 4.636v8.614z" />
+                        <path d="M3.5 12.75a.75.75 0 00-1.5 0v2.5A2.75 2.75 0 004.75 18h10.5A2.75 2.75 0 0018 15.25v-2.5a.75.75 0 00-1.5 0v2.5c0 .69-.56 1.25-1.25 1.25H4.75c-.69 0-1.25-.56-1.25-1.25v-2.5z" />
+                      </svg>
+                      {files.length > 0
+                        ? `${files.length} file(s) attached`
+                        : "+ Upload Screenshots / Files"}
+                    </button>
+                    {fileError && <p className="mt-2 text-xs text-red-400">{fileError}</p>}
+                    {files.length > 0 && (
+                      <div className="mt-3 space-y-1.5">
+                        {files.map((f, i) => (
+                          <div
+                            key={i}
+                            className="flex items-center justify-between text-xs text-white/40"
+                          >
+                            <span className="truncate">{f.name}</span>
+                            <button
+                              type="button"
+                              onClick={() => removeFile(i)}
+                              className="ml-4 text-white/25 hover:text-red-400 shrink-0 transition-colors duration-200"
+                            >
+                              Remove
+                            </button>
+                          </div>
+                        ))}
+                      </div>
+                    )}
+                  </div>
+
+                  <div className="mt-10 pt-8 border-t border-white/[0.08]">
+                    <p className="text-sm font-semibold text-white/60 mb-1">Final</p>
+                    <p className="text-xs text-white/35 mb-5">
+                      Have everything you need? Submit it below.
+                    </p>
+                    <button
+                      type="submit"
+                      className="w-full rounded-md bg-gold px-8 py-4 text-sm font-semibold text-black transition-all duration-300 hover:brightness-110 hover:shadow-[0_0_20px_oklch(0.7_0.18_90/0.15)] active:scale-[0.98]"
+                    >
+                      SUBMIT REQUEST →
+                    </button>
+                  </div>
+                </div>
+              </Reveal>
+              )}
+
+              {/* CTA — Normal platforms */}
+              {!isOther && (
               <Reveal delay={160}>
                 <div className="mt-10 pt-8 border-t border-white/[0.08]">
                   <button
                     type="submit"
-                    className="w-full rounded-md bg-gold px-8 py-4 text-sm font-semibold text-black transition-colors hover:brightness-110"
+                    className="w-full rounded-md bg-gold px-8 py-4 text-sm font-semibold text-black transition-all duration-300 hover:brightness-110 hover:shadow-[0_0_20px_oklch(0.7_0.18_90/0.15)] active:scale-[0.98]"
                   >
                     Continue to Review →
                   </button>
                 </div>
               </Reveal>
+              )}
             </form>
           )}
 
@@ -519,11 +626,11 @@ export function CaseForm() {
                 <SummaryRow label="Name" value={watched.fullName} />
                 <SummaryRow label="Email" value={watched.email} />
                 <SummaryRow label="Platform" value={watched.platform === "Other / Anything" ? `Other — ${watched.otherPlatform}` : watched.platform} />
-                <SummaryRow label="Case Type" value={watched.caseType} />
-                <SummaryRow label="Username" value={watched.username || "—"} />
-                <SummaryRow label="Followers" value={watched.followers || "—"} />
-                <SummaryRow label="Appeal Submitted" value={watched.alreadySubmittedAppeal || "—"} />
-                <SummaryRow label="Can Login" value={watched.canStillLogin || "—"} />
+                {!isOther && <SummaryRow label="Case Type" value={watched.caseType} />}
+                {!isOther && <SummaryRow label="Username" value={watched.username || "—"} />}
+                {!isOther && <SummaryRow label="Followers" value={watched.followers || "—"} />}
+                {!isOther && <SummaryRow label="Appeal Submitted" value={watched.alreadySubmittedAppeal || "—"} />}
+                {!isOther && <SummaryRow label="Can Login" value={watched.canStillLogin || "—"} />}
                 <SummaryRow label="Description" value={watched.description} />
                 {files.length > 0 && (
                   <SummaryRow label="Attachments" value={files.map((f) => f.name).join(", ")} />
@@ -540,7 +647,7 @@ export function CaseForm() {
                 <button
                   type="button"
                   onClick={prev}
-                  className="flex-1 rounded-md border border-white/[0.12] px-6 py-4 text-sm font-medium text-white/55 transition-colors hover:text-foreground hover:border-white/[0.22]"
+                  className="flex-1 rounded-md border border-white/[0.12] px-6 py-4 text-sm font-medium text-white/55 transition-all duration-300 hover:text-foreground hover:border-white/[0.22] active:scale-[0.98]"
                 >
                   Back
                 </button>
@@ -548,7 +655,7 @@ export function CaseForm() {
                   type="button"
                   onClick={handleSubmit(onSubmit)}
                   disabled={submitting}
-                  className="flex-1 rounded-md bg-gold px-6 py-4 text-sm font-semibold text-black transition-colors hover:brightness-110 disabled:opacity-40"
+                  className="flex-1 rounded-md bg-gold px-6 py-4 text-sm font-semibold text-black transition-all duration-300 hover:brightness-110 hover:shadow-[0_0_20px_oklch(0.7_0.18_90/0.15)] active:scale-[0.98] disabled:opacity-40"
                 >
                   {submitting ? "Submitting..." : "Submit Case"}
                 </button>
