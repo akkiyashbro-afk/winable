@@ -1,3 +1,4 @@
+// Made by akki_idle
 import { useEffect, useState } from "react";
 
 function prefersReduced() {

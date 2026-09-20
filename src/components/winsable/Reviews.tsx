@@ -1,3 +1,4 @@
+// Made by akki_idle
 import { LogoMark } from "./Bits";
 import { Reveal } from "./Reveal";
 import { useSiteData, type Review } from "./useSiteData";

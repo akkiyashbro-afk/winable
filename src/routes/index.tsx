@@ -1,3 +1,4 @@
+// Made by akki_idle
 import { createFileRoute } from "@tanstack/react-router";
 import { Nav } from "@/components/winsable/Nav";
 import { AmbientBackground } from "@/components/winsable/AmbientBackground";

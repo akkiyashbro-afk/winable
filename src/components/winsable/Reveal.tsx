@@ -1,3 +1,4 @@
+// Made by akki_idle
 import { useEffect, useRef, useState, type ReactNode } from "react";
 
 export function Reveal({

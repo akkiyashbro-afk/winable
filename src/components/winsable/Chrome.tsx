@@ -1,3 +1,4 @@
+// Made by akki_idle
 import { useEffect, useRef, useState } from "react";
 
 /** Hairline scroll progress indicator — gold accent. Uses direct DOM updates. */

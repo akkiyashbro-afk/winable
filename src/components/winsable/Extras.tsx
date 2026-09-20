@@ -1,3 +1,4 @@
+// Made by akki_idle
 import { Reveal } from "./Reveal";
 import { PlatformMark } from "./Bits";
 

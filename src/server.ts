@@ -1,3 +1,4 @@
+// Made by akki_idle
 import "./lib/error-capture";
 
 import { consumeLastCapturedError } from "./lib/error-capture";

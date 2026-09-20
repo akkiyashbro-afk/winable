@@ -1,3 +1,4 @@
+// Made by akki_idle
 import { z } from "zod";
 
 const platformCaseTypes: Record<string, string[]> = {

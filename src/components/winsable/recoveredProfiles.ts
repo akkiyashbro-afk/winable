@@ -1,3 +1,4 @@
+// Made by akki_idle
 export interface RecoveredProfile {
   id: string;
   name?: string;

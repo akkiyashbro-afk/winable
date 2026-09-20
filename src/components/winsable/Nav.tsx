@@ -1,3 +1,4 @@
+// Made by akki_idle
 import { useCallback, useEffect, useRef, useState } from "react";
 import { ArrowUpRight } from "./Bits";
 

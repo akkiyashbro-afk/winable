@@ -1,5 +1,7 @@
 # WinsAble
 
+> Built by **akki_idle**
+
 Professional assistance for social media account recovery, appeals, impersonation, copyright-related complaints and platform support requests.
 
 ## Tech Stack

@@ -1,3 +1,4 @@
+// Made by akki_idle
 import { useEffect, useRef, useState } from "react";
 
 /** Animates a number from 0 to target when entering viewport. Skips animation if reduced motion. */

@@ -1,3 +1,4 @@
+// Made by akki_idle
 import type { ReactNode } from "react";
 
 export function ArrowUpRight({ className = "" }: { className?: string }) {

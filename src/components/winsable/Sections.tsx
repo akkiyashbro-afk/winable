@@ -1,3 +1,4 @@
+// Made by akki_idle
 import { Fragment, useEffect, useRef, useState } from "react";
 import { CtaLink, PlatformMark, ServiceIcon, LogoMark, LogoFull } from "./Bits";
 import { Reveal } from "./Reveal";

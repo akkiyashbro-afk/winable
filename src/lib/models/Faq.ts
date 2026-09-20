@@ -1,3 +1,4 @@
+// Made by akki_idle
 import mongoose, { Schema, Document, Model } from "mongoose";
 
 export interface IFaq extends Document {

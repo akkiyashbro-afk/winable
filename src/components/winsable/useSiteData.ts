@@ -1,3 +1,4 @@
+// Made by akki_idle
 import { useState, useEffect } from "react";
 
 const STORAGE_KEY = "winsable-site-data";
