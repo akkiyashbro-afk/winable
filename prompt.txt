@@ -1,474 +1,472 @@
-IMPORTANT MOBILE MENU ANIMATION FIX
+I want a COMPLETE ENGLISH COPY / GRAMMAR AUDIT of the ENTIRE EXISTING WinsAble website.
 
-The mobile menu is currently opening and closing almost instantly.
+IMPORTANT:
+DO NOT MODIFY ANY CODE OR CONTENT YET.
 
-I do NOT want a simple conditional render where the menu suddenly appears/disappears.
+First inspect the entire website and produce a detailed report of every English-language issue you can find.
 
-Make the EXISTING mobile menu fully animated in BOTH directions:
+I want you to review the ACTUAL rendered website content AND the source code content.
 
-OPEN:
-MENU button tap
-→ overlay/background smoothly enters
-→ grid/background fades in
-→ menu header reveals
-→ navigation rows animate in sequentially
-→ bottom CTA reveals last
+Do not only check the homepage hero.
 
-CLOSE:
-Close/X or MENU button tap
-→ CTA smoothly exits
-→ navigation rows smoothly exit
-→ header smoothly exits
-→ background/grid fades away
-→ overlay completely disappears
-
-The entire transition must feel intentional, premium and fluid.
+Audit the ENTIRE WEBSITE.
 
 ==================================================
-DO NOT JUST USE DISPLAY NONE
+WHAT TO CHECK
 ==================================================
 
-Do NOT implement the menu using an instant:
+Check every visible piece of English text, including:
 
-display: none
-→ display: block
+- Navbar
+- Mobile menu
+- Hero
+- Hero eyebrow
+- Hero heading
+- Hero description
+- CTA buttons
+- Disclaimer text
+- Process section
+- Services
+- Platform section
+- How It Works
+- Recovery Wall
+- Reviews
+- Case Form
+- Form labels
+- Form placeholders
+- Form helper text
+- Case Details
+- Platform names
+- Other / Anything flow
+- FAQ
+- FAQ questions
+- FAQ answers
+- About section
+- Contact section
+- Footer
+- Footer links
+- Buttons
+- Tooltips
+- Empty states
+- Error messages
+- Success messages
+- Loading messages
+- Validation messages
+- Admin Panel visible text
+- Admin Panel labels
+- Admin Panel buttons
+- Admin Panel forms
+- Any modal/dialog text
+- Any confirmation text
+- Any upload instructions
+- Any microcopy
+- Any legal/disclaimer copy
+- Any metadata text that is user-facing
 
-or:
+Also inspect strings inside:
 
-conditional && <Menu />
+src/
+public/
+components/
+routes/
+data files
+configuration files
 
-that causes the element to disappear before its exit animation can play.
+but distinguish between:
 
-The menu must remain mounted long enough for the CLOSE animation to complete.
+1. User-facing website copy
+2. Internal developer/code text
 
-Use an animation/state architecture that supports both:
-
-ENTER
-and
-EXIT
-
-animations.
-
-You may use the existing animation utilities already present in the project, or clean CSS transitions/keyframes.
-
-Do NOT install a new animation library unless absolutely necessary.
-
-==================================================
-OPEN ANIMATION
-==================================================
-
-When the user taps the mobile MENU button:
-
-1. The dark menu background should smoothly fade/expand into view.
-
-2. The subtle editorial grid should fade in with the background.
-
-3. The menu header:
-
-WinsAble™ Media •
-
-and:
-
-CLOSE + X
-
-should reveal smoothly.
-
-4. Navigation items should enter sequentially.
-
-Existing navigation:
-
-01 Services
-02 How It Works
-03 Platforms
-04 FAQ
-05 About
-
-Use:
-
-first item delay: 120ms
-
-then +60ms for every next item:
-
-Services → 120ms
-How It Works → 180ms
-Platforms → 240ms
-FAQ → 300ms
-About → 360ms
-
-Each row should animate using a combination of:
-
-opacity
-translateY
-possibly subtle clip/reveal
-
-Do NOT overdo blur or scale.
-
-The text should feel like it is sliding/revealing naturally into position.
-
-5. Bottom:
-
-Start a Case ↗
-
-should reveal AFTER the navigation rows.
+Do not report internal variable names unless they are visible to users.
 
 ==================================================
-CLOSE ANIMATION
+GRAMMAR AUDIT
 ==================================================
 
-This is equally important.
+Check for:
 
-When the user closes the menu:
-
-DO NOT instantly remove it.
-
-Play a proper exit animation.
-
-Recommended sequence:
-
-Start a Case CTA
-→ exits/fades
-
-Navigation rows
-→ exit smoothly, preferably with a subtle reverse stagger
-
-Header
-→ fades/slides away
-
-Grid/background
-→ fades out
-
-Entire overlay
-→ fades out
-
-Then remove the menu from interaction/DOM.
-
-The close animation should be fast enough to feel responsive, but visibly animated.
-
-Target approximately:
-
-400–650ms overall
-
-depending on the existing animation system.
-
-Do NOT make closing take several seconds.
-
-==================================================
-REVERSE STAGGER
-==================================================
-
-For closing, use a reverse/staggered exit rather than making everything disappear simultaneously.
-
-For example:
-
-05 About
-04 FAQ
-03 Platforms
-02 How It Works
-01 Services
-
-can begin exiting in sequence.
-
-Keep the effect subtle.
-
-The user should clearly perceive that the menu is closing as one cohesive animation.
+- grammatical errors
+- incorrect verb tense
+- incorrect articles (a/an/the)
+- incorrect prepositions
+- subject-verb agreement
+- singular/plural mistakes
+- awkward sentence construction
+- incorrect word order
+- incomplete sentences
+- sentence fragments that are unintentionally incomplete
+- incorrect contractions
+- incorrect possessives
+- incorrect pronouns
+- inconsistent terminology
+- confusing wording
+- unnatural English
+- phrases that sound machine-translated
+- phrases that sound non-native
+- unnecessary words
+- missing words
+- repeated words
+- incorrect punctuation
+- missing punctuation
+- incorrect commas
+- incorrect apostrophes
+- incorrect quotation marks
+- incorrect hyphenation
+- inconsistent capitalization
+- inconsistent title case
+- inconsistent sentence case
+- inconsistent use of "&" vs "and"
+- inconsistent use of "/" vs "or"
+- inconsistent use of "Case", "Request", "Support", etc.
 
 ==================================================
-HAMBURGER ANIMATION
+SPELLING
 ==================================================
 
-The hamburger itself must also animate continuously with the menu.
+Check every user-facing word for:
 
-CLOSED:
+- spelling mistakes
+- typos
+- duplicated letters
+- missing letters
+- incorrect capitalization
+- inconsistent spelling of the same word
 
-—
-—
-—
+Pay particular attention to words used repeatedly across the website.
 
-OPEN:
+==================================================
+PROFESSIONAL COPY QUALITY
+==================================================
 
+Also identify text that is grammatically technically correct but sounds:
+
+- awkward
+- unnatural
+- overly generic
+- too robotic
+- too repetitive
+- unclear
+- unprofessional
+- unnecessarily wordy
+- inconsistent with a premium editorial brand
+
+Do NOT rewrite everything just because you personally prefer another writing style.
+
+Only flag wording when there is a clear language/copy-quality reason.
+
+==================================================
+WINSABLE TERMINOLOGY CONSISTENCY
+==================================================
+
+Check whether the website consistently uses terminology.
+
+For example, identify inconsistent variations such as:
+
+Case
+Case Details
+Case Type
+Case Request
+Support Request
+Recovery Request
+
+and determine whether the same concept is being referred to by multiple terms.
+
+DO NOT automatically choose a replacement.
+
+First report the inconsistency and show the existing variants.
+
+==================================================
+CTA AUDIT
+==================================================
+
+Review every CTA for grammar and consistency.
+
+Examples to inspect:
+
+Start a Case
+Start Your Case
+Explore Services
+Submit Request
+Submit Request →
+SUBMIT REQUEST →
+
+Check:
+
+- grammar
+- capitalization
+- consistency
+- punctuation
+- whether different buttons unnecessarily use different wording for the same action
+
+Again, REPORT FIRST.
+Do not modify.
+
+==================================================
+FORM COPY AUDIT
+==================================================
+
+Pay special attention to the Case Form.
+
+Check:
+
+- Your Details
+- Full Name
+- Email Address
+- Platform
+- Case Details
+- Username
+- Followers
+- Appeal questions
+- Login questions
+- Description
+- Supporting Files
+- Upload text
+- Continue to Review
+- Review
+- Submit
+- Success
+- Error messages
+
+Check whether labels and helper text use natural professional English.
+
+==================================================
+FAQ AUDIT
+==================================================
+
+Review every FAQ question and answer.
+
+Check:
+
+- grammar
+- punctuation
+- consistency
+- sentence structure
+- capitalization
+- clarity
+- repetitive phrasing
+
+Do NOT change the factual meaning of any FAQ answer.
+
+Report the current wording and a proposed corrected version separately.
+
+==================================================
+MOBILE MENU COPY
+==================================================
+
+Audit:
+
+- MENU
+- CLOSE
+- Services
+- How It Works
+- Platforms
+- FAQ
+- About
+- Start a Case
+- WinsAble™ Media •
+
+Check capitalization and consistency.
+
+==================================================
+ADMIN PANEL COPY
+==================================================
+
+Audit all user-facing Admin Panel English as well.
+
+Include:
+
+- headings
+- labels
+- buttons
+- forms
+- notifications
+- validation
+- success/error messages
+- empty states
+- confirmation dialogs
+
+Do not modify admin functionality.
+
+==================================================
+REPORT FORMAT
+==================================================
+
+Create a detailed report.
+
+Use this format:
+
+# WINSABLE COMPLETE ENGLISH AUDIT
+
+## Summary
+
+Total issues found:
 X
 
-The transformation should happen smoothly at the same time the menu opens.
-
-On close:
-
+Grammar:
 X
-→
-—
-—
-—
 
-Do NOT instantly swap between two icons.
+Spelling:
+X
 
-Use transforms/opacity so the three lines physically transition into the X.
+Punctuation:
+X
 
-Middle line:
-fade/scale out
+Capitalization:
+X
 
-Top/bottom:
-rotate into X
+Awkward/unnatural wording:
+X
 
-==================================================
-MENU LABEL ANIMATION
-==================================================
+Terminology inconsistency:
+X
 
-The:
+Other copy issues:
+X
 
-MENU
 
-label should also transition naturally.
+## Critical Issues
 
-Do not let the label pop/change instantly.
+| Location | Current Text | Problem | Recommended Text |
+|----------|--------------|---------|------------------|
 
-If the label remains "MENU", keep it stable.
+Only include genuinely important issues here.
 
-If its visual state changes when opened, animate that transition.
 
-==================================================
-CLOSE BUTTON ANIMATION
-==================================================
+## Grammar Issues
 
-The circular X close control should:
+| File/Section | Current Text | Issue | Recommended Text |
+|--------------|--------------|-------|------------------|
 
-- fade/scale in during opening
-- respond subtly on tap
-- fade/scale out during closing
 
-The:
+## Spelling / Typo Issues
 
-CLOSE
+| Location | Current | Correct |
+|----------|---------|---------|
 
-text should also reveal smoothly.
 
-==================================================
-BACKGROUND ANIMATION
-==================================================
+## Punctuation Issues
 
-The menu background should not simply appear.
+| Location | Current | Correct |
+|----------|---------|---------|
 
-Animate:
 
-- dark overlay opacity
-- subtle grid opacity
-- optional very subtle background transform
+## Capitalization Issues
 
-Keep the grid extremely restrained.
+| Location | Current | Recommended |
+|----------|---------|-------------|
 
-Do NOT use particles.
 
-Do NOT use flashy gradients.
+## Awkward / Non-Native English
 
-Do NOT use gaming-style effects.
+| Location | Current Text | Why It Sounds Awkward | Suggested Version |
+|----------|--------------|-----------------------|-------------------|
 
-==================================================
-PAGE CONTENT
-==================================================
 
-When opening:
+## Terminology Inconsistencies
 
-The page behind the menu should visually recede behind the overlay.
+| Concept | Version A | Version B | Recommendation |
+|---------|-----------|-----------|----------------|
 
-When closing:
 
-The page should smoothly become visible again.
+## CTA Consistency
 
-Do not animate the entire underlying website unnecessarily.
+List every CTA currently used and identify duplicates/inconsistencies.
 
-Do not cause layout shifts.
 
-==================================================
-POINTER EVENTS
-==================================================
+## Form Copy
 
-During opening:
+Audit the complete Case Form separately.
 
-Allow interaction only when the menu is sufficiently visible/active.
 
-During closing:
+## FAQ Copy
 
-Prevent accidental clicks on navigation links after the close has started.
+Audit every FAQ question and answer separately.
 
-After the exit animation:
 
-- remove pointer interaction
-- restore page interaction
-- restore body scrolling
+## Admin Panel Copy
 
-Do not leave an invisible full-screen layer blocking the page.
+Audit the visible Admin Panel language separately.
+
+
+## Good Copy
+
+Also identify important sections that are already grammatically correct and should NOT be unnecessarily rewritten.
 
 ==================================================
-BODY SCROLL LOCK
+IMPORTANT — DO NOT INVENT ISSUES
 ==================================================
 
-Keep the existing body scroll lock.
+Do not mark something wrong merely because you would phrase it differently.
 
-Opening:
-lock background scrolling.
+Distinguish:
 
-Closing:
-keep scrolling locked until the exit animation is finished.
+1. Definitely grammatically incorrect
+2. Spelling/typing error
+3. Punctuation error
+4. Inconsistent capitalization
+5. Grammatically correct but awkward
+6. Stylistic preference
 
-ONLY after the menu has completely disappeared:
-
-restore body scrolling.
-
-This prevents the page from moving underneath the closing animation.
-
-==================================================
-ESCAPE
-==================================================
-
-Escape should trigger the SAME close animation.
-
-Do not instantly unmount the menu when Escape is pressed.
-
-The exact same animated close sequence should play.
+Clearly label which category each issue belongs to.
 
 ==================================================
-NAVIGATION LINKS
+IMPORTANT — PRESERVE MEANING
 ==================================================
 
-Clicking:
+Do not change the meaning of WinsAble's claims.
 
-Services
-How It Works
-Platforms
-FAQ
-About
+Do not invent:
 
-should trigger:
+- guarantees
+- success rates
+- recovery promises
+- legal claims
+- platform capabilities
+- statistics
 
-1. Start closing animation.
-2. Disable menu interaction.
-3. Finish menu exit animation.
-4. Restore body scrolling.
-5. Navigate/scroll to the requested section.
-
-Do not instantly jump to the section while the menu is still visually covering the page.
+This is a LANGUAGE AUDIT only.
 
 ==================================================
-START A CASE
+IMPORTANT — NO CODE CHANGES
 ==================================================
 
-The:
+DO NOT edit:
 
-Start a Case ↗
+.tsx
+.ts
+.css
+.json
+.md
 
-CTA should use the same closing sequence.
+or any other files.
 
-CTA tap:
+Do not commit anything.
 
-→ start close animation
-→ finish overlay exit
-→ restore scrolling
-→ navigate to #case-form
+Do not deploy anything.
 
-==================================================
-ANIMATION QUALITY
-==================================================
+Do not modify the website.
 
-The final menu should feel like a premium editorial creative-site interaction.
-
-Think:
-
-smooth
-layered
-cinematic
-responsive
-precise
-
-NOT:
-
-instant
-basic dropdown
-generic hamburger
-gaming HUD
-overly bouncy
-excessively blurred
-
-The animation should be noticeable without slowing the user down.
+ONLY inspect and produce the audit report.
 
 ==================================================
-IMPORTANT IMPLEMENTATION
+FINAL REQUIREMENT
 ==================================================
 
-Inspect:
+I want you to inspect the ENTIRE existing website, not just a few files.
 
-src/components/winsable/Nav.tsx
+Search the repository for all user-facing English strings and cross-check them against the actual components/pages where possible.
 
-and the existing animation utilities before editing.
+At the end give me:
 
-Do not create another mobile navigation component.
+1. Total number of issues
+2. Most important issues
+3. Complete table of corrections
+4. Terminology inconsistencies
+5. Sections that are already good
+6. A final recommended copy standard for WinsAble
 
-Do not duplicate menu state.
+STOP AFTER THE AUDIT.
 
-Do not add a second overlay.
+Do NOT automatically apply any corrections.
 
-Modify the existing menu implementation.
-
-If the current code uses:
-
-isOpen && ...
-
-change the architecture as necessary so the menu can remain mounted during its exit animation.
-
-A clean approach is to distinguish:
-
-menu open state
-and
-menu mounted/animating state
-
-or use the existing animation mechanism if one already supports exit transitions.
-
-==================================================
-MOBILE ONLY
-==================================================
-
-This animation applies to the mobile full-screen menu.
-
-Desktop navigation must remain untouched.
-
-Keep the existing desktop breakpoint behavior.
-
-==================================================
-FINAL TEST
-==================================================
-
-Test these exact interactions:
-
-1. Closed → tap MENU
-   → smooth full opening animation.
-
-2. Open → tap X
-   → smooth complete closing animation.
-
-3. Open → press Escape
-   → same smooth closing animation.
-
-4. Open → tap Services
-   → close animation → scroll to Services.
-
-5. Open → tap FAQ
-   → close animation → scroll to FAQ.
-
-6. Open → tap Start a Case
-   → close animation → scroll to Case Form.
-
-7. Open → immediately tap Close during the opening animation
-   → animation must handle this gracefully without glitches.
-
-8. Open → close → immediately reopen
-   → no stuck state, no invisible overlay, no broken animation.
-
-9. Repeatedly open/close the menu
-   → no memory leaks, no duplicate listeners, no body-scroll-lock bugs.
-
-FINAL RESULT:
-
-The menu must feel FULLY ANIMATED both ON and OFF.
-
-Opening should not feel instant.
-
-Closing should not feel instant.
-
-Every major layer — hamburger, background, header, navigation rows, separators, CTA and overlay — should participate in a coordinated, smooth transition.
+I will review the report first and then give you a separate instruction to implement the approved corrections.
