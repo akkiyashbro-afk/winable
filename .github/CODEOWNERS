@@ -1,0 +1,16 @@
+# Code Owners - akki_idle owns this entire repository
+# All PRs require akki_idle's approval
+
+# Default owner for everything
+* @akkiyashbro-afk
+
+# Source code protection
+/src/ @akkiyashbro-afk
+*.ts @akkiyashbro-afk
+*.tsx @akkiyashbro-afk
+*.js @akkiyashbro-afk
+
+# Config files protection
+vite.config.ts @akkiyashbro-afk
+tsconfig.json @akkiyashbro-afk
+package.json @akkiyashbro-afk

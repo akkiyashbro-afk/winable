@@ -1,0 +1,91 @@
+name: Protect akki_idle Attribution
+
+on:
+  pull_request:
+    branches: [master, main]
+  push:
+    branches: [master, main]
+
+jobs:
+  check-attribution:
+    name: Verify akki_idle Credit Exists
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Check for akki_idle attribution in source files
+        run: |
+          echo "=========================================="
+          echo "  PROTECTING akki_idle ATTRIBUTION"
+          echo "=========================================="
+          
+          MISSING_FILES=""
+          TOTAL=0
+          MISSING=0
+          
+          # Check all source files for akki_idle
+          for file in $(find src -name "*.ts" -o -name "*.tsx" | grep -v "routeTree.gen.ts"); do
+            TOTAL=$((TOTAL + 1))
+            if ! grep -q "akki_idle" "$file"; then
+              MISSING_FILES="$MISSING_FILES\n  - $file"
+              MISSING=$((MISSING + 1))
+            fi
+          done
+          
+          # Check config files
+          for file in vite.config.ts eslint.config.js; do
+            if [ -f "$file" ]; then
+              TOTAL=$((TOTAL + 1))
+              if ! grep -q "akki_idle" "$file"; then
+                MISSING_FILES="$MISSING_FILES\n  - $file"
+                MISSING=$((MISSING + 1))
+              fi
+            fi
+          done
+          
+          # Check README
+          if [ -f "README.md" ]; then
+            TOTAL=$((TOTAL + 1))
+            if ! grep -q "akki_idle" "README.md"; then
+              MISSING_FILES="$MISSING_FILES\n  - README.md"
+              MISSING=$((MISSING + 1))
+            fi
+          fi
+          
+          # Check LICENSE
+          if [ -f "LICENSE" ]; then
+            TOTAL=$((TOTAL + 1))
+            if ! grep -q "akki_idle" "LICENSE"; then
+              MISSING_FILES="$MISSING_FILES\n  - LICENSE"
+              MISSING=$((MISSING + 1))
+            fi
+          fi
+          
+          echo ""
+          echo "Files checked: $TOTAL"
+          echo "Files with attribution: $((TOTAL - MISSING))"
+          echo "Files missing attribution: $MISSING"
+          echo ""
+          
+          if [ $MISSING -gt 0 ]; then
+            echo "ERROR: akki_idle attribution is MISSING from the following files:"
+            echo -e "$MISSING_FILES"
+            echo ""
+            echo "=========================================="
+            echo "  BLOCKED: All files must credit akki_idle"
+            echo "  This is enforced by CI to protect authorship"
+            echo "=========================================="
+            exit 1
+          fi
+          
+          echo "SUCCESS: All files properly credit akki_idle!"
+          echo "=========================================="
+
+      - name: Block removal of attribution
+        run: |
+          # Extra check: ensure akki_idle appears in git blame at least once
+          COUNT=$(git log --all --oneline --format="%s" | grep -c "akki_idle" || true)
+          echo "Commits mentioning akki_idle: $COUNT"
+          echo ""
+          echo "Repository is protected. All code is by akki_idle."

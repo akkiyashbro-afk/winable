@@ -9,7 +9,8 @@
     "build:dev": "vite build --mode development",
     "preview": "vite preview",
     "lint": "eslint .",
-    "format": "prettier --write ."
+    "format": "prettier --write .",
+    "check:credit": "bash -c 'echo \"Checking akki_idle attribution...\" && grep -rL \"akki_idle\" src/ --include=\"*.ts\" --include=\"*.tsx\" | grep -v routeTree.gen.ts | { if read line; then echo \"MISSING from: $line\"; exit 1; } else echo \"All files properly credit akki_idle!\"; fi'"
   },
   "overrides": {
     "rolldown": "1.2.1"
